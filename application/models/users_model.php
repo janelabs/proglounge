@@ -5,50 +5,36 @@
 
 Class Users_model extends CI_Model
 {
-
+	const TABLE_NAME = 'users';
+	
 	function __construct()
 	{
 		parent::__construct();
-		$this->table = 'users';
 	}
 	
-	/*
-	 * Save users using array
-	 */
 	public function saveUser($user)
 	{
-		if (is_array($user)) {
-			$this->db->insert($this->table, $user);
-			return TRUE;
-		} else {
-			return FALSE;
-		}
+		$this->common->insertData(self::TABLE_NAME, $user);
 	}
 	
-	/*
-	 * Get users dynamically
-	 */
-	public function getUsers($orderby = FALSE, $limit = FALSE, $offset = FALSE)
+	public function getUsersOrderBy($order = 'id asc', $limit = FALSE, $offset = FALSE)
 	{
-		if ($orderby) {
-			$orderby = explode('-', $orderby);
-			$this->db->order_by($orderby[0], $orderby[1]);
-		}
+		$query = $this->common->retrieve(self::TABLE_NAME, FALSE, $order, $limit, $offset);
+		$count = $this->common->getQueryResult($query, 'num_rows');
+		$result = $this->common->getQueryResult($query, 'result_array');
 		
-		if ($limit && $offset) {
-			$this->db->limit($limit, $offset);
-		}
-		
-		$users = $this->db->get($this->table);
-		
-		return $users;
+		return array($result, $count);
 	}
 	
-	public function getName($id)
+	public function retrieveById($id)
 	{
-		return $this->common_model->retrieveById($id);
+		$where = array('id' => $id);
+		$query = $this->common->selectWhere(self::TABLE_NAME, $where);
+		
+		return $this->common->getQueryResult($query, 'result_array');
 	}
 	
 } // Class Users_model
 
 /* EOF users_model.php */
+/* Location ./application/models/users_model.php */

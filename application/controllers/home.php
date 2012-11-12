@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Home extends CI_Controller {
 
 	function __construct()
 	{
@@ -11,10 +11,10 @@ class Welcome extends CI_Controller {
 	
 	public function index()
 	{
-		$data['users'] = $this->users_model->getUsers()->result();
-		$this->load->view('welcome_message', $data);
+		list($data['users'], $data['user_count']) = $this->users_model->getUsersOrderBy();
+		$this->load->view('home_view', $data);
 	}
 }
 
-/* End of file welcome.php */
+/* EOF home.php */
 /* Location: ./application/controllers/welcome.php */
