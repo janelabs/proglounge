@@ -52,7 +52,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database', 'session');
+$autoload['libraries'] = array('database');
 
 
 /*
@@ -64,7 +64,7 @@ $autoload['libraries'] = array('database', 'session');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array();
+$autoload['helper'] = array('url');
 
 
 /*
@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('Super_model');
+$autoload['model'] = array('common_model');
 
 
 /* End of file autoload.php */
