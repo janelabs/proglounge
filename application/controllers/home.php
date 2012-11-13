@@ -13,6 +13,7 @@ class Home extends CI_Controller {
 	{
 		list($data['users'], $data['user_count']) = $this->users_model->getUsersOrderBy();
 		list($data['user_follower'], $data['user_follower_count']) = $this->users_model->getUserFollowers(1);
+		list($data['user_following'], $data['user_following_count']) = $this->users_model->getUserFollowing(1);
 		$this->load->view('home_view', $data);
 	}
 }

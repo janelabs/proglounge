@@ -17,6 +17,9 @@ Class Users_model extends CI_Model
 		$this->common->insertData(self::TABLE_NAME, $user);
 	}
 	
+	/*
+	 * List all users
+	 */
 	public function getUsersOrderBy($order = 'id asc', $limit = FALSE, $offset = FALSE)
 	{
 		$query = $this->common->retrieve(self::TABLE_NAME, FALSE, $order, $limit, $offset);
@@ -26,6 +29,9 @@ Class Users_model extends CI_Model
 		return array($result, $count);
 	}
 	
+	/*
+	 * Gets user data using id column
+	 */
 	public function retrieveById($id)
 	{
 		$where = array('id' => $id);
@@ -34,13 +40,37 @@ Class Users_model extends CI_Model
 		return $this->common->getQueryResult($query, 'result_array');
 	}
 	
+	/*
+	 * Gets user follower
+	 * 
+	 * following_id : the user
+	 * follower_id  : the user's follower
+	 */
 	public function getUserFollowers($id)
 	{
 		$where = array('follow.following_id' => $id);
-		$on = 'follow.follower_id = users.id';
-		$order = 'users.username asc';
+		$on = 'follow.follower_id = users.id'; 
+		$order = 'users.id asc';
 		$query = $this->common->selectJoin(self::TABLE_NAME, 'follow', $on, $join_type = 'join', 
                                            $columns = FALSE, $where, $order);
+		$count = $this->common->getQueryResult($query, 'num_rows');
+		$result = $this->common->getQueryResult($query, 'result_array');
+		return array($result, $count);
+	}
+	
+	/*
+	 * Gets user following
+	 *
+	 * follower_id : the user
+	 * following_id  : the user's following
+	 */
+	public function getUserFollowing($id)
+	{
+		$where = array('follow.follower_id' => $id);
+		$on = 'follow.following_id = users.id';
+		$order = 'users.id asc';
+		$query = $this->common->selectJoin(self::TABLE_NAME, 'follow', $on, $join_type = 'join',
+				$columns = FALSE, $where, $order);
 		$count = $this->common->getQueryResult($query, 'num_rows');
 		$result = $this->common->getQueryResult($query, 'result_array');
 		return array($result, $count);

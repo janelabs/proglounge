@@ -67,15 +67,34 @@
 					<th colspan="3">Followers: <?php echo $user_follower_count; ?></th>
 				</tr>
 				<tr>
-					<th>ID</th>
 					<th>Name</th>
 					<th>Username</th>
 				</tr>
 				<?php if ($user_follower_count > 0) { foreach($user_follower as $user1) {	?>
 					<tr class="clickable" id="<?php echo $user1['id']; ?>">
-						<td><?php echo $user1['id']; ?></td>
 						<td><?php echo $user1['last_name'] . ", " . $user1['first_name']; ?></td>
 						<td><?php echo $user1['username']; ?></td>
+					</tr>
+				<?php } } else { ?>
+					<tr>
+						<td colspan="3">Empty user records.</td>
+					</tr>
+				<?php } ?>
+			</table>
+		</div>
+		<div class="span9 offset3">
+			<table class="table table-bordered table-stripped table-hover">
+				<tr>
+					<th colspan="3">Following: <?php echo $user_following_count; ?></th>
+				</tr>
+				<tr>
+					<th>Name</th>
+					<th>Username</th>
+				</tr>
+				<?php if ($user_follower_count > 0) { foreach($user_following as $user2) {	?>
+					<tr class="clickable" id="<?php echo $user2['id']; ?>">
+						<td><?php echo $user2['last_name'] . ", " . $user2['first_name']; ?></td>
+						<td><?php echo $user2['username']; ?></td>
 					</tr>
 				<?php } } else { ?>
 					<tr>
