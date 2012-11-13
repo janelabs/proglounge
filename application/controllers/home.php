@@ -6,11 +6,14 @@ class Home extends CI_Controller {
 	{
 		parent::__construct();
 		$data['base_url'] = base_url();
-		$this->load->model('users_model');
+		$this->load->model('Users_model', 'users_model');
 	}
 	
 	public function index()
 	{
+        $data['header'] = $this->load->view('header', TRUE);
+        $data['footer'] = $this->load->view('footer', TRUE);
+
 		list($data['users'], $data['user_count']) = $this->users_model->getUsersOrderBy();
 		list($data['user_follower'], $data['user_follower_count']) = $this->users_model->getUserFollowers(1);
 		list($data['user_following'], $data['user_following_count']) = $this->users_model->getUserFollowing(1);
