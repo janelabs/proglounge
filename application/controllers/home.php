@@ -19,6 +19,21 @@ class Home extends CI_Controller {
 		list($data['user_following'], $data['user_following_count']) = $this->users_model->getUserFollowing(1);
 		$this->load->view('home_view', $data);
 	}
+
+    /**
+     * Views registration form
+     *
+     * @access public
+     * @param void
+     * @return void
+     */
+    public function register()
+    {
+        $data['header'] = $this->load->view('header', TRUE);
+        $data['footer'] = $this->load->view('footer', TRUE);
+
+        $this->load->view('register', $data);
+    }
 }
 
 /* EOF home.php */
