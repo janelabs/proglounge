@@ -5,20 +5,26 @@ class Home extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		$data['base_url'] = base_url();
-		$this->load->model('Users_model', 'users_model');
+		$this->load->model('Users_model', 'user');
+		$this->load->model('Follow_model', 'follow');
 	}
 	
 	public function index()
 	{
+		//list all users
+		list($data['users'], $data['user_count']) = $this->user->getUsersOrderBy();
+		
+		//followers
+		list($data['user_follower'], $data['user_follower_count']) = $this->user->getUserFollowers(1);
+		
+		//following
+		list($data['user_following'], $data['user_following_count']) = $this->user->getUserFollowing(1);
+		
         $data['header'] = $this->load->view('header', TRUE);
         $data['footer'] = $this->load->view('footer', TRUE);
-
-		list($data['users'], $data['user_count']) = $this->users_model->getUsersOrderBy();
-		list($data['user_follower'], $data['user_follower_count']) = $this->users_model->getUserFollowers(1);
-		list($data['user_following'], $data['user_following_count']) = $this->users_model->getUserFollowing(1);
 		$this->load->view('home_view', $data);
 	}
+<<<<<<< HEAD
 
     /**
      * Views registration form
@@ -34,6 +40,20 @@ class Home extends CI_Controller {
 
         $this->load->view('register', $data);
     }
+=======
+	
+	public function follow($following_id)
+	{
+		$this->follow->followUser(1, $following_id);
+		redirect();
+	}
+	
+	public function unfollow($following_id)
+	{
+		$this->follow->unfollowUser(1, $following_id);
+		redirect();
+	}
+>>>>>>> 8741f5a3d27de6355e32bd340b78f06d4c667f3d
 }
 
 /* EOF home.php */
