@@ -34,6 +34,18 @@ Class Users_model extends CI_Model
 		return $this->common->getQueryResult($query, 'result_array');
 	}
 	
+	public function getUserFollowers($id)
+	{
+		$where = array('follow.following_id' => $id);
+		$on = 'follow.follower_id = users.id';
+		$order = 'users.username asc';
+		$query = $this->common->selectJoin(self::TABLE_NAME, 'follow', $on, $join_type = 'join', 
+                                           $columns = FALSE, $where, $order);
+		$count = $this->common->getQueryResult($query, 'num_rows');
+		$result = $this->common->getQueryResult($query, 'result_array');
+		return array($result, $count);
+	}
+	
 } // Class Users_model
 
 /* EOF users_model.php */

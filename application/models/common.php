@@ -56,7 +56,7 @@ Class Common extends CI_Model
 	 * Retrieve all
 	 */
 	public function retrieve($table, $columns = FALSE, $order = FALSE,
-                           $limit = FALSE, $offset = FALSE)
+                             $limit = FALSE, $offset = FALSE)
 	{
 		//select columns
 		if ($columns) {
@@ -72,8 +72,36 @@ Class Common extends CI_Model
 		if ($limit && $offset) {
 			$this->db->limit($limit, $offset);
 		}
-		
+				
 		return $this->db->get($table);
+	}
+	
+	/*
+	 * Retrieve data using join(inner, left, right, outer) statements
+	 */
+	public function selectJoin($table1, $table2, $on, $join_type = 'join', 
+                               $columns = FALSE, $where = FALSE, $order = FALSE)
+	{
+		if (!$columns) {
+			$this->db->select('*');
+		} else {
+			$this->db->select($columns);
+		}
+		
+		$this->db->from($table1);
+		$this->db->join($table2, $on, $join_type);
+		
+		// add where in query
+		if ($where && is_array($where)) {
+			$this->db->where($where);
+		}
+		
+		// add order by in query
+		if ($order) {
+			$this->db->order_by($order);
+		}
+		
+		return $this->db->get();
 	}
 	
 	public function deleteDataWhere($table, $where)
