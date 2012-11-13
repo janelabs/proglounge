@@ -35,7 +35,7 @@
 						<td>
 							<a class="btn" 
 							   href="<?php echo site_url('home/follow/'.$user['id']); ?>">
-							<i class="icon-star"></i>Follow</a>
+							<i class="icon-star"></i> Follow</a>
 						</td>
 					</tr>
 				<?php } } else { ?>
@@ -81,9 +81,9 @@
 						<td><?php echo $user2['last_name'] . ", " . $user2['first_name']; ?></td>
 						<td><?php echo $user2['username']; ?></td>
 						<td>
-							<a class="btn btn-primary" 
-							   href="<?php echo site_url('home/unfollow/'.$user['id']); ?>">
-							<i class="icon-star"></i>Unfollow</a>
+							<a class="btn btn-danger" 
+							   href="<?php echo site_url('home/unfollow/'.$user2['id'], true); ?>">
+							<i class="icon-star icon-white"></i> Unfollow</a>
 						</td>
 					</tr>
 				<?php } } else { ?>
@@ -98,7 +98,7 @@
 <script>
 $('.clickable').click(function() {
 	var id = $(this).attr('id');
-	alert(id);
+	//alert(id);
 });
 </script>
 <?php echo $footer; ?>

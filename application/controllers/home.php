@@ -11,15 +11,17 @@ class Home extends CI_Controller {
 
     public function index()
     {
+    	$columns = 'users.id, users.username, users.first_name, users.last_name,
+    	            follow.following_id, follow.follower_id';
+    	
         //list all users
         list($data['users'], $data['user_count']) = $this->user->getUsersOrderBy();
 
         //followers
-        list($data['user_follower'], $data['user_follower_count']) = $this->user->getUserFollowers(1);
+        list($data['user_follower'], $data['user_follower_count']) = $this->user->getUserFollowers(1, $columns);
 
         //following
-        list($data['user_following'], $data['user_following_count']) = $this->user->getUserFollowing(1);
-
+        list($data['user_following'], $data['user_following_count']) = $this->user->getUserFollowing(1, $columns);
         $data['header'] = $this->load->view('header', TRUE);
         $data['footer'] = $this->load->view('footer', TRUE);
         $this->load->view('home_view', $data);
