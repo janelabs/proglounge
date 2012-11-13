@@ -20,6 +20,8 @@ class Home extends CI_Controller {
 		//following
 		list($data['user_following'], $data['user_following_count']) = $this->user->getUserFollowing(1);
 		
+        $data['header'] = $this->load->view('header', TRUE);
+        $data['footer'] = $this->load->view('footer', TRUE);
 		$this->load->view('home_view', $data);
 	}
 	
