@@ -13,9 +13,9 @@
             <a href="#" class="brand"><strong>{ PL }</strong></a>
             <ul class="nav">
                 <li class="active">
-                    <a href="#">Home</a>
+                    <a href="<?php echo site_url(); ?>">Home</a>
                 </li>
-                <li><a href="#">Link</a></li>
+                <li><a href="<?php echo site_url('home/register'); ?>">Register</a></li>
                 <li><a href="#">Link</a></li>
             </ul>
         </div>
