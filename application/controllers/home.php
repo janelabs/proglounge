@@ -5,16 +5,34 @@ class Home extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		$data['base_url'] = base_url();
-		$this->load->model('users_model');
+		$this->load->model('Users_model', 'user');
+		$this->load->model('Follow_model', 'follow');
 	}
 	
 	public function index()
 	{
-		list($data['users'], $data['user_count']) = $this->users_model->getUsersOrderBy();
-		list($data['user_follower'], $data['user_follower_count']) = $this->users_model->getUserFollowers(1);
-		list($data['user_following'], $data['user_following_count']) = $this->users_model->getUserFollowing(1);
+		//list all users
+		list($data['users'], $data['user_count']) = $this->user->getUsersOrderBy();
+		
+		//followers
+		list($data['user_follower'], $data['user_follower_count']) = $this->user->getUserFollowers(1);
+		
+		//following
+		list($data['user_following'], $data['user_following_count']) = $this->user->getUserFollowing(1);
+		
 		$this->load->view('home_view', $data);
+	}
+	
+	public function follow($following_id)
+	{
+		$this->follow->followUser(1, $following_id);
+		redirect();
+	}
+	
+	public function unfollow($following_id)
+	{
+		$this->follow->unfollowUser(1, $following_id);
+		redirect();
 	}
 }
 

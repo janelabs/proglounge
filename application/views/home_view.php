@@ -47,16 +47,22 @@
 					<th>ID</th>
 					<th>Name</th>
 					<th>Username</th>
+					<th>Follow</th>
 				</tr>
 				<?php if ($user_count > 0) { foreach($users as $user) {	?>
 					<tr class="clickable" id="<?php echo $user['id']; ?>">
 						<td><?php echo $user['id']; ?></td>
 						<td><?php echo $user['last_name'] . ", " . $user['first_name']; ?></td>
 						<td><?php echo $user['username']; ?></td>
+						<td>
+							<a class="btn" 
+							   href="<?php echo site_url('home/follow/'.$user['id']); ?>">
+							<i class="icon-star"></i>Follow</a>
+						</td>
 					</tr>
 				<?php } } else { ?>
 					<tr>
-						<td colspan="3">Empty user records.</td>
+						<td colspan="4">Empty user records.</td>
 					</tr>
 				<?php } ?>
 			</table>
@@ -90,11 +96,17 @@
 				<tr>
 					<th>Name</th>
 					<th>Username</th>
+					<th>Unfollow</th>
 				</tr>
-				<?php if ($user_follower_count > 0) { foreach($user_following as $user2) {	?>
+				<?php if ($user_following_count > 0) { foreach($user_following as $user2) {	?>
 					<tr class="clickable" id="<?php echo $user2['id']; ?>">
 						<td><?php echo $user2['last_name'] . ", " . $user2['first_name']; ?></td>
 						<td><?php echo $user2['username']; ?></td>
+						<td>
+							<a class="btn btn-primary" 
+							   href="<?php echo site_url('home/unfollow/'.$user['id']); ?>">
+							<i class="icon-star"></i>Unfollow</a>
+						</td>
 					</tr>
 				<?php } } else { ?>
 					<tr>

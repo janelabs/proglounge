@@ -6,6 +6,7 @@
 Class Users_model extends CI_Model
 {
 	const TABLE_NAME = 'users';
+	const FOLLOW_TABLE = 'follow';
 	
 	function __construct()
 	{
@@ -46,13 +47,15 @@ Class Users_model extends CI_Model
 	 * following_id : the user
 	 * follower_id  : the user's follower
 	 */
-	public function getUserFollowers($id)
+	public function getUserFollowers($id, $columns = FALSE, $order = FALSE, 
+			                         $limit = FALSE, $offset = FALSE)
 	{
-		$where = array('follow.following_id' => $id);
-		$on = 'follow.follower_id = users.id'; 
-		$order = 'users.id asc';
-		$query = $this->common->selectJoin(self::TABLE_NAME, 'follow', $on, $join_type = 'join', 
-                                           $columns = FALSE, $where, $order);
+		$where = array(self::FOLLOW_TABLE . '.following_id' => $id);
+		$on = self::FOLLOW_TABLE . '.follower_id = users.id'; 
+		
+		$query = $this->common->selectJoin(self::TABLE_NAME, self::FOLLOW_TABLE, $on, $join_type = 'join', 
+                                           $columns, $where, $order, $limit, $offset);
+		
 		$count = $this->common->getQueryResult($query, 'num_rows');
 		$result = $this->common->getQueryResult($query, 'result_array');
 		return array($result, $count);
@@ -64,13 +67,15 @@ Class Users_model extends CI_Model
 	 * follower_id : the user
 	 * following_id  : the user's following
 	 */
-	public function getUserFollowing($id)
+	public function getUserFollowing($id, $columns = FALSE, $order = FALSE, 
+                                     $limit = FALSE, $offset = FALSE)
 	{
-		$where = array('follow.follower_id' => $id);
-		$on = 'follow.following_id = users.id';
-		$order = 'users.id asc';
-		$query = $this->common->selectJoin(self::TABLE_NAME, 'follow', $on, $join_type = 'join',
-				$columns = FALSE, $where, $order);
+		$where = array(self::FOLLOW_TABLE . '.follower_id' => $id);
+		$on = self::FOLLOW_TABLE . '.following_id = users.id';
+		
+		$query = $this->common->selectJoin(self::TABLE_NAME, self::FOLLOW_TABLE, $on, $join_type = 'join',
+				                           $columns, $where, $order, $limit, $offset);
+		
 		$count = $this->common->getQueryResult($query, 'num_rows');
 		$result = $this->common->getQueryResult($query, 'result_array');
 		return array($result, $count);

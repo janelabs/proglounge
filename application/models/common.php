@@ -12,6 +12,9 @@ Class Common extends CI_Model
 		parent::__construct();
 	}
 	
+	/*
+	 * Insert data using an array
+	 */
 	public function insertData($table, $data)
 	{
 		if (is_array($data)) {
@@ -80,7 +83,8 @@ Class Common extends CI_Model
 	 * Retrieve data using join(inner, left, right, outer) statements
 	 */
 	public function selectJoin($table1, $table2, $on, $join_type = 'join', 
-                               $columns = FALSE, $where = FALSE, $order = FALSE)
+                               $columns = FALSE, $where = FALSE, $order = FALSE,
+                               $limit = FALSE, $offset = FALSE)
 	{
 		if (!$columns) {
 			$this->db->select('*');
@@ -99,6 +103,11 @@ Class Common extends CI_Model
 		// add order by in query
 		if ($order) {
 			$this->db->order_by($order);
+		}
+		
+		// add limit in query
+		if ($limit && $offset) {
+			$this->db->limit($limit, $offset);
 		}
 		
 		return $this->db->get();
