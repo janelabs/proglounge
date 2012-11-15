@@ -5,11 +5,23 @@ class Profile extends CI_Controller {
     function __construct()
     {
         parent::__construct();
+        
+        $this->user_session = $this->session->all_userdata();
+        $this->is_logged_in = $this->mylibrary->checkUserSession($this->user_session);
+        
         $this->load->model('Users_model', 'user');
         $this->load->model('Follow_model', 'follow');
     }
+    
+    public function _remap($username, $method)
+    {
+    	if (empty($method)) {
+    		$user = $this->user->retrieveByUsername($username, 'id');
+    		$this->index($user['id']);
+    	}
+    }
 
-    public function index($id = 1)
+    public function index($id)
     {
     	$columns = 'users.id, users.username, users.first_name, users.last_name,
     	follow.following_id, follow.follower_id';
@@ -31,15 +43,16 @@ class Profile extends CI_Controller {
              $data['suggested_users_count']) = $this->user->getSuggestedUsersInfo($suggested_ids);
     	
     	$data['user_id'] = $id;
+    	$data['session'] = $this->user_session;
     	
     	//templates
-    	$data['header'] = $this->load->view('header', TRUE);
-    	$data['footer'] = $this->load->view('footer', TRUE);
+    	$data['header'] = $this->load->view('header', $data, TRUE);
+    	$data['footer'] = $this->load->view('footer', $data, TRUE);
     	
     	$this->load->view('profile_view', $data);
     }
 
-}
+}// class Profile
 
 /* EOF profile.php */
 /* Location: ./application/controllers/profile.php */

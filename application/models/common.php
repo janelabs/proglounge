@@ -123,7 +123,7 @@ Class Common extends CI_Model
 		$this->db->delete($table);
 	}
 		
-} // Class Common_model
+} // Class Common
 
-/* EOF common_model.php */
+/* EOF common.php */
 /* Location ./application/models/common.php */

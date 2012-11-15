@@ -19,6 +19,22 @@ Class Users_model extends CI_Model
 	}
 	
 	/*
+	 * Checking of user if existing.
+	 */
+	public function checkUser($username, $password)
+	{
+		$where = array('username' => $username,
+                       'password' => $password);
+		$columns = 'id, username';
+		
+		$query = $this->common->selectWhere(self::TABLE_NAME, $where, $columns);
+		$is_user = ($query->num_rows() > 0);
+		$user_info = $query->result_array();
+		
+		return array($is_user, $user_info);
+	}
+	
+	/*
 	 * List all users
 	 */
 	public function getUsersOrderBy($order = 'id asc', $limit = FALSE, $offset = FALSE)
@@ -28,6 +44,14 @@ Class Users_model extends CI_Model
 		$result = $query->result_array();
 		
 		return array($result, $count);
+	}
+	
+	public function retrieveByUsername($username, $columns)
+	{
+		$where = array('username' => $username);
+		$query = $this->common->selectWhere(self::TABLE_NAME, $where, $columns);
+		
+		return $query->row_array();
 	}
 	
 	/*

@@ -39,7 +39,16 @@
 */
 
 $route['default_controller'] = "home";
-$route['404_override'] = '';
+$route['404_override'] = 'error/pageMissing';
+
+$route['login/(:any)/(:any)'] = 'account/login/$1/$2';
+$route['logout'] = 'account/logout';
+$route['register'] = 'account/register';
+$route['account'] = 'error/pageMissing';
+$route['account/(:any)'] = 'error/pageMissing';
+$route['profile'] = 'error/pageMissing';
+$route['profile/(:any)'] = 'error/pageMissing';
+$route['(:any)'] = 'profile/$1';
 
 
 /* End of file routes.php */

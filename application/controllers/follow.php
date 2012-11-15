@@ -5,6 +5,8 @@ class Follow extends CI_Controller {
     function __construct()
     {
         parent::__construct();
+        
+        $user_session = $this->session->all_userdata();
         $this->load->model('Users_model', 'user');
         $this->load->model('Follow_model', 'follow');
     }
