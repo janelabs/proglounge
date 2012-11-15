@@ -24,6 +24,13 @@
                 <li><a href="<?php echo site_url('register/'); ?>">Register</a></li>
                 <?php } ?>
             </ul>
+            <?php if (isset($session['id']) && isset($session['username'])) { ?>
+            <a href="<?php echo site_url('logout'); ?>" class="btn pull-right"><strong>Log out</strong></a>
+            <?php } ?>
+            
+            <?php if (!isset($session['id']) || !isset($session['username'])) { ?>
+            <a href="<?php echo site_url('login'); ?>" class="btn pull-right"><strong>Log In</strong></a>
+            <?php } ?>
         </div>
     </div>
 </div>

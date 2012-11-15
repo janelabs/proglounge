@@ -41,7 +41,8 @@
 $route['default_controller'] = "home";
 $route['404_override'] = 'error/pageMissing';
 
-$route['login/(:any)/(:any)'] = 'account/login/$1/$2';
+$route['login'] = 'account/login';
+$route['validate'] = 'account/checkLogin';
 $route['logout'] = 'account/logout';
 $route['register'] = 'account/register';
 $route['account'] = 'error/pageMissing';

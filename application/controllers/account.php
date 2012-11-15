@@ -19,9 +19,11 @@ Class Account extends CI_Controller
         $this->load->view('register', $data);
     }
     
-    public function login($username, $password)
+    public function checkLogin()
     {
-		list($is_existing_user, $user) = $this->user->checkUser($username, $password);
+    	$user_input = $this->input->post(NULL, TRUE);
+		var_dump($user_input);
+		list($is_existing_user, $user) = $this->user->checkUser($user_input['username'], $user_input['password']);
 		
 		if ($is_existing_user) {
 			$session_data = array('id' => $user[0]['id'],
@@ -29,8 +31,15 @@ Class Account extends CI_Controller
 			$this->session->set_userdata($session_data);
 			redirect($user[0]['username']);
 		} else {
-			
+			$this->session->set_flashdata('login_error', 'Invalid Username/Password');
+			redirect('login');
 		}
+    }
+    
+    public function login()
+    {
+    	$data['login_error'] = $this->session->flashdata('login_error');
+    	$this->load->view('login_view', $data);
     }
     
     public function logout()
