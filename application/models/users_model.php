@@ -24,8 +24,8 @@ Class Users_model extends CI_Model
 	public function getUsersOrderBy($order = 'id asc', $limit = FALSE, $offset = FALSE)
 	{
 		$query = $this->common->retrieve(self::TABLE_NAME, FALSE, $order, $limit, $offset);
-		$count = $this->common->getQueryResult($query, 'num_rows');
-		$result = $this->common->getQueryResult($query, 'result_array');
+		$count = $query->num_rows();
+		$result = $query->result_array();
 		
 		return array($result, $count);
 	}
@@ -33,12 +33,12 @@ Class Users_model extends CI_Model
 	/*
 	 * Gets user data using id column
 	 */
-	public function retrieveById($id)
+	public function retrieveById($id, $columns = FALSE)
 	{
 		$where = array('id' => $id);
-		$query = $this->common->selectWhere(self::TABLE_NAME, $where);
+		$query = $this->common->selectWhere(self::TABLE_NAME, $where, $columns);
 		
-		return $this->common->getQueryResult($query, 'result_array');
+		return $query->row_array();
 	}
 	
 	/*
@@ -56,8 +56,9 @@ Class Users_model extends CI_Model
 		$query = $this->common->selectJoin(self::TABLE_NAME, self::FOLLOW_TABLE, $on, $join_type = 'join', 
                                            $columns, $where, $order, $limit, $offset);
 		
-		$count = $this->common->getQueryResult($query, 'num_rows');
-		$result = $this->common->getQueryResult($query, 'result_array');
+		$count = $query->num_rows();
+		$result = $query->result_array();
+		
 		return array($result, $count);
 	}
 	
@@ -76,9 +77,29 @@ Class Users_model extends CI_Model
 		$query = $this->common->selectJoin(self::TABLE_NAME, self::FOLLOW_TABLE, $on, $join_type = 'join',
 				                           $columns, $where, $order, $limit, $offset);
 		
-		$count = $this->common->getQueryResult($query, 'num_rows');
-		$result = $this->common->getQueryResult($query, 'result_array');
+		$count = $query->num_rows();
+		$result = $query->result_array();
 		return array($result, $count);
+	}
+	
+	/*
+	 * Gets suggested user info.
+	 * 
+	 * $ids : array of suggested user ids.
+	 */
+	public function getSuggestedUsersInfo($ids)
+	{
+		if (!is_array($ids)) {
+			throw new Exception('Param must be an array.');
+		}
+		
+		$suggested_users = array();
+		for($i = 0; $i < count($ids); $i++) {
+			$columns = 'id, last_name, first_name, username';
+			$suggested_users[] = $this->retrieveById($ids[$i], $columns);
+		}
+		
+		return array($suggested_users, count($suggested_users));
 	}
 	
 } // Class Users_model

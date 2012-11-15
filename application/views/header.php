@@ -7,7 +7,7 @@
     <script type="text/javascript" src="<?php echo base_url('public/js/jquery.js'); ?>"></script>
 </head>
 <body>
-<div class="navbar navbar-fixed-top">
+<div class="navbar navbar-inverse navbar-static-top">
     <div class="navbar-inner">
         <div class="container">
             <a href="#" class="brand"><strong>{ PL }</strong></a>

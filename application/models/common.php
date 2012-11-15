@@ -122,37 +122,6 @@ Class Common extends CI_Model
 		$this->db->where($where);
 		$this->db->delete($table);
 	}
-	
-	/*
-	 * Returns the result type (result(), result_array()...)
-	 */
-	public function getQueryResult($query, $return)
-	{
-		switch($return) 
-		{
-			case 'result':
-				return $query->result();
-				break;
-			case 'result_array':
-				return $query->result_array();
-				break;
-			case 'row':
-				return $query->row();
-				break;
-			case 'row_array':
-				return $query->row_array();
-				break;
-			case 'num_fields':
-				return $query->num_fields();
-				break;
-			case 'num_rows':
-				return $query->num_rows();
-				break;
-			default:
-				return $query->result_array();
-				break;
-		}
-	}
 		
 } // Class Common_model
 
