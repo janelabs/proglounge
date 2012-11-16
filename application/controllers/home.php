@@ -24,23 +24,28 @@ class Home extends CI_Controller {
     	}
     }
 
-    public function index($id = 1)
+    public function index()
     {
-    	$columns = 'users.id, users.username, users.first_name, users.last_name,
-    	            follow.following_id, follow.follower_id';
+    	$id = $this->user_session['id'];
     	
         //list all users
-        list($data['users'], $data['user_count']) = $this->user->getUsersOrderBy();
+        list($data['users'], 
+             $data['user_count']) = $this->user->getUsersOrderBy();
+        
+        $columns = 'users.id, users.username, users.first_name, users.last_name,
+                    follow.following_id, follow.follower_id';
 
         //followers
-        list($data['user_follower'], $data['user_follower_count']) = $this->user->getUserFollowers($id, $columns);
+        list($data['user_follower'], 
+             $data['user_follower_count']) = $this->user->getUserFollowers($id, $columns);
 
         //following
         list($data['user_following'], $data['user_following_count']) = $this->user->getUserFollowing($id, $columns);
         
         //suggested user to follow.
         $suggested_ids = $this->follow->getSuggestedUserIds($id);
-        list($data['suggested_users'], $data['suggested_users_count']) = $this->user->getSuggestedUsersInfo($suggested_ids);
+        list($data['suggested_users'], 
+             $data['suggested_users_count']) = $this->user->getSuggestedUsersInfo($suggested_ids);
         
         $data['user_id'] = $id;
         $data['session'] = $this->user_session;

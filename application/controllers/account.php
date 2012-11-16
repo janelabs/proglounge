@@ -13,16 +13,59 @@ Class Account extends CI_Controller
      */
     public function register()
     {
-        $data['header'] = $this->load->view('header', TRUE);
-        $data['footer'] = $this->load->view('footer', TRUE);
-
-        $this->load->view('register', $data);
+    	$data['register_error'] = $this->session->flashdata('register_error');
+        $this->load->view('register_view', $data);
+    }
+    
+    public function saveUser()
+    {
+    	$input = $this->input->post(NULL, TRUE);
+    	
+    	//validate inputs
+    	if (in_array('', $input)) {
+    		$this->session->set_flashdata('register_error', 'Please don not leave blank information');
+    		redirect('register');
+    	}
+    	
+    	if ($input['password'] != $input['repassword']) {
+    		$this->session->set_flashdata('register_error', 'Password did not match.');
+    		redirect('register');
+    	}
+    	
+    	//check username if exists.
+    	$is_exist = (count($this->user->retrieveByUsername($input['username'], 'id')) > 0);
+    	if ($is_exist) {
+    		$this->session->set_flashdata('register_error', 'Username already exist');
+    		redirect('register');
+    	}
+    	
+    	unset($input['repassword']);
+    	
+    	$this->user->saveUser($input);
+    	redirect($input['username']);
+    	
     }
     
     public function checkLogin()
     {
     	$user_input = $this->input->post(NULL, TRUE);
-		var_dump($user_input);
+		
+    	//check if input is empty.
+    	if ($user_input['username'] == '' && $user_input['password'] == '') {
+    		$this->session->set_flashdata('login_error', 'Please input your username and password');
+    		redirect('login');
+    	}
+    	
+    	if ($user_input['username'] == '') {
+    		$this->session->set_flashdata('login_error', 'Please input your username');
+    		redirect('login');
+    	}
+    	
+    	if ($user_input['password'] == '') {
+    		$this->session->set_flashdata('login_error', 'Please input your password');
+    		redirect('login');
+    	}
+    	
 		list($is_existing_user, $user) = $this->user->checkUser($user_input['username'], $user_input['password']);
 		
 		if ($is_existing_user) {

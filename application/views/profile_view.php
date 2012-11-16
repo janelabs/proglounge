@@ -14,14 +14,14 @@
 		
 		<div class="span12">
 			<div class="btn-group">
-				<button class="btn btn-large span4 profile-buttons">
-					Blogs <span class="badge badge-inverse">8</span>
+				<button class="btn btn-large btn-info span4 profile-buttons">
+					Blogs <span class="badge badge-info">8</span>
 				</button>
-	  			<button class="btn btn-large span4 profile-buttons">
-	  				Followers <span class="badge badge-inverse"><?php echo $user_follower_count ?></span>
+	  			<button class="btn btn-large btn-info span4 profile-buttons">
+	  				Followers <span class="badge badge-info"><?php echo $user_follower_count ?></span>
 	  			</button>
-	  			<button class="btn btn-large span4 profile-buttons">
-	  				Following <span class="badge badge-inverse"><?php echo $user_following_count ?></span>
+	  			<button class="btn btn-large btn-info span4 profile-buttons">
+	  				Following <span class="badge badge-info"><?php echo $user_following_count ?></span>
 	  			</button>
 			</div>
 		</div>

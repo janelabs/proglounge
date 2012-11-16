@@ -5,31 +5,34 @@
     <title>Programmers Lounge</title>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('public/css/bootstrap.css'); ?>">
     <script type="text/javascript" src="<?php echo base_url('public/js/jquery.js'); ?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('public/js/bootstrap.min.js'); ?>"></script>
 </head>
 <body>
 <div class="navbar navbar-static-top">
     <div class="navbar-inner">
         <div class="container">
-            <a href="#" class="brand"><strong>{ PL }</strong></a>
-            <ul class="nav">
-                <li class="active">
-                    <a href="<?php echo site_url(); ?>">Home</a>
-                </li>
-                
-                <?php if (isset($session['id']) && isset($session['username'])) { ?>
-                <li><a href="<?php echo site_url($session['username']) ?>">Profile</a></li>
-                <?php } ?>
-                    
-                <?php if (!isset($session['id']) || !isset($session['username'])) { ?>
-                <li><a href="<?php echo site_url('register/'); ?>">Register</a></li>
-                <?php } ?>
-            </ul>
+            <a href="<?php echo site_url(); ?>" class="brand">{ Programmers Lounge }</a>
             <?php if (isset($session['id']) && isset($session['username'])) { ?>
-            <a href="<?php echo site_url('logout'); ?>" class="btn pull-right"><strong>Log out</strong></a>
+            <div class="btn-group pull-right">
+            <a href="<?php echo site_url($session['username']) ?>" 
+               class="btn btn-info"><?php echo $session['username'] ?>
+            </a>
+			  <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+			    <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu">
+				  <li><a href="#">Account Settings</a></li>
+				  <li class="divider"></li>
+				  <li><a href="<?php echo site_url('logout') ?>">Log out</a></li>
+			  </ul>
+            </div>
             <?php } ?>
             
             <?php if (!isset($session['id']) || !isset($session['username'])) { ?>
-            <a href="<?php echo site_url('login'); ?>" class="btn pull-right"><strong>Log In</strong></a>
+            <div class="pull-right">
+	            <a href="<?php echo site_url('register'); ?>" class="btn btn-inverse">Register</a>
+	            <a href="<?php echo site_url('login'); ?>" class="btn btn-primary">Log In</a>
+            </div>
             <?php } ?>
         </div>
     </div>
