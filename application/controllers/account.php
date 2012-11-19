@@ -5,6 +5,7 @@ Class Account extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
+		$this->load->library('encrypt');
 		$this->load->model('Users_model', 'user');
 	}
 	
@@ -14,34 +15,54 @@ Class Account extends CI_Controller
     public function register()
     {
     	$data['register_error'] = $this->session->flashdata('register_error');
+    	$data['user_input'] = $this->session->flashdata('user_input');
         $this->load->view('register_view', $data);
     }
     
     public function saveUser()
     {
     	$input = $this->input->post(NULL, TRUE);
-    	
+
     	//validate inputs
     	if (in_array('', $input)) {
-    		$this->session->set_flashdata('register_error', 'Please don not leave blank information');
+    		$this->session->set_flashdata('register_error', 'Ooopss! You forgot some fields');
+    		$input['password'] = '';
+    		$input['repassword'] = '';
+    		$this->session->set_flashdata('user_input', $input);
     		redirect('register');
     	}
     	
     	if ($input['password'] != $input['repassword']) {
-    		$this->session->set_flashdata('register_error', 'Password did not match.');
+    		$this->session->set_flashdata('register_error', 'Hey! Password did not match.');
+    		$input['password'] = '';
+    		$input['repassword'] = '';
+    		$this->session->set_flashdata('user_input', $input);
     		redirect('register');
     	}
-    	
+    	    	
     	//check username if exists.
     	$is_exist = (count($this->user->retrieveByUsername($input['username'], 'id')) > 0);
     	if ($is_exist) {
-    		$this->session->set_flashdata('register_error', 'Username already exist');
+    		$this->session->set_flashdata('register_error', 'Oh no! Username already exist');
+    		$input['password'] = '';
+    		$input['repassword'] = '';
+    		$this->session->set_flashdata('user_input', $input);
     		redirect('register');
     	}
     	
     	unset($input['repassword']);
     	
+    	//encrypt password
+    	$input['password'] = md5($input['password']);
+    	
     	$this->user->saveUser($input);
+    	
+    	//set session
+    	$session_data = array('id' => $this->db->insert_id(),
+    			              'username' => $input['username'],
+    			              'is_new' => TRUE);
+    	$this->session->set_userdata($session_data);
+    	
     	redirect($input['username']);
     	
     }
@@ -66,6 +87,8 @@ Class Account extends CI_Controller
     		redirect('login');
     	}
     	
+    	$user_input['password'] = md5($user_input['password']);
+    	
 		list($is_existing_user, $user) = $this->user->checkUser($user_input['username'], $user_input['password']);
 		
 		if ($is_existing_user) {
@@ -87,8 +110,9 @@ Class Account extends CI_Controller
     
     public function logout()
     {
-    	$session_data = array('id' => $user[0]['id'],
-    			              'username' => $user[0]['username']);
+    	$session_data = array('id' => '',
+    			              'username' => '',
+    			              'is_new' => FALSE);
     	
     	$this->session->unset_userdata($session_data);
     	redirect();

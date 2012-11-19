@@ -66,16 +66,17 @@
 	      		<strong>Error: </strong><?php echo $register_error ?>
 	      	</div>
 	      	<?php } ?>
-        <input type="text" id="last_name" name="last_name" class="input-block-level" placeholder="Lastname">
-        <input type="text" name="first_name" class="input-block-level" placeholder="Firstname">
-        <input type="text" name="middle_name" class="input-block-level" placeholder="Middlename">
-        <input type="text" name="nickname" class="input-block-level" placeholder="Nickname">
-        <input type="text" name="email_address" class="input-block-level" placeholder="Email Address">
-        <input type="text" name="username" class="input-block-level" placeholder="Username">
+        <input type="text" id="last_name" name="last_name" class="input-block-level" value="<?php echo $user_input['last_name'] ?>" placeholder="Lastname">
+        <input type="text" name="first_name" class="input-block-level" value="<?php echo $user_input['first_name'] ?>" placeholder="Firstname">
+        <input type="text" name="middle_name" class="input-block-level" value="<?php echo $user_input['middle_name'] ?>" placeholder="Middlename">
+        <input type="text" name="nickname" class="input-block-level" value="<?php echo $user_input['nickname'] ?>" placeholder="Nickname">
+        <input type="text" name="email_address" class="input-block-level" value="<?php echo $user_input['email_address'] ?>" placeholder="Email Address">
+        <input type="text" name="username" class="input-block-level" value="<?php echo $user_input['username'] ?>" placeholder="Username">
+        <textarea name="bio" class="input-block-level" placeholder="Simple programming quote"><?php echo $user_input['bio'] ?></textarea>
         <input type="password" name="password" class="input-block-level" placeholder="Password">
         <input type="password" name="repassword" class="input-block-level" placeholder="Retype Password">
-        <button type="submit" id="btnlog" class="btn btn-primary" data-loading-text="Registering...">Register</button>
-        <a href="<?php echo site_url(); ?>" class="btn btn-primary">Cancel</a>
+        <button type="submit" id="btnlog" class="btn btn-info" data-loading-text="Registering...">Register</button>
+        <a href="<?php echo site_url(); ?>" class="btn btn-info">Cancel</a>
       </form>
     </div> <!-- /container -->
     <script type="text/javascript">

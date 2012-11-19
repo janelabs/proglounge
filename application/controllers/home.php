@@ -40,8 +40,7 @@ class Home extends CI_Controller {
              $data['user_follower_count']) = $this->user->getUserFollowers($id, $columns);
 
         //following
-        list($data['user_following'], $data['user_following_count']) = $this->user->getUserFollowing($id, $columns);
-        
+        list($data['user_following'], $data['user_following_count']) = $this->user->getUserFollowing(intval($id), $columns);
         //suggested user to follow.
         $suggested_ids = $this->follow->getSuggestedUserIds($id);
         list($data['suggested_users'], 

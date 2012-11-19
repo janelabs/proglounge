@@ -14,11 +14,14 @@
             <a href="<?php echo site_url(); ?>" class="brand">{ Programmers Lounge }</a>
             <?php if (isset($session['id']) && isset($session['username'])) { ?>
             <div class="btn-group pull-right">
+            <a href="<?php echo site_url() ?>" 
+               class="btn btn-info">Home
+            </a>
             <a href="<?php echo site_url($session['username']) ?>" 
-               class="btn btn-info"><?php echo $session['username'] ?>
+               class="btn btn-info"><i class="icon-user"></i>   Profile
             </a>
 			  <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-			    <span class="caret"></span>
+			    <i class="icon-chevron-down icon-white"></i>
 			  </button>
 			  <ul class="dropdown-menu">
 				  <li><a href="#">Account Settings</a></li>
@@ -30,8 +33,8 @@
             
             <?php if (!isset($session['id']) || !isset($session['username'])) { ?>
             <div class="pull-right">
-	            <a href="<?php echo site_url('register'); ?>" class="btn btn-inverse">Register</a>
-	            <a href="<?php echo site_url('login'); ?>" class="btn btn-primary">Log In</a>
+	            <a href="<?php echo site_url('register'); ?>" class="btn btn-primary">Register</a>
+	            <a href="<?php echo site_url('login'); ?>" class="btn btn-info">Log In</a>
             </div>
             <?php } ?>
         </div>

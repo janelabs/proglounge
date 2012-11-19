@@ -68,8 +68,8 @@
 	    <?php } ?>
         <input type="text" id="username" name="username" class="input-block-level" placeholder="Username">
         <input type="password" name="password" class="input-block-level" placeholder="Password">
-        <button type="submit" id="btnlog" class="btn btn-primary" data-loading-text="Logging in...">Log In</button>
-        <a href="<?php echo site_url(); ?>" class="btn btn-primary">Cancel</a>
+        <button type="submit" id="btnlog" class="btn btn-info" data-loading-text="Logging in...">Log In</button>
+        <a href="<?php echo site_url(); ?>" class="btn btn-info">Cancel</a>
       </form>
     </div> <!-- /container -->
     <script type="text/javascript">
