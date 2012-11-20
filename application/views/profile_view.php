@@ -1,16 +1,4 @@
 <?php echo $header; ?>
-<style>
-.profile-buttons {
-	height: 55px;
-}
-
-.profile-picture {
-	margin-top:20px;
-	margin-right:20px;
-	width:220px;
-	height:176px;
-}
-</style>
 <div class="container">
 	<div class="row">
 	    <div class="span12">
@@ -56,17 +44,41 @@
 				Blogs
 			</div>
 			
+			<!-- FOLLOWERS -->
 			<div id="followers-content" style="display: none;">
-				Follower
+				<div class="follower well">
+					<img src="http://placehold.it/100x100" height="100" width="100" 
+					     class="img-polaroid follower-img"/>
+					<div class="follower-username">
+						<a href="#" class="link">@ladymodesto</a>
+					</div>
+				</div>
+				<div class="follower well">
+					<img src="http://placehold.it/100x100" height="100" width="100" 
+					     class="img-polaroid follower-img"/>
+					<div class="follower-username">
+						<a href="#" class="link">@ladymodesto</a>
+					</div>
+				</div>
+				<div class="follower well">
+					<img src="http://placehold.it/100x100" height="100" width="100" 
+					     class="img-polaroid follower-img"/>
+					<div class="follower-username">
+						<a href="#" class="link">@ladymodesto</a>
+					</div>
+				</div>
 			</div>
+			<!-- END FOLLOWERS -->
 			
 			<div id="following-content" style="display: none;">
 				Following
 			</div>
 		</div>
+		
 		<div class="span4">
 			Suggested Users
 		</div>
+		
 	</div>
 	
 </div>

@@ -1,44 +1,42 @@
 <?php echo $header; ?>
-<style>
-.profile-buttons {
-	height: 55px;
-}
-
-.profile-picture {
-	margin-top:20px;
-	margin-right:20px;
-	width:220px;
-	height:176px;
-}
-</style>
 <div class="container">
 	<div class="row">
 	    <div class="span12">
 	    	<div class="thumbnail span3 pull-right profile-picture">
 			   	<img src="http://placehold.it/500x400">
 			</div>
-	    	<div class="hero-unit" style="margin-bottom:0px;">
-	    		<h1 style="margin-left:10px;"><?php echo $user_info['username']; ?></h1>
-	    		<p>" I am a Programmer, I have no life... "</p>
+	    	<div class="hero-unit" style="margin-bottom:0px; background-color:#fff;">
+	    		<h4>function </h4>
+	    		<h1 style="margin-left:10px;"><?php echo $user_info['username']; ?>() </h1>
+	    		<?php if ($user_info['bio'] != '') { ?>
+	    			<p>{ <?php echo $user_info['bio'] ?> }</p>
+	    		<?php } else { ?>
+	    			<p>{ " Don't mess with the programmers... " }</p>
+	    		<?php } ?>
 	    	</div>
 	    </div>
+	    <?php if (array_key_exists('is_new', $session) && $session['is_new'] && $is_your_profile) { ?>
+		<div class="span12">
+			<div class="alert alert-info">
+				<h2>Welcome <?php echo $user_info['username']; ?>!</h2>
+			</div>
+		</div>
+		<?php } ?>
 	</div>
 	
-	<div class="row">		
-		<div class="span12" style="margin-left:41px;">
-			<div class="btn-group">
-				<button id="blogs"  style="padding-left:0px;" class="btn btn-large btn-info span4 profile-buttons">
-					Blogs <span class="badge badge-info">8</span>
-				</button>
-		  		<button id="followers" class="btn btn-large btn-info span4 profile-buttons">
-		  			Followers <span class="badge badge-info"><?php echo $user_follower_count ?></span>
-		  		</button>
-		  		<button id="following" class="btn btn-large btn-info span4 profile-buttons">
-		  			Following <span class="badge badge-info"><?php echo $user_following_count ?></span>
-		  		</button>
-			</div>				
+	<!-- PROFILE NAV -->
+	<div class="row" style="margin-left:0px;">		
+		<div class="navbar">
+			<div class="navbar-inner">
+				<ul class="nav">
+		    		<li><a href="#" id="blogs">Blogs</a></li>
+		      		<li><a href="#" id="followers">Followers : <?php echo $user_follower_count ?></a></li>
+		      		<li><a href="#" id="following">Following : <?php echo $user_following_count ?></a></li>
+		    	</ul>
+		  	</div>
 		</div>
 	</div>
+	<!-- END PROFILE NAV -->
 	
 </div>
 <script>

@@ -61,6 +61,10 @@ Class Follow_model extends CI_Model
 		//users followed by the current user.
 		$user_following_ids = $this->_getUserFollowingIds($follower_id);
 		
+		if (count($user_following_ids) == 0) {
+			return array();
+		}
+		
 		foreach ($user_following_ids as $user_following_id) {
 			//users followed by the current user's following.
 			$following_ids = $this->_getUserFollowingIds($user_following_id['following_id']);

@@ -37,9 +37,9 @@ Class Users_model extends CI_Model
 	/*
 	 * List all users
 	 */
-	public function getUsersOrderBy($order = 'id asc', $limit = FALSE, $offset = FALSE)
+	public function getUsersOrderBy($order = 'id asc', $columns = FALSE, $limit = FALSE, $offset = FALSE)
 	{
-		$query = $this->common->retrieve(self::TABLE_NAME, FALSE, $order, $limit, $offset);
+		$query = $this->common->retrieve(self::TABLE_NAME, $columns, $order, $limit, $offset);
 		$count = $query->num_rows();
 		$result = $query->result_array();
 		
@@ -111,15 +111,23 @@ Class Users_model extends CI_Model
 	 * 
 	 * $ids : array of suggested user ids.
 	 */
-	public function getSuggestedUsersInfo($ids)
+	public function getSuggestedUsersInfo($ids, $user_id)
 	{
+		$columns = 'id, last_name, first_name, username';
+		$suggested_users = array();
+		
 		if (!is_array($ids)) {
 			throw new Exception('Param must be an array.');
 		}
 		
-		$suggested_users = array();
+		if (count($ids) == 0) {
+			list($users, $count) = $this->getUsersOrderBy('id asc', 'id', 5, 0);
+			foreach ($users as $user) {
+				$ids[] = $user['id'];
+			}
+		}
+
 		for($i = 0; $i < count($ids); $i++) {
-			$columns = 'id, last_name, first_name, username';
 			$suggested_users[] = $this->retrieveById($ids[$i], $columns);
 		}
 		
