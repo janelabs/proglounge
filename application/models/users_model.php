@@ -123,7 +123,9 @@ Class Users_model extends CI_Model
 		if (count($ids) == 0) {
 			list($users, $count) = $this->getUsersOrderBy('id asc', 'id', 5, 0);
 			foreach ($users as $user) {
-				$ids[] = $user['id'];
+				if ($user['id'] != $user_id) {
+					$ids[] = $user['id'];
+				}
 			}
 		}
 

@@ -66,7 +66,7 @@
 	      		<strong>Error: </strong><?php echo $register_error ?>
 	      	</div>
 	      	<?php } ?>
-        <input type="text" id="last_name" name="last_name" class="input-block-level" value="<?php echo $user_input['last_name'] ?>" placeholder="Lastname">
+        <input type="text" rel="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." id="last_name" name="last_name" class="input-block-level" value="<?php echo $user_input['last_name'] ?>" placeholder="Lastname">
         <input type="text" name="first_name" class="input-block-level" value="<?php echo $user_input['first_name'] ?>" placeholder="Firstname">
         <input type="text" name="middle_name" class="input-block-level" value="<?php echo $user_input['middle_name'] ?>" placeholder="Middlename">
         <input type="text" name="nickname" class="input-block-level" value="<?php echo $user_input['nickname'] ?>" placeholder="Nickname">
@@ -77,12 +77,24 @@
         <input type="password" name="repassword" class="input-block-level" placeholder="Retype Password">
         <button type="submit" id="btnlog" class="btn btn-info" data-loading-text="Registering...">Register</button>
         <a href="<?php echo site_url(); ?>" class="btn btn-info">Cancel</a>
+        
       </form>
     </div> <!-- /container -->
     <script type="text/javascript">
-    $('#btnlog').click(function(){
-    	$('#btnlog').button('loading');
-    });
+	    $('#btnlog').click(function(){
+	    	$('#btnlog').button('loading');
+	    });
+
+	    $('.input-block-level').click(function() {
+	    	var id = $(this).attr('id');
+	    	$('#'+id).focus(function(){
+		    	$('#last_name').popover();
+			});
+		
+			$('#'+id).blur(function(){
+		    	$('#last_name').popover('hide');
+			});
+	    });
     </script>
   </body>
 </html>

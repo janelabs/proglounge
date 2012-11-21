@@ -44,7 +44,7 @@ class Home extends CI_Controller {
         //suggested user to follow.
         $suggested_ids = $this->follow->getSuggestedUserIds($id);
         list($data['suggested_users'], 
-             $data['suggested_users_count']) = $this->user->getSuggestedUsersInfo($suggested_ids);
+             $data['suggested_users_count']) = $this->user->getSuggestedUsersInfo($suggested_ids, $id);
         
         $data['user_id'] = $id;
         $data['session'] = $this->user_session;

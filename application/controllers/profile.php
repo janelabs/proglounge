@@ -55,10 +55,13 @@ class Profile extends CI_Controller {
     	list($data['user_following'], 
              $data['user_following_count']) = $this->user->getUserFollowing($id, $columns);
     	
-    	//suggested user to follow.
-    	$suggested_ids = $this->follow->getSuggestedUserIds($id);
-    	list($data['suggested_users'], 
-             $data['suggested_users_count']) = $this->user->getSuggestedUsersInfo($suggested_ids, $id);
+  		if (!$this->is_guest) {
+	    	//suggested user to follow.
+	    	$suggested_ids = $this->follow->getSuggestedUserIds($id);
+	    	list($data['suggested_users'], 
+	             $data['suggested_users_count']) = 
+	    	     $this->user->getSuggestedUsersInfo($suggested_ids, $this->user_session['id']);
+  		}
     	
     	$data['user_id'] = $id;
     	$data['session'] = $this->user_session;

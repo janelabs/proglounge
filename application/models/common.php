@@ -51,7 +51,7 @@ Class Common extends CI_Model
 		if ($limit && $offset) {
 			$this->db->limit($limit, $offset);
 		}
-		
+
 		return $this->db->get($table);
 	}
 	
@@ -75,7 +75,7 @@ Class Common extends CI_Model
 		if ($limit && $offset) {
 			$this->db->limit($limit, $offset);
 		}
-				
+
 		return $this->db->get($table);
 	}
 	
@@ -109,7 +109,7 @@ Class Common extends CI_Model
 		if ($limit && $offset) {
 			$this->db->limit($limit, $offset);
 		}
-		
+
 		return $this->db->get();
 	}
 	
@@ -118,7 +118,7 @@ Class Common extends CI_Model
 		if (!is_array($where)) {
 			throw new Exception('Second param must be an array.');
 		}
-		
+
 		$this->db->where($where);
 		$this->db->delete($table);
 	}
