@@ -44,6 +44,26 @@
     </style>
 	<script type="text/javascript" src="<?php echo base_url('public/js/jquery.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo base_url('public/js/bootstrap.min.js'); ?>"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+	    $('#btnlog').click(function(){
+	    	$('#btnlog').button('loading');
+	    });
+	
+	    $('#btnlog').click(function(){
+	    	$('#btnlog').button('loading');
+	    });
+	    $('#username').focus();
+	    $('#username').tooltip('show');
+	    $('.input-block-level').focus(function(){
+	    	$(this).tooltip('show');
+	    });
+
+	    $('.input-block-level').blur(function(){
+	    	$(this).tooltip('hide');
+	    });
+    });
+    </script>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -57,7 +77,7 @@
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
   </head>
 
-  <body onload="document.getElementById('username').focus();">
+  <body>
     <div class="container">
       <form class="form-signin" method="post" action="<?php echo site_url('validate') ?>">
         <h2 class="form-signin-heading">Log in</h2>
@@ -66,16 +86,13 @@
 	    	<strong>Error: </strong><?php echo $login_error ?>
 	    </div>
 	    <?php } ?>
-        <input type="text" id="username" name="username" class="input-block-level" placeholder="Username">
-        <input type="password" name="password" class="input-block-level" placeholder="Password">
+        <input type="text" id="username" name="username" class="input-block-level" placeholder="Username"
+        rel="tooltip" data-placement="right" data-original-title="Username">
+        <input type="password" id="password" name="password" class="input-block-level" placeholder="Password"
+        rel="tooltip" data-placement="right" data-original-title="Password">
         <button type="submit" id="btnlog" class="btn btn-info" data-loading-text="Logging in...">Log In</button>
         <a href="<?php echo site_url(); ?>" class="btn btn-info">Cancel</a>
       </form>
     </div> <!-- /container -->
-    <script type="text/javascript">
-    $('#btnlog').click(function(){
-    	$('#btnlog').button('loading');
-    });
-    </script>
   </body>
 </html>

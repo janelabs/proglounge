@@ -44,6 +44,20 @@
     </style>
 	<script type="text/javascript" src="<?php echo base_url('public/js/jquery.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo base_url('public/js/bootstrap.min.js'); ?>"></script>
+    <script>
+		$(document).ready(function(){
+			 $('#last_name').focus();
+			 $('#last_name').tooltip('show');
+
+			 $('.input-block-level').focus(function(){
+			 	$(this).tooltip('show');
+			 });
+
+			 $('.input-block-level').blur(function(){
+			   	$(this).tooltip('hide');
+			 });
+		});
+    </script>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -66,35 +80,28 @@
 	      		<strong>Error: </strong><?php echo $register_error ?>
 	      	</div>
 	      	<?php } ?>
-        <input type="text" rel="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." id="last_name" name="last_name" class="input-block-level" value="<?php echo $user_input['last_name'] ?>" placeholder="Lastname">
-        <input type="text" name="first_name" class="input-block-level" value="<?php echo $user_input['first_name'] ?>" placeholder="Firstname">
-        <input type="text" name="middle_name" class="input-block-level" value="<?php echo $user_input['middle_name'] ?>" placeholder="Middlename">
-        <input type="text" name="nickname" class="input-block-level" value="<?php echo $user_input['nickname'] ?>" placeholder="Nickname">
-        <input type="text" name="email_address" class="input-block-level" value="<?php echo $user_input['email_address'] ?>" placeholder="Email Address">
-        <input type="text" name="username" class="input-block-level" value="<?php echo $user_input['username'] ?>" placeholder="Username">
-        <textarea name="bio" class="input-block-level" placeholder="Simple programming quote"><?php echo $user_input['bio'] ?></textarea>
-        <input type="password" name="password" class="input-block-level" placeholder="Password">
-        <input type="password" name="repassword" class="input-block-level" placeholder="Retype Password">
+        <input type="text" id="last_name" name="last_name" class="input-block-level" value="<?php echo $user_input['last_name'] ?>" placeholder="Last Name"
+        rel="tooltip" data-placement="right" data-original-title="Last Name">
+        <input type="text" name="first_name" class="input-block-level" value="<?php echo $user_input['first_name'] ?>" placeholder="First Name"
+        rel="tooltip" data-placement="right" data-original-title="First Name">
+        <input type="text" name="middle_name" class="input-block-level" value="<?php echo $user_input['middle_name'] ?>" placeholder="Middle Name"
+        rel="tooltip" data-placement="right" data-original-title="Middle Name">
+        <input type="text" name="nickname" class="input-block-level" value="<?php echo $user_input['nickname'] ?>" placeholder="Nickname"
+        rel="tooltip" data-placement="right" data-original-title="Nickname">
+        <input type="text" name="email_address" class="input-block-level" value="<?php echo $user_input['email_address'] ?>" placeholder="Email Address"
+        rel="tooltip" data-placement="right" data-original-title="Email Address">
+        <input type="text" name="username" class="input-block-level" value="<?php echo $user_input['username'] ?>" placeholder="Username"
+        rel="tooltip" data-placement="right" data-original-title="Username">
+        <textarea name="bio" class="input-block-level" placeholder="Simple programming quote"
+      	rel="tooltip" data-placement="right" data-original-title="Simple programming quote"><?php echo $user_input['bio'] ?></textarea>
+        <input type="password" name="password" class="input-block-level" placeholder="Password"
+        rel="tooltip" data-placement="right" data-original-title="Password">
+        <input type="password" name="repassword" class="input-block-level" placeholder="Retype Password"
+        rel="tooltip" data-placement="right" data-original-title="Retype Password">
         <button type="submit" id="btnlog" class="btn btn-info" data-loading-text="Registering...">Register</button>
         <a href="<?php echo site_url(); ?>" class="btn btn-info">Cancel</a>
         
       </form>
     </div> <!-- /container -->
-    <script type="text/javascript">
-	    $('#btnlog').click(function(){
-	    	$('#btnlog').button('loading');
-	    });
-
-	    $('.input-block-level').click(function() {
-	    	var id = $(this).attr('id');
-	    	$('#'+id).focus(function(){
-		    	$('#last_name').popover();
-			});
-		
-			$('#'+id).blur(function(){
-		    	$('#last_name').popover('hide');
-			});
-	    });
-    </script>
   </body>
 </html>
