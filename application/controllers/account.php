@@ -118,6 +118,12 @@ Class Account extends CI_Controller
     	redirect();
     }
     
+    //this is a sample function
+    public function sample_lang()
+    {
+        echo "sample.";
+    }
+    
 } // class Account
 
 /* EOF account.php */
