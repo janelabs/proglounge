@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>PL - Log in</title>
+    <title>PL - Registration</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -46,16 +46,20 @@
     <script type="text/javascript" src="<?php echo base_url('public/js/bootstrap.min.js'); ?>"></script>
     <script>
 		$(document).ready(function(){
-			 $('#last_name').focus();
-			 $('#last_name').tooltip('show');
+			$('#last_name').focus();
+			$('#last_name').tooltip('show');
 
-			 $('.input-block-level').focus(function(){
+			$('.input-block-level').hover(function(){
 			 	$(this).tooltip('show');
 			 });
 
-			 $('.input-block-level').blur(function(){
-			   	$(this).tooltip('hide');
-			 });
+			$('.input-block-level').focus(function(){
+				$(this).tooltip('show');
+			});
+
+			$('.input-block-level').blur(function(){
+			  	$(this).tooltip('hide');
+			});
 		});
     </script>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -94,6 +98,8 @@
         rel="tooltip" data-placement="right" data-original-title="Username">
         <textarea name="bio" class="input-block-level" placeholder="Simple programming quote"
       	rel="tooltip" data-placement="right" data-original-title="Simple programming quote"><?php echo $user_input['bio'] ?></textarea>
+      	<textarea name="about_me" class="input-block-level" placeholder="Tell something about yourself..."
+      	rel="tooltip" data-placement="right" data-original-title="Tell something about yourself..."><?php echo $user_input['about_me'] ?></textarea>
         <input type="password" name="password" class="input-block-level" placeholder="Password"
         rel="tooltip" data-placement="right" data-original-title="Password">
         <input type="password" name="repassword" class="input-block-level" placeholder="Retype Password"

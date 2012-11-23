@@ -7,15 +7,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('public/css/style.css'); ?>">
     <script type="text/javascript" src="<?php echo base_url('public/js/jquery.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo base_url('public/js/bootstrap.min.js'); ?>"></script>
-    <script>
-    	//back to top
-    	$(document).ready(function() {        
-	    	$('#top').click(function(){  
-	    	$('html, body').animate({scrollTop:0}, 'fast');  
-	    	return false;  
-	    	});  
-    	});
-    </script>
+    <script type="text/javascript" src="<?php echo base_url('public/js/proglounge.js'); ?>"></script>
 </head>
 <body>
 <div class="navbar navbar-static-top">

@@ -6,21 +6,20 @@ class Follow extends CI_Controller {
     {
         parent::__construct();
         
-        $user_session = $this->session->all_userdata();
+        $this->user_session = $this->session->all_userdata();
         $this->load->model('Users_model', 'user');
         $this->load->model('Follow_model', 'follow');
     }
 
-    public function followUser($follower_id, $following_id)
+    public function followUser()
     {
-        $this->follow->followUser($follower_id, $following_id);
-        redirect();
+    	$following_id = $this->input->post('id', TRUE);
+        $this->follow->followUser($this->user_session['id'], $following_id);
     }
 
-    public function unfollowUser($follower_id, $following_id)
+    public function unfollowUser($following_id)
     {
-        $this->follow->unfollowUser($follower_id, $following_id);
-        redirect();
+        $this->follow->unfollowUser($this->user_session['id'], $following_id);
     }
 
 }

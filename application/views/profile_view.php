@@ -17,9 +17,11 @@
 				   	<img src="http://placehold.it/500x400">
 				   	<div class="caption">
 				   		<h3>About Me</h3>
-	      				<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. 
-	      				   Donec id elit non mi porta gravida at eget metus. 
-	      				   Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+				   		<?php if ($user_info['about_me'] != '') { ?>
+	      					<p><?php echo $user_info['about_me'] ?></p>
+	      				<?php } else {?>
+	      					<p>I will say something about me later..</p>
+	      				<?php } ?>
 				   	</div>
 				</div>
 				<!-- END ABOUT ME AND DP SECTION -->
@@ -38,7 +40,7 @@
 								   class="link" style="margin-top:10px; float:left;">
 								   @<?php echo $suggested_user['username'] ?>
 								</a>
-								<button class="btn btn-info" style="margin-top:7px;">
+								<button user-id="<?php echo $suggested_user['id'] ?>" class="followbtn btn btn-info" style="margin-top:7px;">
 									<i class="icon-star icon-white"></i> Follow
 								</button>
 								</div>

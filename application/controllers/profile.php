@@ -14,6 +14,8 @@ class Profile extends CI_Controller {
         
         $this->load->model('Users_model', 'user');
         $this->load->model('Follow_model', 'follow');
+        
+        $this->output->enable_profiler(TRUE);
     }
     
     public function _remap($username, $method)
@@ -45,7 +47,7 @@ class Profile extends CI_Controller {
     	follow.following_id, follow.follower_id';
     	 
     	//user info
-    	$data['user_info'] = $this->user->retrieveById($id, 'first_name, last_name, username, bio');
+    	$data['user_info'] = $this->user->retrieveById($id, 'first_name, last_name, username, bio, about_me');
     	 
     	//followers
     	list($data['user_follower'], 
