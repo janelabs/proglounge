@@ -46,12 +46,16 @@
     <script type="text/javascript" src="<?php echo base_url('public/js/bootstrap.min.js'); ?>"></script>
     <script>
 		$(document).ready(function(){
+			$('#btnlog').click(function(){
+	    		$('#btnlog').button('loading');
+	    	});
+			
 			$('#last_name').focus();
 			$('#last_name').tooltip('show');
 
 			$('.input-block-level').hover(function(){
 			 	$(this).tooltip('show');
-			 });
+			});
 
 			$('.input-block-level').focus(function(){
 				$(this).tooltip('show');
@@ -88,18 +92,16 @@
         rel="tooltip" data-placement="right" data-original-title="Last Name">
         <input type="text" name="first_name" class="input-block-level" value="<?php echo $user_input['first_name'] ?>" placeholder="First Name"
         rel="tooltip" data-placement="right" data-original-title="First Name">
-        <input type="text" name="middle_name" class="input-block-level" value="<?php echo $user_input['middle_name'] ?>" placeholder="Middle Name"
-        rel="tooltip" data-placement="right" data-original-title="Middle Name">
         <input type="text" name="nickname" class="input-block-level" value="<?php echo $user_input['nickname'] ?>" placeholder="Nickname"
         rel="tooltip" data-placement="right" data-original-title="Nickname">
         <input type="text" name="email_address" class="input-block-level" value="<?php echo $user_input['email_address'] ?>" placeholder="Email Address"
         rel="tooltip" data-placement="right" data-original-title="Email Address">
-        <input type="text" name="username" class="input-block-level" value="<?php echo $user_input['username'] ?>" placeholder="Username"
-        rel="tooltip" data-placement="right" data-original-title="Username">
-        <textarea name="bio" class="input-block-level" placeholder="Simple programming quote"
+        <textarea name="quote" class="input-block-level" placeholder="Simple programming quote"
       	rel="tooltip" data-placement="right" data-original-title="Simple programming quote"><?php echo $user_input['bio'] ?></textarea>
       	<textarea name="about_me" class="input-block-level" placeholder="Tell something about yourself..."
       	rel="tooltip" data-placement="right" data-original-title="Tell something about yourself..."><?php echo $user_input['about_me'] ?></textarea>
+        <input type="text" name="username" class="input-block-level" value="<?php echo $user_input['username'] ?>" placeholder="Username"
+        rel="tooltip" data-placement="right" data-original-title="Username">
         <input type="password" name="password" class="input-block-level" placeholder="Password"
         rel="tooltip" data-placement="right" data-original-title="Password">
         <input type="password" name="repassword" class="input-block-level" placeholder="Retype Password"

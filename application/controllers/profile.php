@@ -47,7 +47,7 @@ class Profile extends CI_Controller {
     	follow.following_id, follow.follower_id';
     	 
     	//user info
-    	$data['user_info'] = $this->user->retrieveById($id, 'first_name, last_name, username, bio, about_me');
+    	$data['user_info'] = $this->user->retrieveById($id, 'first_name, last_name, username, quote, about_me');
     	 
     	//followers
     	list($data['user_follower'], 
