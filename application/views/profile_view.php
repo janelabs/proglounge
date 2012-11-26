@@ -40,7 +40,10 @@
 								   class="link" style="margin-top:10px; float:left;">
 								   @<?php echo $suggested_user['username'] ?>
 								</a>
-								<button user-id="<?php echo $suggested_user['id'] ?>" class="followbtn btn btn-info" style="margin-top:7px;">
+								</div>
+								<div class="span2">
+								<button user-id="<?php echo $suggested_user['id'] ?>" class="followbtn btn btn-info" 
+								        style="margin-top:7px;" data-loading-text="Loading...">
 									<i class="icon-star icon-white"></i> Follow
 								</button>
 								</div>

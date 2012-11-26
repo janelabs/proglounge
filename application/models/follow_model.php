@@ -61,10 +61,6 @@ Class Follow_model extends CI_Model
 		//users followed by the current user.
 		$user_following_ids = $this->_getUserFollowingIds($follower_id);
 		
-		if (count($user_following_ids) == 0) {
-			return array();
-		}
-		
 		foreach ($user_following_ids as $user_following_id) {
 			//users followed by the current user's following.
 			$following_ids = $this->_getUserFollowingIds($user_following_id['following_id']);
@@ -96,7 +92,14 @@ Class Follow_model extends CI_Model
 			}
 		}
 		
-		return array_merge($tmp_suggested_ids1 += $tmp_suggested_ids2);
+		$ids = array_merge($tmp_suggested_ids1 += $tmp_suggested_ids2);
+		if (count($ids) == 0) {
+			$ids = $this->_getRandomSuggestedIds($follower_id);
+		}
+		
+		return $ids;
+		
+	
 		
 	}
 	
@@ -118,6 +121,35 @@ Class Follow_model extends CI_Model
 		$query = $this->common->selectWhere(self::TABLE_NAME, $where, $columns);
 	
 		return $query->result_array();
+	}
+	
+	private function _getRandomSuggestedIds($follower_id)
+	{
+		$where = array('id <>' => $follower_id);
+		$columns = 'id';
+		$rand_ids = array();
+		
+		//get users
+		$query = $this->common->selectWhere(self::USERS_TABLE, $where, $columns);
+		$tmp_random_ids = $query->result_array();
+		
+		//get following
+		$tmp_following_ids = $this->_getUserFollowingIds($follower_id);
+		$following_ids = array();
+		foreach ($tmp_following_ids as $tmp_following_id) {
+			$following_ids[] = $tmp_following_id['following_id'];
+		}
+		
+		
+		//remove followed users
+		foreach ($tmp_random_ids as $tmp_random_id) {
+			if (!in_array($tmp_random_id['id'], $following_ids)) {
+				$rand_ids[] = $tmp_random_id['id'];
+			}
+		}
+		
+		return $rand_ids;
+		
 	}
 	
 	private function _isFollowed($follower_id, $following_id)

@@ -119,15 +119,6 @@ Class Users_model extends CI_Model
 		if (!is_array($ids)) {
 			throw new Exception('Param must be an array.');
 		}
-		
-		if (count($ids) == 0) {
-			list($users, $count) = $this->getUsersOrderBy('id asc', 'id', 5, 0);
-			foreach ($users as $user) {
-				if ($user['id'] != $user_id) {
-					$ids[] = $user['id'];
-				}
-			}
-		}
 
 		for($i = 0; $i < count($ids); $i++) {
 			$suggested_users[] = $this->retrieveById($ids[$i], $columns);
