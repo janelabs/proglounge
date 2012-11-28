@@ -40,10 +40,7 @@ Class Users_model extends CI_Model
 	public function getUsersOrderBy($order = 'id asc', $columns = FALSE, $limit = FALSE, $offset = FALSE)
 	{
 		$query = $this->common->retrieve(self::TABLE_NAME, $columns, $order, $limit, $offset);
-		$count = $query->num_rows();
-		$result = $query->result_array();
-		
-		return array($result, $count);
+		return $query;
 	}
 	
 	public function retrieveByUsername($username, $columns)
@@ -78,12 +75,9 @@ Class Users_model extends CI_Model
 		$on = self::FOLLOW_TABLE . '.follower_id = users.id'; 
 		
 		$query = $this->common->selectJoin(self::TABLE_NAME, self::FOLLOW_TABLE, $on, $join_type = 'join', 
-                                           $columns, $where, $order, $limit, $offset);
+                                           $columns, $where, $order, $limit, $offset);	
 		
-		$count = $query->num_rows();
-		$result = $query->result_array();
-		
-		return array($result, $count);
+		return $query;
 	}
 	
 	/*
@@ -101,9 +95,7 @@ Class Users_model extends CI_Model
 		$query = $this->common->selectJoin(self::TABLE_NAME, self::FOLLOW_TABLE, $on, $join_type = 'join',
 				                           $columns, $where, $order, $limit, $offset);
 		
-		$count = $query->num_rows();
-		$result = $query->result_array();
-		return array($result, $count);
+		return $query;
 	}
 	
 	/*

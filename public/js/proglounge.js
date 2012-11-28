@@ -22,4 +22,8 @@ $(document).ready(function() {
 		$(this).html('<i class="icon-star icon-white"></i> Follow');
 	});
 	
+	//set active nav in profile navigation
+	var active_menu = $('.nav').find($('a[href="'+window.location.href+'"]'));
+	$(active_menu).parent('li').addClass('active');
+	
 });

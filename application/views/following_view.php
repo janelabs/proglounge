@@ -26,8 +26,8 @@
 				</div>
 				<!-- END ABOUT ME AND DP SECTION -->
 				
-				<!-- SUGGESTED USERS -->
 				<?php if (!$is_guest && $is_your_profile) { ?>
+				<!-- SUGGESTED USERS -->
 				<div class="span3" style="margin-top:10px;">
 					<i class="icon-user"></i> Suggested Users<br><br>
 					<?php foreach ($suggested_users as $suggested_user) : ?>

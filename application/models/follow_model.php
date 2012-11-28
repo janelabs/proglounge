@@ -25,7 +25,7 @@ Class Follow_model extends CI_Model
 			throw new Exception('empty parameter');
 		}
 		
-		if ($this->_isFollowed($follower_id, $following_id)) {
+		if ($this->isFollowed($follower_id, $following_id)) {
 			throw new Exception('Already followed the user');
 		}
 		
@@ -66,7 +66,7 @@ Class Follow_model extends CI_Model
 			$following_ids = $this->_getUserFollowingIds($user_following_id['following_id']);
 			foreach ($following_ids as $following_id) {
 				$is_you = ($following_id['following_id'] == $follower_id);
-				$is_followed = $this->_isFollowed($follower_id, $following_id['following_id']);
+				$is_followed = $this->isFollowed($follower_id, $following_id['following_id']);
 				$in_array = (in_array($following_id['following_id'], $tmp_suggested_ids2));
 				
 				if (!$is_you && !$is_followed && !$in_array) {
@@ -83,7 +83,7 @@ Class Follow_model extends CI_Model
 			$follower_following_ids = $this->_getUserFollowingIds($user_follower_id['follower_id']);
 			foreach ($follower_following_ids as $follower_following_id) {
 				$is_you = ($follower_following_id['following_id'] == $follower_id);
-				$is_followed = $this->_isFollowed($follower_id, $follower_following_id['following_id']);
+				$is_followed = $this->isFollowed($follower_id, $follower_following_id['following_id']);
 				$in_array = (in_array($follower_following_id['following_id'], $tmp_suggested_ids2));
 				
 				if (!$is_you && !$in_array && !$is_followed) {
@@ -152,7 +152,7 @@ Class Follow_model extends CI_Model
 		
 	}
 	
-	private function _isFollowed($follower_id, $following_id)
+	public function isFollowed($follower_id, $following_id)
 	{
 		$where = array('follower_id' => $follower_id,
                        'following_id' => $following_id);

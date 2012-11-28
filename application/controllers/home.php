@@ -29,18 +29,20 @@ class Home extends CI_Controller {
     	$id = $this->user_session['id'];
     	
         //list all users
-        list($data['users'], 
-             $data['user_count']) = $this->user->getUsersOrderBy();
+        $data['users'] = $this->user->getUsersOrderBy();
+        $data['user_count'] = $data['users']->num_rows();
         
         $columns = 'users.id, users.username, users.first_name, users.last_name,
                     follow.following_id, follow.follower_id';
 
         //followers
-        list($data['user_follower'], 
-             $data['user_follower_count']) = $this->user->getUserFollowers($id, $columns);
+        $data['user_follower'] = $this->user->getUserFollowers($id, $columns);
+        $data['user_follower_count'] = $data['user_follower']->num_rows();
 
         //following
-        list($data['user_following'], $data['user_following_count']) = $this->user->getUserFollowing(intval($id), $columns);
+        $data['user_following'] = $this->user->getUserFollowing(intval($id), $columns);
+        $data['user_following_count'] = $data['user_following']->num_rows(); 
+        
         //suggested user to follow.
         $suggested_ids = $this->follow->getSuggestedUserIds($id);
         list($data['suggested_users'], 

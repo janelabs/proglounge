@@ -52,6 +52,7 @@ $route['account'] = 'error/pageMissing';
 $route['account/(:any)'] = 'error/pageMissing';
 $route['profile'] = 'error/pageMissing';
 $route['profile/(:any)'] = 'error/pageMissing';
+$route['(:any)/followers'] = 'profile/$1/followers';
 $route['(:any)'] = 'profile/$1';
 
 
