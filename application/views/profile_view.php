@@ -77,7 +77,7 @@
 		    	<?php if ($is_your_profile) { ?>
     		    	<div class="post-div well">
     					<textarea rows="3" class="input-block-level" id="post"></textarea>
-    					<div class="progress progress-stripped active" style="height:20px; display:none;">
+    					<div class="progress progress-striped active" style="height:10px; display:none;">
       						<div class="bar" style="width:100%"></div>
     					</div>
     					<button class="btn btn-large btn-info btn-block" id="share">

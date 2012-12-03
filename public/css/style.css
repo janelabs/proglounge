@@ -76,6 +76,7 @@ textarea {
 .post-message {
     float:left;
     width:100%;
+    white-space: pre;
 }
 
 .post-message label {

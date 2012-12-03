@@ -24,12 +24,15 @@ class Posts extends CI_Controller {
         $params = array();
         $params['is_error'] = TRUE;
         
+        $post['content'] = str_replace("\n", '</br>', $post['content']);
+        $post['content'] = str_replace("[code]</br>", '[code]', $post['content']);
+        $post['content'] = str_replace("[code]", '<pre class="prettyprint linenums" style="width:10  0%;"><code>', $post['content']);
+        $post['content'] = str_replace("[/code]", '</code></pre>', $post['content']);
+        
         if (!$this->posts->savePost($post)) {
             echo json_encode($params);
             return;
         }
-        
-        $post['content'] = str_replace("\n", '</br>', $post['content']);
         
         $params['is_error'] = FALSE;
         $params['content'] = $post['content'];
