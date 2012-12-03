@@ -41,8 +41,11 @@
 $route['default_controller'] = "home";
 $route['404_override'] = 'error/pageMissing';
 
+//follow
 $route['follow'] = 'follow/followUser';
 $route['unfollow'] = 'follow/unfollowUser';
+
+//account
 $route['login'] = 'account/login';
 $route['validate'] = 'account/checkLogin';
 $route['save_user'] = 'account/saveUser';
@@ -50,6 +53,11 @@ $route['logout'] = 'account/logout';
 $route['register'] = 'account/register';
 $route['account'] = 'error/pageMissing';
 $route['account/(:any)'] = 'error/pageMissing';
+
+//posts
+$route['new_post'] = 'posts/newPost';
+
+//profile
 $route['profile'] = 'error/pageMissing';
 $route['profile/(:any)'] = 'error/pageMissing';
 $route['(:any)/followers'] = 'profile/$1/followers';

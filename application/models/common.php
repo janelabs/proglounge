@@ -18,8 +18,7 @@ Class Common extends CI_Model
 	public function insertData($table, $data)
 	{
 		if (is_array($data)) {
-			$this->db->insert($table, $data);
-			return TRUE;
+			return $this->db->insert($table, $data);
 		} else {
 			throw new Exception('Second param must be an array');
 		}
@@ -84,7 +83,7 @@ Class Common extends CI_Model
 	 */
 	public function selectJoin($table1, $table2, $on, $join_type = 'join', 
                                $columns = FALSE, $where = FALSE, $order = FALSE,
-                               $limit = FALSE, $offset = FALSE)
+                               $limit = FALSE, $offset = 0)
 	{
 		if (!$columns) {
 			$this->db->select('*');
@@ -106,7 +105,7 @@ Class Common extends CI_Model
 		}
 		
 		// add limit in query
-		if ($limit && $offset) {
+		if ($limit) {
 			$this->db->limit($limit, $offset);
 		}
 
@@ -120,7 +119,7 @@ Class Common extends CI_Model
 		}
 
 		$this->db->where($where);
-		$this->db->delete($table);
+		return $this->db->delete($table);
 	}
 		
 } // Class Common

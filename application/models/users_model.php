@@ -15,7 +15,7 @@ Class Users_model extends CI_Model
 	
 	public function saveUser($user)
 	{
-		$this->common->insertData(self::TABLE_NAME, $user);
+		return $this->common->insertData(self::TABLE_NAME, $user);
 	}
 	
 	/*
@@ -25,7 +25,7 @@ Class Users_model extends CI_Model
 	{
 		$where = array('username' => $username,
                        'password' => $password);
-		$columns = 'id, username';
+		$columns = 'id, username, image';
 		
 		$query = $this->common->selectWhere(self::TABLE_NAME, $where, $columns);
 		$is_user = ($query->num_rows() > 0);
@@ -72,7 +72,7 @@ Class Users_model extends CI_Model
 			                         $limit = FALSE, $offset = FALSE)
 	{
 		$where = array(self::FOLLOW_TABLE . '.following_id' => $id);
-		$on = self::FOLLOW_TABLE . '.follower_id = users.id'; 
+		$on = self::FOLLOW_TABLE . '.follower_id = '.self::TABLE_NAME.'.id';
 		
 		$query = $this->common->selectJoin(self::TABLE_NAME, self::FOLLOW_TABLE, $on, $join_type = 'join', 
                                            $columns, $where, $order, $limit, $offset);	
@@ -90,7 +90,7 @@ Class Users_model extends CI_Model
                                      $limit = FALSE, $offset = FALSE)
 	{
 		$where = array(self::FOLLOW_TABLE . '.follower_id' => $id);
-		$on = self::FOLLOW_TABLE . '.following_id = users.id';
+		$on = self::FOLLOW_TABLE . '.following_id = '.self::TABLE_NAME.'.id';
 		
 		$query = $this->common->selectJoin(self::TABLE_NAME, self::FOLLOW_TABLE, $on, $join_type = 'join',
 				                           $columns, $where, $order, $limit, $offset);

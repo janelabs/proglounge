@@ -12,7 +12,7 @@
 		
 		<div class="row">
 		    <div class="span4" style="margin-right:0px;">
-		    	<!-- ABOUT ME AND DP SECTION -->
+		    	<!-- about me and DP section -->
 		    	<div class="thumbnail span3 pull-left profile-picture">
 				   	<img src="http://placehold.it/500x400">
 				   	<div class="caption">
@@ -24,37 +24,7 @@
 	      				<?php } ?>
 				   	</div>
 				</div>
-				<!-- END ABOUT ME AND DP SECTION -->
-				
-				<?php if (!$is_guest && $is_your_profile) { ?>
-				<!-- SUGGESTED USERS -->
-				<div class="span3" style="margin-top:10px;">
-					<i class="icon-user"></i> Suggested Users<br><br>
-					<?php foreach ($suggested_users as $suggested_user) : ?>
-						<div class="suggested-content">
-							<div class="row">
-								<div class="span1">
-								<img src="http://placehold.it/60x60" class="thumbnail" height="60" width="60">
-								</div>
-								<div class="span2">
-								<a href="<?php echo site_url($suggested_user['username']) ?>"
-								   class="link" style="margin-top:10px; float:left;">
-								   @<?php echo $suggested_user['username'] ?>
-								</a>
-								</div>
-								<div class="span2">
-								<button user-id="<?php echo $suggested_user['id'] ?>" class="followbtn btn btn-info" 
-								        style="margin-top:7px;">
-									<i class="icon-star icon-white"></i> Follow
-								</button>
-								</div>
-							</div>
-						</div>
-						<hr style="margin-top: 7px; margin-bottom: 7px;">
-					<?php endforeach; ?>
-				</div>
-				<?php } ?>
-				<!-- END SUGGESTED USERS -->
+				<!-- end about me and DP section -->
 			</div>
 			
 			<div class="span8" style="margin-left:0px;">
@@ -73,9 +43,37 @@
 		    	<!-- PROFILE NAV -->
 		    	<?php echo $profile_nav ?>
 		    	<!-- END PROFILE NAV -->
+		    	
+		    	<!-- FOLLOWING USERS -->
+		    	<div class="span8" style="margin-left:0px;">
+		    		<div class="row" style="margin-bottom:5px;">
+		    			<ul class="thumbnails" style="margin-left:0px;">
+		    			<?php foreach ($user_following->result_array() as $user_follow): ?>
+							<li class="span2">
+								<div class="thumbnail">
+									<img src="http://placehold.it/170x170" alt="">
+									<p></p>
+									<p class="pagination-centered">
+										<a href="<?php echo site_url($user_follow['username']) ?>" 
+										class="link">@<?php echo $user_follow['username'] ?></a>
+									</p>
+									<?php if ($is_your_profile || !$is_guest) { ?>
+    									<p class="pagination-centered">
+    										<button user-id="<?php echo $user_follow['id'] ?>" 
+    										class="unfollowbtn btn btn-danger">
+    											<i class="icon-off icon-white"></i> Unfollow
+    										</button>
+    									</p>
+									<?php } ?>
+								</div>
+							</li>	
+						<?php endforeach; ?>
+						</ul>
+					</div>
+		    	</div>
+		    	<!-- END FOLLOWING USERS -->
 		    </div>
 	    </div><!-- row -->
 	</div><!-- row -->
 </div><!-- container -->
-
 <?php echo $footer; ?>

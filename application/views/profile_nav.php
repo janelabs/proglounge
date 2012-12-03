@@ -1,11 +1,15 @@
-
+<?php $uname = $user_info['username']; ?>
 <div class="navbar" style="margin-left:0px;">
 	<div class="navbar-inner">
 		<div class="profile_nav">
 	   		<ul class="nav">
-				<li><a href="<?php echo site_url($user_info['username']) ?>">Blogs</a></li>
-			    <li><a href="<?php echo site_url($user_info['username'].'/followers'); ?>">Followers</a></li>
-			    <li><a href="<?php echo site_url($user_info['username'].'/following'); ?>">Following</a></li>
+				<li><a href="<?php echo site_url($uname) ?>">Posts</a></li>
+			    <li><a href="<?php echo site_url($uname.'/followers'); ?>">Followers
+			         <span class="badge badge-info"><?php echo $follower_count ?></span>
+			        </a></li>
+			    <li><a href="<?php echo site_url($uname.'/following'); ?>">Following
+			         <span class="badge badge-info"><?php echo $following_count ?></span>
+			        </a></li>
 			</ul>
 			<?php if (!$is_your_profile && !$is_guest) { ?>
 				<?php if (!$is_followed) { ?>

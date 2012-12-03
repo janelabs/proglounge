@@ -73,6 +73,33 @@
 		    	<!-- PROFILE NAV -->
 		    	<?php echo $profile_nav ?>
 		    	<!-- END PROFILE NAV -->
+		    	
+		    	<?php if ($is_your_profile) { ?>
+    		    	<div class="post-div well">
+    					<textarea rows="3" class="input-block-level" id="post"></textarea>
+    					<div class="progress progress-stripped active" style="height:20px; display:none;">
+      						<div class="bar" style="width:100%"></div>
+    					</div>
+    					<button class="btn btn-large btn-info btn-block" id="share">
+    						<i class="icon-share icon-white"></i> Share your idea
+    					</button>
+    				</div>
+				<?php } ?>
+				
+				<div class="post-container">
+				    <?php foreach ($user_posts->result_array() as $post) { ?>
+				        <div class="post-contents">
+				            <div class="img-username">
+    				            <img src="http://placehold.it/35x35"/>
+                                <a href="#" class="link"><?php echo $post['username'] ?></a><br>
+                                <label><?php echo date("M d, Y g:h A", strtotime($post['date_created'])) ?></label>
+                            </div>
+                            <div class="post-message">
+                                <label><?php echo $post['content'] ?></label>
+                            </div>
+				        </div>
+				    <?php } ?>
+				</div>
 		    </div>
 	    </div><!-- row -->
 	</div><!-- row -->

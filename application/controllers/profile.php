@@ -14,6 +14,7 @@ class Profile extends CI_Controller {
         
         $this->load->model('Users_model', 'user');
         $this->load->model('Follow_model', 'follow');
+        $this->load->model('Post_model', 'post');
         
 		//for benchmarking
         $this->output->enable_profiler(TRUE);
@@ -50,6 +51,16 @@ class Profile extends CI_Controller {
     		     $this->data['suggested_users_count']) =
     		     $this->user->getSuggestedUsersInfo($suggested_ids, $this->user_session['id']);
     	}
+        
+        $follow_columns = 'users.id, users.username, users.first_name, users.last_name,
+        follow.following_id, follow.follower_id';
+        //followers
+        $user_follower = $this->user->getUserFollowers($user['id'], $follow_columns);
+        $this->data['follower_count'] = $user_follower->num_rows();
+        
+        //following
+        $following_users = $this->user->getUserFollowing($user['id'], $follow_columns);
+        $this->data['following_count'] = $following_users->num_rows();
     	 
     	$this->data['user_id'] = $user['id'];
     	$this->data['session'] = $this->user_session;
@@ -73,16 +84,9 @@ class Profile extends CI_Controller {
     	//user info
     	$user_info_columns = 'first_name, last_name, username, quote, about_me';
     	$data['user_info'] = $this->user->retrieveById($id, $user_info_columns);
-
-    	$follow_columns = 'users.id, users.username, users.first_name, users.last_name,
-    	follow.following_id, follow.follower_id';
-    	//followers
-    	$data['user_follower'] = $this->user->getUserFollowers($id, $follow_columns);
-        $data['user_follower_count'] = $data['user_follower']->num_rows();
-    	
-    	//following
-    	$following_users = $this->user->getUserFollowing($id, $follow_columns);
-        $data['user_following_count'] = $following_users->num_rows();
+        
+        //user posts
+        $data['user_posts'] = $this->post->getUserPosts($id, 10, 0);
     	
   		$data = array_merge($data, $this->data);
         
@@ -106,7 +110,6 @@ class Profile extends CI_Controller {
     	
     	//followers
     	$data['user_follower'] = $this->user->getUserFollowers($id, $follow_columns);
-    	$data['user_follower_count'] = $data['user_follower']->num_rows();
     	
     	//merge to common data
     	$data = array_merge($data, $this->data);
@@ -130,8 +133,7 @@ class Profile extends CI_Controller {
     	$data['user_info'] = $this->user->retrieveById($id, $user_info_columns);
     	
     	//followers
-    	$data['user_follower'] = $this->user->getUserFollowers($id, $follow_columns);
-    	$data['user_follower_count'] = $data['user_follower']->num_rows();
+    	$data['user_following'] = $this->user->getUserFollowing($id, $follow_columns);
     	
     	//merge to common data
     	$data = array_merge($data, $this->data);

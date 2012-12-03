@@ -54,6 +54,7 @@ class Home extends CI_Controller {
         //templates
         $data['header'] = $this->load->view('header', $data, TRUE);
         $data['footer'] = $this->load->view('footer', $data, TRUE);
+        $data['carousel'] = $this->load->view('carousel', $data, TRUE);
         
         $this->load->view('home_view', $data);
     }
@@ -65,6 +66,7 @@ class Home extends CI_Controller {
     	//templates
     	$data['header'] = $this->load->view('header', $data, TRUE);
     	$data['footer'] = $this->load->view('footer', $data, TRUE);
+    	$data['carousel'] = $this->load->view('carousel', $data, TRUE);
     	
     	$this->load->view('home_view2', $data);
     }

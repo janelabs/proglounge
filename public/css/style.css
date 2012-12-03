@@ -22,3 +22,65 @@
 
 /* END PROFILE */
 
+/* HOME */
+
+textarea {
+	resize:none;
+}
+
+.icon-loading {
+	background-image: url('/public/img/loading.gif');
+}
+
+/* END HOME */
+
+/* POSTS */
+
+.post-container {
+    float:left;
+    padding:10px;
+    width:100%;
+}
+
+.post-contents {
+    width:100%;
+    float:left;
+    margin-bottom:10px;
+    border-bottom:1px solid #E3E3E3;
+}
+
+.img-username {
+    float:left;
+    width:100%;
+}
+
+.img-username a {
+    float:left;
+    margin-left:10px;
+    margin-top:-3px;
+}
+
+.img-username label {
+    float:left;
+    font-size:12px;
+    margin-left:10px;
+    margin-top:-3px;
+}
+
+.img-username img {
+    width:35px;
+    height:35px;
+    float:left;
+}
+
+.post-message {
+    float:left;
+    width:100%;
+}
+
+.post-message label {
+    float:left;
+    margin-left:45px;
+}
+
+/* END POSTS */
