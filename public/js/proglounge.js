@@ -1,5 +1,8 @@
 $(document).ready(function() {
-
+    
+    //syntax highlighting
+    $('pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
+    
 	// back to top
 	$('#top').click(function(){  
 		$('html, body').animate({scrollTop:0}, 'fast');  
@@ -45,16 +48,18 @@ $(document).ready(function() {
 	                            '<div class="img-username">'+
 	                              '<img src="http://placehold.it/35x35"/>'+
 	                              '<a href="#" class="link">'+post_data.username+'</a><br>'+
-	                              '<label>01-01-2013 00:00:00</label>'+
+	                              '<label>'+post_data.postdate+'</label>'+
 	                            '</div>'+
 	                            '<div class="post-message">'+
-	                              '<label>'+post_data.content+'</label>'+
+	                              '<label class="new">'+post_data.content+'</label>'+
 	                            '</div>'+
 	                          '</div>';
 	                          
 	        if (!post_data.is_error) {
 	            $('.post-container').prepend(append_data);
 	            $('.post-contents').fadeIn('slow');
+	            $('.new pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
+	            $('.post-message label').removeClass('new');
 	        }
 	    });		
 	});

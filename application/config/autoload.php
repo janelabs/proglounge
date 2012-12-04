@@ -64,7 +64,7 @@ $autoload['libraries'] = array('database','session', 'mylibrary');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url');
+$autoload['helper'] = array('url', 'proglounge');
 
 
 /*

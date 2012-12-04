@@ -5,9 +5,11 @@
     <title>Programmers Lounge</title>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('public/css/bootstrap2.min.css'); ?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('public/css/style.css'); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('public/css/highlight.css'); ?>">
     <script type="text/javascript" src="<?php echo base_url('public/js/jquery.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo base_url('public/js/bootstrap.min.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo base_url('public/js/proglounge.js'); ?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('public/js/highlight.js'); ?>"></script>
 </head>
 <body>
 <div class="navbar navbar-static-top">

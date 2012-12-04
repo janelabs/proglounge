@@ -17,7 +17,7 @@ class Profile extends CI_Controller {
         $this->load->model('Post_model', 'post');
         
 		//for benchmarking
-        $this->output->enable_profiler(TRUE);
+        //$this->output->enable_profiler(TRUE);
     }
     
     public function _remap($username, $method)

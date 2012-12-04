@@ -92,10 +92,10 @@
 				            <div class="img-username">
     				            <img src="http://placehold.it/35x35"/>
                                 <a href="#" class="link"><?php echo $post['username'] ?></a><br>
-                                <label><?php echo date("M d, Y g:h A", strtotime($post['date_created'])) ?></label>
+                                <label><?php echo filterPostDate($post['date_created']) ?></label>
                             </div>
                             <div class="post-message">
-                                <label><?php echo $post['content'] ?></label>
+                                <label><?php echo filterPost($post['content']) ?></label>
                             </div>
 				        </div>
 				    <?php } ?>
