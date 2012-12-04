@@ -94,8 +94,15 @@
                                 <a href="#" class="link"><?php echo $post['username'] ?></a><br>
                                 <label><?php echo filterPostDate($post['date_created']) ?></label>
                             </div>
-                            <div class="post-message">
-                                <label><?php echo filterPost($post['content']) ?></label>
+                            <blockquote>
+                                <p><?php echo filterPost($post['content']) ?></p>
+                            </blockquote>
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                  <button class="btn btn-small"><i class="icon-thumbs-up"></i> Like</button>
+                                  <button class="btn btn-small">Comment</button>
+                                  <button class="btn btn-small">Repost</button>
+                                </div>
                             </div>
 				        </div>
 				    <?php } ?>

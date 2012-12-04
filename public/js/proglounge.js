@@ -1,5 +1,7 @@
 $(document).ready(function() {
     
+    /* MISC */
+    
     //syntax highlighting
     $('pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
     
@@ -8,6 +10,14 @@ $(document).ready(function() {
 		$('html, body').animate({scrollTop:0}, 'fast');  
 		return false;  
 	});
+	
+	//set active nav in profile navigation
+    var active_menu = $('.nav').find($('a[href="'+window.location.href+'"]'));
+    $(active_menu).parent('li').addClass('active');
+    
+    /* END MISC */
+	
+	/* JQUERY AJAX */
 	
 	//follow ajax
 	$('.followbtn').live("click", function(){
@@ -24,10 +34,6 @@ $(document).ready(function() {
 		$(this).attr('class', 'followbtn btn btn-info');
 		$(this).html('<i class="icon-star icon-white"></i> Follow');
 	});
-	
-	//set active nav in profile navigation
-	var active_menu = $('.nav').find($('a[href="'+window.location.href+'"]'));
-	$(active_menu).parent('li').addClass('active');
 	
 	//share ajax
 	$('#share').live("click", function(){
@@ -51,17 +57,19 @@ $(document).ready(function() {
 	                              '<label>'+post_data.postdate+'</label>'+
 	                            '</div>'+
 	                            '<div class="post-message">'+
-	                              '<label class="new">'+post_data.content+'</label>'+
+	                              '<blockquote class="new"><p>'+post_data.content+'</p></blockquote>'+
 	                            '</div>'+
 	                          '</div>';
 	                          
 	        if (!post_data.is_error) {
 	            $('.post-container').prepend(append_data);
 	            $('.post-contents').fadeIn('slow');
-	            $('.new pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
+	            $('label.new pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
 	            $('.post-message label').removeClass('new');
 	        }
 	    });		
 	});
+	
+	/* END JQUERY AJAX */
 	
 });

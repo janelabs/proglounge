@@ -76,13 +76,13 @@ textarea {
 .post-message {
     float:left;
     width:100%;
-    white-space: pre;
-    margin-bottom:20px;
+    white-space:pre;
+    margin-bottom:10px;
 }
 
-.post-message label {
+.post-contents blockquote {
     float:left;
-    margin-left:45px;
+    width:100%;
 }
 
 /* END POSTS */
