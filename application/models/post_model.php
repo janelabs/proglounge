@@ -18,8 +18,14 @@ Class Post_model extends CI_Model
 		return $this->common->insertData(self::TABLE_NAME, $post);
 	}
 	
-	public function deletePost($post_id)
+	public function deletePost($post_id, $user_id = 0)
 	{
+	    $is_valid = $this->_validateDelete($post_id, $user_id);
+		
+        if (!$is_valid) {
+            return FALSE;
+        }
+		
 		$where = array('id' => $post_id);
 		return $this->common->deleteDataWhere(self::TABLE_NAME, $where);
 	}
@@ -28,12 +34,26 @@ Class Post_model extends CI_Model
 	{
 		$where = array(self::TABLE_NAME.'.user_id' => $user_id);
 		$on = self::USERS_TABLE . '.id = '.self::TABLE_NAME.'.user_id';
-		$columns = self::TABLE_NAME.'.*, '.self::USERS_TABLE.'.id, '.self::USERS_TABLE.'.username, '.self::USERS_TABLE.'.image';
+		$columns = self::TABLE_NAME.'.*, '.self::USERS_TABLE.'.username, '.self::USERS_TABLE.'.image';
 		$order = self::TABLE_NAME.'.date_created desc';
         
 		return $this->common->selectJoin(self::TABLE_NAME, self::USERS_TABLE, $on, $join_type = 'join', 
                                          $columns, $where, $order, $limit, $offset);
 	}
+
+    private function _validateDelete($post_id, $user_id)
+    {
+        $where = array('id' => $post_id, 'user_id' => $user_id);
+        $query = $this->common->selectWhere(self::TABLE_NAME, $where);
+        $count = $query->num_rows();
+        
+        if ($count > 0) {
+            return TRUE;
+        }
+        
+        return FALSE;
+    }
+    
 	
 } // Class Post_model
 

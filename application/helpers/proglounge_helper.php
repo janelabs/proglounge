@@ -20,6 +20,6 @@ if ( ! function_exists('filterPost'))
     //returns Dec 04, 2012 12:12 PM date format
     function filterPostDate($timestamp)
     {
-        return date("M d, Y g:h A", strtotime($timestamp));
+        return date("M d, Y g:h a", strtotime($timestamp));
     }
 }

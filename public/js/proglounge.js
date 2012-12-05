@@ -1,6 +1,9 @@
 $(document).ready(function() {
     
-    /* MISC */
+/* -----------------------------------------------------------
+ *  @MISC
+ * -----------------------------------------------------------
+ */
     
     //syntax highlighting
     $('pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
@@ -15,9 +18,33 @@ $(document).ready(function() {
     var active_menu = $('.nav').find($('a[href="'+window.location.href+'"]'));
     $(active_menu).parent('li').addClass('active');
     
-    /* END MISC */
-	
-	/* JQUERY AJAX */
+    //delete modal
+    var del_id = 0;
+    var post_content_obj;
+    $('.delete-modal').live("click", function(){
+        del_id = $(this).attr('post-id');
+        $('#delete-modal').modal({
+            keyboard: true 
+        });
+        post_content_obj = $(this);
+        $('#delete-modal').modal('show'); 
+    });
+    
+    $('#del-modal-close').live("click",function(){
+        $('#delete-modal').modal('hide');
+        return false;
+    });
+    
+/* -----------------------------------------------------------
+ *  @END MISC
+ * -----------------------------------------------------------
+ */
+
+
+/* -----------------------------------------------------------
+ *  @JQUERY AJAX 
+ * -----------------------------------------------------------
+ */
 	
 	//follow ajax
 	$('.followbtn').live("click", function(){
@@ -34,6 +61,26 @@ $(document).ready(function() {
 		$(this).attr('class', 'followbtn btn btn-info');
 		$(this).html('<i class="icon-star icon-white"></i> Follow');
 	});
+	
+	//delete post ajax
+    $('#confirm-del').live("click", function(){
+        var ajax_url = "/delete_post";
+        var remove_post_div = post_content_obj.parent().parent().parent('div.post-contents');
+        console.log(remove_post_div);
+        $.post(ajax_url, {post_id:del_id}, function(data){
+            json_data = $.parseJSON(data);
+            if (json_data.success) {
+                remove_post_div.fadeOut('slow', function(){
+                    remove_post_div.remove();
+                });
+                $('#delete-modal').modal('hide');
+                return false;
+            } else {
+                alert('you mother father!');
+            }
+        });
+        return false;
+    });
 	
 	//share ajax
 	$('#share').live("click", function(){
@@ -59,6 +106,13 @@ $(document).ready(function() {
 	                            '<div class="post-message">'+
 	                              '<blockquote class="new"><p>'+post_data.content+'</p></blockquote>'+
 	                            '</div>'+
+	                            '<div class="pull-right">'+
+	                              '<div class="btn-group">'+
+    	                              '<button post-id="'+post_data.post_id+'" class="delete-modal btn btn-danger btn-mini">'+
+                                            '<i class="icon-trash icon-white"></i>'+
+                                      '</button>'+
+                                  '</div>'+
+	                            '</div>'+
 	                          '</div>';
 	                          
 	        if (!post_data.is_error) {
@@ -70,6 +124,9 @@ $(document).ready(function() {
 	    });		
 	});
 	
-	/* END JQUERY AJAX */
+/* -----------------------------------------------------------
+ *  @END JQUERY AJAX 
+ * -----------------------------------------------------------
+ */
 	
 });

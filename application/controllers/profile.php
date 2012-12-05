@@ -29,13 +29,7 @@ class Profile extends CI_Controller {
     	}
     	
     	//check viewer of profile
-    	if (array_key_exists('id', $this->user_session)) {
-    		list($this->is_your_profile,
-    				$this->is_guest) = $this->_isYourProfile($this->user_session['id'], $user['id']);
-    	} else {
-    		list($this->is_your_profile,
-    				$this->is_guest) = $this->_isYourProfile('guest', $user['id']);
-    	}
+    	list($this->is_your_profile, $this->is_guest) = $this->_isYourProfile($user['id']);
     	
     	//check if the the viewer of profile already followed the user.
     	$this->is_followed = FALSE;
@@ -93,12 +87,13 @@ class Profile extends CI_Controller {
     	//templates
     	$data['header'] = $this->load->view('header', $data, TRUE);
     	$data['footer'] = $this->load->view('footer', $data, TRUE);
+        $data['modals'] = $this->load->view('modals_view', $data, TRUE);
     	$data['profile_nav'] = $this->load->view('profile_nav', $data, TRUE);
     	
     	$this->load->view('profile_view', $data);   	
     }
     
-    /* display of followers. */
+    /* display followers. */
     public function followers($id) 
     {
     	$follow_columns = 'users.id, users.username, users.first_name, users.last_name,
@@ -122,7 +117,7 @@ class Profile extends CI_Controller {
     	$this->load->view('follower_view', $data);
     }
     
-    /* display of following. */
+    /* display following. */
     public function following($id)
     {
     	$follow_columns = 'users.id, users.username, users.first_name, users.last_name,
@@ -147,17 +142,20 @@ class Profile extends CI_Controller {
     }
        
     /* Checks if you are viewing your profile */
-    private function _isYourProfile($sess_id, $id)
+    private function _isYourProfile($user_id)
     {
-    	if ($sess_id == 'guest') {
+    	if (!array_key_exists('id', $this->user_session)) {
     		return array(FALSE, TRUE);
     	}
+        
+        // id of current user
+        $sess_id = $this->user_session['id'];
     
-    	if ($sess_id == $id) {
+    	if ($sess_id == $user_id) {
     		return array(TRUE, FALSE);
     	}
     
-    	if ($sess_id != $id) {
+    	if ($sess_id != $user_id) {
     		return array(FALSE, FALSE);
     	}
     }

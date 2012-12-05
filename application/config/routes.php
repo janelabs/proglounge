@@ -56,6 +56,7 @@ $route['account/(:any)'] = 'error/pageMissing';
 
 //posts
 $route['new_post'] = 'posts/newPost';
+$route['delete_post'] = 'posts/deletePost';
 
 //profile
 $route['profile'] = 'error/pageMissing';

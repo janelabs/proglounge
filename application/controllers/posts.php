@@ -34,8 +34,26 @@ class Posts extends CI_Controller {
         $params['username'] = $this->user_session['username'];
         $now = date("Y-m-d H:i:s");
         $params['postdate'] = filterPostDate($now);
+        $params['post_id'] = $this->db->insert_id();
         
         echo json_encode($params);
+    }
+    
+    public function deletePost()
+    {
+        $params = array();
+        $params['success'] = FALSE;
+        $post_id = $this->input->post('post_id', TRUE);
+        $user_id = $this->user_session['id'];
+        
+        if ($this->posts->deletePost($post_id, $user_id)) {
+            $params['success'] = TRUE;
+            echo json_encode($params);
+            return;
+        }
+        
+        echo json_encode($params);
+        
     }
 
 }// class Posts

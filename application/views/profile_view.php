@@ -1,4 +1,5 @@
-<?php echo $header; ?>
+<?php echo $header ?>
+<?php echo $modals ?>
 <div class="container">
 	<div class="row">
 		<?php if (array_key_exists('is_new', $session) && $session['is_new'] && $is_your_profile) { ?>
@@ -74,6 +75,7 @@
 		    	<?php echo $profile_nav ?>
 		    	<!-- END PROFILE NAV -->
 		    	
+		    	<!-- SHARE SECTION -->
 		    	<?php if ($is_your_profile) { ?>
     		    	<div class="post-div well">
     					<textarea rows="3" class="input-block-level" id="post"></textarea>
@@ -85,7 +87,9 @@
     					</button>
     				</div>
 				<?php } ?>
+				<!-- END SHARE SECTION -->
 				
+				<!-- USER POSTS SECTION -->
 				<div class="post-container">
 				    <?php foreach ($user_posts->result_array() as $post) { ?>
 				        <div class="post-contents">
@@ -99,17 +103,23 @@
                             </blockquote>
                             <div class="pull-right">
                                 <div class="btn-group">
+                                  <?php if (!$is_your_profile) { ?>
                                   <button class="btn btn-small"><i class="icon-thumbs-up"></i> Like</button>
-                                  <button class="btn btn-small">Comment</button>
-                                  <button class="btn btn-small">Repost</button>
+                                  <button class="btn btn-small">Repost</button>   
+                                  <?php } else { ?>
+                                  
+                                  <button post-id="<?php echo $post['id'] ?>" class="delete-modal btn btn-danger btn-mini">
+                                    <i class="icon-trash icon-white"></i>
+                                  </button>
+                                  <?php } ?>
                                 </div>
                             </div>
 				        </div>
 				    <?php } ?>
 				</div>
+				<!-- END USER POSTS SECTION -->
 		    </div>
 	    </div><!-- row -->
 	</div><!-- row -->
 </div><!-- container -->
-
 <?php echo $footer; ?>
