@@ -19,9 +19,9 @@ class Posts extends CI_Controller {
      */
     public function newPost()
     {
+        $params = array();
         $post = $this->input->post(NULL, TRUE);
         $post['user_id'] = $this->user_session['id'];
-        $params = array();
         $params['is_error'] = TRUE;
          
         if (!$this->posts->savePost($post)) {
@@ -54,6 +54,49 @@ class Posts extends CI_Controller {
         
         echo json_encode($params);
         
+    }
+
+    public function loadMoreUserPost()
+    {
+        $params = array();
+        $params['success'] = FALSE;
+        $post_id = $this->input->post('post_id', TRUE);
+        $user_id = $this->user_session['id'];
+        $html = '';
+
+        list($user_posts, $last_id) = $this->posts->getUserPostsByLoadMore($user_id, $post_id, 10, 0);
+
+        if ($user_posts) {
+            foreach ($user_posts->result_array() as $post) {
+                $html .= '<div class="post-contents" style="display:none;">
+                            <div class="img-username">
+                              <img src="http://placehold.it/35x35"/>
+                              <a href="#" class="link">'.$post['username'].'</a><br>
+                              <label>'.filterPostDate($post['date_created']).'</label>
+                            </div>
+                            <blockquote class="new"><p>'.filterPost($post['content']).'</p></blockquote>
+                            <div class="pull-right">
+                              <div class="btn-group">
+                                <button post-id="'.$post['id'].'" class="delete-modal btn btn-danger btn-mini">
+                                  <i class="icon-trash icon-white"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>';
+            }
+            if ($last_id != $post['id']) {
+                $html .= '<button class="btn btn-block btn-info" id="load-more" last-id="'.$post['id'].'">load more</button>';
+            }
+
+        } else {
+            echo json_encode($params);
+            return;
+        }
+
+        $params['html'] = $html;
+        $params['success'] = TRUE;
+
+        echo json_encode($params);
     }
 
 }// class Posts

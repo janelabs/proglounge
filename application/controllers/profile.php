@@ -81,6 +81,7 @@ class Profile extends CI_Controller {
         
         //user posts
         $data['user_posts'] = $this->post->getUserPosts($id, 10, 0);
+        $data['user_posts_count'] = $this->post->getUserPostsCount($id);
     	
   		$data = array_merge($data, $this->data);
         

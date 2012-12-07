@@ -78,6 +78,7 @@
 		    	<!-- SHARE SECTION -->
 		    	<?php if ($is_your_profile) { ?>
     		    	<div class="post-div well">
+    		    	    <label id="counter"></label>
     					<textarea rows="3" class="input-block-level" id="post"></textarea>
     					<div class="progress progress-striped active" style="height:10px; display:none;">
       						<div class="bar" style="width:100%"></div>
@@ -91,7 +92,7 @@
 				
 				<!-- USER POSTS SECTION -->
 				<div class="post-container">
-				    <?php foreach ($user_posts->result_array() as $post) { ?>
+				    <?php foreach ($user_posts->result_array() as $post) : ?>
 				        <div class="post-contents">
 				            <div class="img-username">
     				            <img src="http://placehold.it/35x35"/>
@@ -104,18 +105,22 @@
                             <div class="pull-right">
                                 <div class="btn-group">
                                   <?php if (!$is_your_profile) { ?>
-                                  <button class="btn btn-small"><i class="icon-thumbs-up"></i> Like</button>
-                                  <button class="btn btn-small">Repost</button>   
+                                      <button class="btn btn-small"><i class="icon-thumbs-up"></i> Like</button>
+                                      <button class="btn btn-small">Repost</button>
                                   <?php } else { ?>
                                   
                                   <button post-id="<?php echo $post['id'] ?>" class="delete-modal btn btn-danger btn-mini">
-                                    <i class="icon-trash icon-white"></i>
+                                       <i class="icon-trash icon-white"></i>
                                   </button>
                                   <?php } ?>
                                 </div>
                             </div>
 				        </div>
-				    <?php } ?>
+				    <?php endforeach; ?>
+
+                    <?php if ($user_posts_count > 10) { ?>
+                        <button class="btn btn-block btn-info" id="load-more" last-id="<?php echo $post['id'] ?>">load more</button>
+                    <?php } ?>
 				</div>
 				<!-- END USER POSTS SECTION -->
 		    </div>

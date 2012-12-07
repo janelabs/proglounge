@@ -38,14 +38,13 @@ textarea {
 
 .post-container {
     float:left;
-    padding:10px;
     width:100%;
 }
 
 .post-contents {
     width:100%;
     float:left;
-    margin-bottom:10px;
+    margin-bottom:30px;
     border-bottom:1px solid #E3E3E3;
 }
 
@@ -82,7 +81,7 @@ textarea {
 
 .post-contents blockquote {
     float:left;
-    width:100%;
+    width:auto;
 }
 
 /* END POSTS */

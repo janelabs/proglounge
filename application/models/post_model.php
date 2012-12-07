@@ -35,11 +35,31 @@ Class Post_model extends CI_Model
 		$where = array(self::TABLE_NAME.'.user_id' => $user_id);
 		$on = self::USERS_TABLE . '.id = '.self::TABLE_NAME.'.user_id';
 		$columns = self::TABLE_NAME.'.*, '.self::USERS_TABLE.'.username, '.self::USERS_TABLE.'.image';
-		$order = self::TABLE_NAME.'.date_created desc';
+		$order = self::TABLE_NAME.'.id desc';
         
 		return $this->common->selectJoin(self::TABLE_NAME, self::USERS_TABLE, $on, $join_type = 'join', 
                                          $columns, $where, $order, $limit, $offset);
 	}
+
+    public function getUserPostsCount($user_id)
+    {
+        return $this->getUserPosts($user_id, FALSE)->num_rows();
+    }
+
+    public function getUserPostsByLoadMore($user_id, $post_id, $limit, $offset = 0)
+    {
+        $where = array(self::TABLE_NAME.'.user_id' => $user_id,
+                       self::TABLE_NAME.'.id <' => $post_id);
+        $on = self::USERS_TABLE . '.id = '.self::TABLE_NAME.'.user_id';
+        $columns = self::TABLE_NAME.'.*, '.self::USERS_TABLE.'.username, '.self::USERS_TABLE.'.image';
+        $order = self::TABLE_NAME.'.id desc';
+
+        $tmp_user_post = $this->getUserPosts($user_id, FALSE)->last_row('array');
+        $query = $this->common->selectJoin(self::TABLE_NAME, self::USERS_TABLE, $on, $join_type = 'join',
+                                           $columns, $where, $order, $limit, $offset);
+
+        return array($query, $tmp_user_post['id']);
+    }
 
     private function _validateDelete($post_id, $user_id)
     {
