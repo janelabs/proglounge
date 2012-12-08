@@ -150,13 +150,14 @@ $(document).ready(function() {
         });
 	});
 
-    //load more post ajax
+    //load more post ajax (profile)
     $('#load-more').live("click", function(){
         $(this).html('loading...');
-        var ajax_url = "load_more";
+        var ajax_url = window.location.pathname.split( '/' )[1]+"/load_more";
         var id = $(this).attr("last-id");
         $.post(ajax_url, {post_id:id}, function(data){
             json_data = $.parseJSON(data);
+            console.log(json_data);
             if (json_data.success) {
                 $('.post-container').append(json_data.html);
                 $('.post-contents').fadeIn('slow');

@@ -14,7 +14,7 @@ class Profile extends CI_Controller {
         
         $this->load->model('Users_model', 'user');
         $this->load->model('Follow_model', 'follow');
-        $this->load->model('Post_model', 'post');
+        $this->load->model('Post_model', 'posts');
         
 		//for benchmarking
         //$this->output->enable_profiler(TRUE);
@@ -70,6 +70,8 @@ class Profile extends CI_Controller {
     		$this->followers($user['id']);
     	} elseif ($method[0] == 'following') {
     		$this->following($user['id']);
+        } elseif ($method[0] == 'load_more') {
+    		$this->loadMoreUserPost($user['id']);
     	}
     }
 
@@ -80,8 +82,8 @@ class Profile extends CI_Controller {
     	$data['user_info'] = $this->user->retrieveById($id, $user_info_columns);
         
         //user posts
-        $data['user_posts'] = $this->post->getUserPosts($id, 10, 0);
-        $data['user_posts_count'] = $this->post->getUserPostsCount($id);
+        $data['user_posts'] = $this->posts->getUserPosts($id, 10, 0);
+        $data['user_posts_count'] = $this->posts->getUserPostsCount($id);
     	
   		$data = array_merge($data, $this->data);
         
@@ -140,6 +142,57 @@ class Profile extends CI_Controller {
     	$data['profile_nav'] = $this->load->view('profile_nav', $data, TRUE);
     	
     	$this->load->view('following_view', $data);
+    }
+    
+    public function loadMoreUserPost($id)
+    {
+        $params = array();
+        $params['success'] = FALSE;
+        $post_id = $this->input->post('post_id', TRUE);
+        $html = '';
+        list($user_posts, $last_id) = $this->posts->getUserPostsByLoadMore($id, $post_id, 10, 0);
+        if ($user_posts) {
+            foreach ($user_posts->result_array() as $post) {
+                $html .= '<div class="post-contents" style="display:none;">
+                            <div class="img-username">
+                              <img src="http://placehold.it/35x35"/>
+                              <a href="#" class="link">'.$post['username'].'</a><br>
+                              <label>'.filterPostDate($post['date_created']).'</label>
+                            </div>
+                            <blockquote class="loadmore"><p>'.filterPost($post['content']).'</p></blockquote>';
+               
+               if ($this->is_your_profile) {
+                   $html .= '<div class="pull-right">
+                              <div class="btn-group">
+                                <button post-id="'.$post['id'].'" class="delete-modal btn btn-danger btn-mini">
+                                  <i class="icon-trash icon-white"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>';
+               } else {
+                   $html .= '<div class="pull-right">
+                              <div class="btn-group">
+                                <button class="btn btn-small"><i class="icon-thumbs-up"></i> Like</button>
+                                <button class="btn btn-small">Repost</button>
+                              </div>
+                            </div>
+                          </div>';
+               }
+            }
+            if ($last_id != $post['id']) {
+                $html .= '<button class="btn btn-block btn-info" id="load-more" last-id="'.$post['id'].'">load more</button>';
+            }
+
+        } else {
+            echo json_encode($params);
+            return;
+        }
+
+        $params['html'] = $html;
+        $params['success'] = TRUE;
+
+        echo json_encode($params);
     }
        
     /* Checks if you are viewing your profile */

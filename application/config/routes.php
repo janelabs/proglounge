@@ -57,12 +57,14 @@ $route['account/(:any)'] = 'error/pageMissing';
 //posts
 $route['new_post'] = 'posts/newPost';
 $route['delete_post'] = 'posts/deletePost';
-$route['load_more'] = 'posts/loadMoreUserPost';
+//$route['load_more'] = 'posts/loadMoreUserPost';
 
 //profile
 $route['profile'] = 'error/pageMissing';
 $route['profile/(:any)'] = 'error/pageMissing';
+$route['(:any)/load_more'] = 'profile/$1/load_more';
 $route['(:any)/followers'] = 'profile/$1/followers';
+$route['(:any)/followers'] = 'profile/$1/following';
 $route['(:any)'] = 'profile/$1';
 
 

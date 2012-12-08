@@ -15,7 +15,7 @@
 		    <div class="span4" style="margin-right:0px;">
 		    	<!-- ABOUT ME AND DP SECTION -->
 		    	<div class="thumbnail span3 pull-left profile-picture">
-				   	<img src="http://placehold.it/500x400">
+				   	<img width="270" height="216" src="http://placehold.it/500x400">
 				   	<div class="caption">
 				   		<h3>About Me</h3>
 				   		<?php if ($user_info['about_me'] != '') { ?>
