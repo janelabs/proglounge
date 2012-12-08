@@ -137,7 +137,15 @@ $(document).ready(function() {
                 $('.post-container').prepend(append_data);
                 $('.post-contents').fadeIn('slow');
                 $('blockquote.new pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
-                var count_posts = $('.post-contents').length;
+                $('blockquote.new').removeClass('new');
+                if ($('.post-contents').size() > 10) {
+                    $('.post-contents').each(function(i){
+                        if (i == 10) {
+                            $(this).fadeOut('slow');
+                            $(this).remove();
+                        }
+                    });
+                }
             }
         });
 	});
@@ -152,7 +160,8 @@ $(document).ready(function() {
             if (json_data.success) {
                 $('.post-container').append(json_data.html);
                 $('.post-contents').fadeIn('slow');
-                $('blockquote.new pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
+                $('blockquote.loadmore pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
+                $('blockquote.loadmore').removeClass('loadmore');
                 $('#load-more').remove();
             }
         });

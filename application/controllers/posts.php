@@ -74,7 +74,7 @@ class Posts extends CI_Controller {
                               <a href="#" class="link">'.$post['username'].'</a><br>
                               <label>'.filterPostDate($post['date_created']).'</label>
                             </div>
-                            <blockquote class="new"><p>'.filterPost($post['content']).'</p></blockquote>
+                            <blockquote class="loadmore"><p>'.filterPost($post['content']).'</p></blockquote>
                             <div class="pull-right">
                               <div class="btn-group">
                                 <button post-id="'.$post['id'].'" class="delete-modal btn btn-danger btn-mini">
