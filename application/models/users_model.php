@@ -48,7 +48,7 @@ Class Users_model extends CI_Model
 		$where = array('username' => $username);
 		$query = $this->common->selectWhere(self::TABLE_NAME, $where, $columns);
 		
-		return $query->row_array();
+		return $query;
 	}
 	
 	/*

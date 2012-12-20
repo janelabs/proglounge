@@ -48,23 +48,31 @@
 		    	<div class="span8" style="margin-left:0px;">
 		    		<div class="row" style="margin-bottom:5px;">
 		    			<ul class="thumbnails" style="margin-left:0px;">
-		    			<?php foreach ($user_following->result_array() as $user_follow): ?>
+		    			<?php foreach ($user_following->result('Follow_model') as $user_follow): ?>
 							<li class="span2">
 								<div class="thumbnail">
 									<img src="http://placehold.it/170x170" alt="">
 									<p></p>
 									<p class="pagination-centered">
-										<a href="<?php echo site_url($user_follow['username']) ?>" 
-										class="link">@<?php echo $user_follow['username'] ?></a>
+										<a href="<?php echo site_url($user_follow->username) ?>"
+										class="link">@<?php echo $user_follow->username ?></a>
 									</p>
-									<?php if ($is_your_profile || !$is_guest) { ?>
-    									<p class="pagination-centered">
-    										<button user-id="<?php echo $user_follow['id'] ?>" 
-    										class="unfollowbtn btn btn-danger">
-    											<i class="icon-off icon-white"></i> Unfollow
-    										</button>
-    									</p>
-									<?php } ?>
+                                    <p class="pagination-centered">
+									<?php if ($is_your_profile || (!$is_guest && $user_follow->id != $session['id'])) { ?>
+                                    <?php $is_followed_this = $user_follow->isFollowed($session['id'], $user_follow->id) ?>
+                                        <?php if ($is_followed_this) { ?>
+                                            <button user-id="<?php echo $user_follow->id ?>"
+                                                    class="unfollowbtn btn btn-danger">
+                                                <i class="icon-off icon-white"></i> Unfollow
+                                            </button>
+                                            <?php } else { ?>
+                                            <button user-id="<?php echo $user_follow->id ?>"
+                                                    class="followbtn btn btn-info">
+                                                <i class="icon-star icon-white"></i> Follow
+                                            </button>
+                                        <?php } ?>
+                                    <?php } ?>
+                                    </p>
 								</div>
 							</li>	
 						<?php endforeach; ?>

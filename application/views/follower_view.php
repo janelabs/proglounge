@@ -58,8 +58,9 @@
 										class="link">@<?php echo $user_follow->username ?></a>
 									</p>
 									<p class="pagination-centered">
-									<?php if ($is_your_profile || !$is_guest) { ?>
-    									<?php if ($user_follow->isFollowed($session['id'], $user_follow->id)) { ?>
+									<?php if ($is_your_profile || (!$is_guest && $user_follow->id != $session['id'])) { ?>
+                                    <?php $is_followed_this = $user_follow->isFollowed($session['id'], $user_follow->id) ?>
+    									<?php if ($is_followed_this) { ?>
     										<button user-id="<?php echo $user_follow->id ?>" 
     										class="unfollowbtn btn btn-danger">
     											<i class="icon-off icon-white"></i> Unfollow

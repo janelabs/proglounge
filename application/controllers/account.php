@@ -22,49 +22,35 @@ Class Account extends CI_Controller
     public function saveUser()
     {
     	$input = $this->input->post(NULL, TRUE);
+        $params = array('is_error' => FALSE);
 
-    	//validate inputs
-    	if (in_array('', $input)) {
-    		$this->session->set_flashdata('register_error', 'Ooopss! You forgot some fields');
-    		$input['password'] = '';
-    		$input['repassword'] = '';
-    		$this->session->set_flashdata('user_input', $input);
-    		redirect('register');
-    	}
-    	
-    	if ($input['password'] != $input['repassword']) {
-    		$this->session->set_flashdata('register_error', 'Hey! Password did not match.');
-    		$input['password'] = '';
-    		$input['repassword'] = '';
-    		$this->session->set_flashdata('user_input', $input);
-    		redirect('register');
-    	}
-    	    	
-    	//check username if exists.
-    	$is_exist = (count($this->user->retrieveByUsername($input['username'], 'id')) > 0);
-    	if ($is_exist) {
-    		$this->session->set_flashdata('register_error', 'Oh no! Username already exist');
-    		$input['password'] = '';
-    		$input['repassword'] = '';
-    		$this->session->set_flashdata('user_input', $input);
-    		redirect('register');
-    	}
-    	
-    	unset($input['repassword']);
-    	
-    	//encrypt password
+        //encrypt password
     	$input['password'] = md5($input['password']);
     	
-    	$this->user->saveUser($input);
+    	$result = $this->user->saveUser($input);
+        if (!$result) {
+            $params['is_error'] = TRUE;
+        }
     	
-    	//set session
-    	$session_data = array('id' => $this->db->insert_id(),
-    			              'username' => $input['username'],
-    			              'is_new' => TRUE);
-    	$this->session->set_userdata($session_data);
+    	echo json_encode($params);
     	
-    	redirect($input['username']);
-    	
+    }
+
+    public function checkUname()
+    {
+        $uname = $this->input->post('username', TRUE);
+        $query = $this->user->retrieveByUsername($uname, 'id');
+        $params = array('is_error' => FALSE, 'is_existing' => FALSE);
+
+        if (!$query) {
+            $params['is_error'] = TRUE;
+        }
+
+        if ($query->num_rows() > 0) {
+            $params['is_existing'] = TRUE;
+        }
+
+        echo json_encode($params);
     }
     
     public function checkLogin()

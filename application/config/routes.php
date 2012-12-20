@@ -49,6 +49,7 @@ $route['unfollow'] = 'follow/unfollowUser';
 $route['login'] = 'account/login';
 $route['validate'] = 'account/checkLogin';
 $route['save_user'] = 'account/saveUser';
+$route['check_uname'] = 'account/checkUname';
 $route['logout'] = 'account/logout';
 $route['register'] = 'account/register';
 $route['account'] = 'error/pageMissing';
@@ -57,14 +58,14 @@ $route['account/(:any)'] = 'error/pageMissing';
 //posts
 $route['new_post'] = 'posts/newPost';
 $route['delete_post'] = 'posts/deletePost';
-//$route['load_more'] = 'posts/loadMoreUserPost';
+$route['load_more'] = 'posts/loadMoreUserPost';
 
 //profile
 $route['profile'] = 'error/pageMissing';
 $route['profile/(:any)'] = 'error/pageMissing';
 $route['(:any)/load_more'] = 'profile/$1/load_more';
 $route['(:any)/followers'] = 'profile/$1/followers';
-$route['(:any)/followers'] = 'profile/$1/following';
+$route['(:any)/following'] = 'profile/$1/following';
 $route['(:any)'] = 'profile/$1';
 
 
