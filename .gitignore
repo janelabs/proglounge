@@ -1,2 +1,5 @@
 nbproject/
 .idea/
+.project
+.settings/
+application/logs
