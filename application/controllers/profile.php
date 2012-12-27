@@ -16,6 +16,8 @@ class Profile extends CI_Controller {
         $this->load->model('Follow_model', 'follow');
         $this->load->model('Post_model', 'posts');
 
+        $this->user_info_columns = 'first_name, last_name, username, quote, about_me, image';
+
 		//for benchmarking
         //$this->output->enable_profiler(TRUE);
     }
@@ -80,8 +82,7 @@ class Profile extends CI_Controller {
     public function index($id)
     {
     	//user info
-    	$user_info_columns = 'first_name, last_name, username, quote, about_me';
-    	$data['user_info'] = $this->user->retrieveById($id, $user_info_columns);
+    	$data['user_info'] = $this->user->retrieveById($id, $this->user_info_columns);
 
         //user posts
         $data['user_posts'] = $this->posts->getUserPosts($id, 10, 0);
@@ -93,6 +94,7 @@ class Profile extends CI_Controller {
     	$data['header'] = $this->load->view('header', $data, TRUE);
     	$data['footer'] = $this->load->view('footer', $data, TRUE);
         $data['modals'] = $this->load->view('modals_view', $data, TRUE);
+        $data['profile_pic'] = $this->load->view('profile_pic_view', $data, TRUE);
     	$data['profile_nav'] = $this->load->view('profile_nav', $data, TRUE);
 
     	$this->load->view('profile_view', $data);
@@ -105,8 +107,7 @@ class Profile extends CI_Controller {
     	follow.following_id, follow.follower_id';
 
     	//user info
-    	$user_info_columns = 'first_name, last_name, username, quote, about_me';
-    	$data['user_info'] = $this->user->retrieveById($id, $user_info_columns);
+    	$data['user_info'] = $this->user->retrieveById($id, $this->user_info_columns);
 
     	//followers
     	$data['user_follower'] = $this->user->getUserFollowers($id, $follow_columns);
@@ -117,6 +118,7 @@ class Profile extends CI_Controller {
     	//templates
     	$data['header'] = $this->load->view('header', $data, TRUE);
     	$data['footer'] = $this->load->view('footer', $data, TRUE);
+        $data['profile_pic'] = $this->load->view('profile_pic_view', $data, TRUE);
     	$data['profile_nav'] = $this->load->view('profile_nav', $data, TRUE);
 
     	$this->load->view('follower_view', $data);
@@ -129,8 +131,7 @@ class Profile extends CI_Controller {
     	follow.following_id, follow.follower_id';
 
     	//user info
-    	$user_info_columns = 'first_name, last_name, username, quote, about_me';
-    	$data['user_info'] = $this->user->retrieveById($id, $user_info_columns);
+    	$data['user_info'] = $this->user->retrieveById($id, $this->user_info_columns);
 
     	//followers
     	$data['user_following'] = $this->user->getUserFollowing($id, $follow_columns);
@@ -141,6 +142,7 @@ class Profile extends CI_Controller {
     	//templates
     	$data['header'] = $this->load->view('header', $data, TRUE);
     	$data['footer'] = $this->load->view('footer', $data, TRUE);
+        $data['profile_pic'] = $this->load->view('profile_pic_view', $data, TRUE);
     	$data['profile_nav'] = $this->load->view('profile_nav', $data, TRUE);
 
     	$this->load->view('following_view', $data);

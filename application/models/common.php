@@ -121,6 +121,23 @@ Class Common extends CI_Model
 		$this->db->where($where);
 		return $this->db->delete($table);
 	}
+
+    public function updateData($table, $data, $where = '')
+    {
+        if (!is_array($data)) {
+            throw new Exception('2nd param must be an array');
+        }
+
+        if (!is_array($where) && $where != '') {
+            throw new Exception('3rd param must be an array');
+        }
+
+        if ($where != '') {
+            $this->db->where($where);
+        }
+
+        return $this->db->update($table, $data);
+    }
 		
 } // Class Common
 

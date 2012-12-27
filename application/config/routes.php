@@ -61,7 +61,7 @@ $route['delete_post'] = 'posts/deletePost';
 $route['load_more'] = 'posts/loadMoreUserPost';
 
 //upload
-$route['upload'] = 'upload/index';
+$route['upload'] = 'upload/uploadDp';
 
 //profile
 $route['profile'] = 'error/pageMissing';

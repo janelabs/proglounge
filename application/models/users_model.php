@@ -28,10 +28,10 @@ Class Users_model extends CI_Model
 		$columns = 'id, username, image';
 		
 		$query = $this->common->selectWhere(self::TABLE_NAME, $where, $columns);
-		$is_user = ($query->num_rows() > 0);
+		$is_exists = ($query->num_rows() > 0);
 		$user_info = $query->result_array();
 		
-		return array($is_user, $user_info);
+		return array($is_exists, $user_info);
 	}
 	
 	/*

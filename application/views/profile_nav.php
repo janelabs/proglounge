@@ -5,10 +5,10 @@
 	   		<ul class="nav">
 				<li><a href="<?php echo site_url($uname) ?>">Posts</a></li>
 			    <li><a href="<?php echo site_url($uname.'/followers'); ?>">Followers
-			         <span class="badge badge-info"><?php echo $follower_count ?></span>
+			         <span id="follower-count" class="badge badge-info"><?php echo $follower_count ?></span>
 			        </a></li>
 			    <li><a href="<?php echo site_url($uname.'/following'); ?>">Following
-			         <span class="badge badge-info"><?php echo $following_count ?></span>
+			         <span id="following-count" class="badge badge-info"><?php echo $following_count ?></span>
 			        </a></li>
 			</ul>
 			<?php if (!$is_your_profile && !$is_guest) { ?>

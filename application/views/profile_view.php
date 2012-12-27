@@ -14,21 +14,11 @@
 		<div class="row">
 		    <div class="span4" style="margin-right:0px;">
 		    	<!-- ABOUT ME AND DP SECTION -->
-		    	<div class="thumbnail span3 pull-left profile-picture">
-				   	<img width="270" height="216" src="http://placehold.it/500x400">
-				   	<div class="caption">
-				   		<h3>About Me</h3>
-				   		<?php if ($user_info['about_me'] != '') { ?>
-	      					<p><?php echo $user_info['about_me'] ?></p>
-	      				<?php } else {?>
-	      					<p>I will say something about me later..</p>
-	      				<?php } ?>
-				   	</div>
-				</div>
+                <?php echo $profile_pic; ?>
 				<!-- END ABOUT ME AND DP SECTION -->
 				
 				<!-- SUGGESTED USERS -->
-				<?php if (!$is_guest && $is_your_profile) { ?>
+				<?php if (!$is_guest && $is_your_profile && $suggested_users_count > 0) { ?>
 				<div class="span3" style="margin-top:10px;">
 					<i class="icon-user"></i> Suggested Users<br><br>
 					<?php foreach ($suggested_users as $suggested_user) : ?>
@@ -92,34 +82,42 @@
 				
 				<!-- USER POSTS SECTION -->
 				<div class="post-container">
-				    <?php foreach ($user_posts->result_array() as $post) : ?>
-				        <div class="post-contents">
-				            <div class="img-username">
-    				            <img src="http://placehold.it/35x35"/>
-                                <a href="#" class="link"><?php echo $post['username'] ?></a><br>
-                                <label><?php echo filterPostDate($post['date_created']) ?></label>
-                            </div>
-                            <blockquote>
-                                <p><?php echo filterPost($post['content']) ?></p>
-                            </blockquote>
-                            <div class="pull-right">
-                                <div class="btn-group">
-                                  <?php if (!$is_your_profile) { ?>
-                                      <button class="btn btn-small"><i class="icon-thumbs-up"></i> Like</button>
-                                      <button class="btn btn-small">Repost</button>
-                                  <?php } else { ?>
-                                  
-                                  <button post-id="<?php echo $post['id'] ?>" class="delete-modal btn btn-danger btn-mini">
-                                       <i class="icon-trash icon-white"></i>
-                                  </button>
-                                  <?php } ?>
+                    <?php if ($user_posts_count > 0) { ?>
+                        <?php foreach ($user_posts->result_array() as $post) : ?>
+                            <div class="post-contents">
+                                <div class="img-username">
+                                    <img src="http://placehold.it/35x35"/>
+                                    <a href="#" class="link"><?php echo $post['username'] ?></a><br>
+                                    <label><?php echo filterPostDate($post['date_created']) ?></label>
+                                </div>
+                                <blockquote>
+                                    <p><?php echo filterPost($post['content']) ?></p>
+                                </blockquote>
+                                <div class="pull-right">
+                                    <div class="btn-group">
+                                      <?php if (!$is_your_profile) { ?>
+                                          <button class="btn btn-small"><i class="icon-thumbs-up"></i> Like</button>
+                                          <button class="btn btn-small">Repost</button>
+                                      <?php } else { ?>
+
+                                      <button post-id="<?php echo $post['id'] ?>" class="delete-modal btn btn-danger btn-mini">
+                                           <i class="icon-trash icon-white"></i>
+                                      </button>
+                                      <?php } ?>
+                                    </div>
                                 </div>
                             </div>
-				        </div>
-				    <?php endforeach; ?>
+                        <?php endforeach; ?>
 
-                    <?php if ($user_posts_count > 10) { ?>
-                        <button class="btn btn-block btn-info" id="load-more" last-id="<?php echo $post['id'] ?>">load more</button>
+                        <?php if ($user_posts_count > 10) { ?>
+                            <button class="btn btn-block btn-info" id="load-more" last-id="<?php echo $post['id'] ?>">
+                                load more
+                            </button>
+                        <?php } ?>
+                    <?php } else { ?>
+                        <div id="no-post" style="display: none;" class="alert alert-info pagination-centered">
+                            <strong>No current post</strong>
+                        </div>
                     <?php } ?>
 				</div>
 				<!-- END USER POSTS SECTION -->

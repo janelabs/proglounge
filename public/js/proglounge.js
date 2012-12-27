@@ -5,6 +5,35 @@ $(document).ready(function() {
  * -----------------------------------------------------------
  */
 
+    /* profile pic upload */
+
+    $('#choose-pic').click(function(){
+        $('#upfile').click();
+        return false;
+    });
+
+    $('#upfile').change(function(){
+        var filename = $(this).val().replace("C:\\fakepath\\", "");
+        if (filename == '') {
+            $('#choose-pic').html("Change");
+            $('#btn-upload').attr("disabled", "disabled");
+            $('#btn-upload').addClass("disabled");
+        } else {
+            $('#choose-pic').html(filename);
+            $('#btn-upload').removeAttr("disabled");
+            $('#btn-upload').removeClass("disabled");
+        }
+    });
+
+    /* end profile pic upload */
+
+
+
+    //check if no current user post
+    if ($('.post-contents').size() <= 0) {
+        $('#no-post').fadeIn('fast');
+    }
+
     //syntax highlighting
     $('blockquote pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
 
@@ -268,13 +297,17 @@ $(document).ready(function() {
         var ajax_url = "delete_post";
         var remove_post_div = post_content_obj.parent().parent().parent('div.post-contents');
         console.log(remove_post_div);
+        $('#delete-modal').modal('hide');
         $.post(ajax_url, {post_id:del_id}, function(data){
             json_data = $.parseJSON(data);
             if (json_data.success) {
                 remove_post_div.fadeOut('slow', function(){
                     remove_post_div.remove();
+                    if ($('.post-contents').size() <= 0) {
+                        console.log('pasok');
+                        $('#no-post').fadeIn('fast');
+                    }
                 });
-                $('#delete-modal').modal('hide');
                 return false;
             } else {
                 alert('you mother father hacker!');
@@ -291,7 +324,7 @@ $(document).ready(function() {
         $("#counter").html("You have <strong>"+  remaining+"</strong> characters remaining");
 
         if (post == '') {
-            alert('blank');
+            alert("you can't share nothing");
             return false;
         }
 
@@ -321,6 +354,7 @@ $(document).ready(function() {
                 $('.post-contents').fadeIn('slow');
                 $('blockquote.new pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
                 $('blockquote.new').removeClass('new');
+                $('#no-post').hide();
                 if ($('.post-contents').size() > 10) {
                     $('.post-contents').each(function(i){
                         if (i == 10) {

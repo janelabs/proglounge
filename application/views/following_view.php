@@ -13,17 +13,7 @@
 		<div class="row">
 		    <div class="span4" style="margin-right:0px;">
 		    	<!-- about me and DP section -->
-		    	<div class="thumbnail span3 pull-left profile-picture">
-				   	<img src="http://placehold.it/500x400">
-				   	<div class="caption">
-				   		<h3>About Me</h3>
-				   		<?php if ($user_info['about_me'] != '') { ?>
-	      					<p><?php echo $user_info['about_me'] ?></p>
-	      				<?php } else {?>
-	      					<p>I will say something about me later..</p>
-	      				<?php } ?>
-				   	</div>
-				</div>
+		    	<?php echo $profile_pic; ?>
 				<!-- end about me and DP section -->
 			</div>
 			

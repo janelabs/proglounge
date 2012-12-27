@@ -15,7 +15,6 @@ class Follow extends CI_Controller {
     {
     	$following_id = $this->input->post('id', TRUE);
         $this->follow->followUser($this->user_session['id'], $following_id);
-        echo $this->user_session['id'];
     }
 
     public function unfollowUser()
