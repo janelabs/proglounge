@@ -60,6 +60,9 @@ $route['new_post'] = 'posts/newPost';
 $route['delete_post'] = 'posts/deletePost';
 $route['load_more'] = 'posts/loadMoreUserPost';
 
+//upload
+$route['upload'] = 'upload/index';
+
 //profile
 $route['profile'] = 'error/pageMissing';
 $route['profile/(:any)'] = 'error/pageMissing';

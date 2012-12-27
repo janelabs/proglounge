@@ -83,11 +83,12 @@
         </p>
     </div>
     <div class="modal-footer">
-        <button class="btn" id="back">Back</button>
-        <button id="next" class="btn btn-primary">Next</button>
+        <button class="btn btn-danger" id="back"><i class="icon-chevron-left icon-white"></i> Back</button>
+        <button id="next" class="btn btn-primary">Next <i class="icon-chevron-right icon-white"></i></button>
         <button id="close-reg-form" class="btn" style="display: none;">CLOSE</button>
     </div>
 </div>
+<!-- end register modal -->
 
 <div class="container">
 	<div class="container">

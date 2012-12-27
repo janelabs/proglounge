@@ -67,7 +67,7 @@ Class Follow_model extends CI_Model
 			foreach ($following_ids as $following_id) {
 				$is_you = ($following_id['following_id'] == $follower_id);
 				$is_followed = $this->isFollowed($follower_id, $following_id['following_id']);
-				$in_array = (in_array($following_id['following_id'], $tmp_suggested_ids2));
+				$in_array = (in_array($following_id['following_id'], $tmp_suggested_ids1));
 				
 				if (!$is_you && !$is_followed && !$in_array) {
 					$tmp_suggested_ids1[] = $following_id['following_id'];
@@ -84,7 +84,7 @@ Class Follow_model extends CI_Model
 			foreach ($follower_following_ids as $follower_following_id) {
 				$is_you = ($follower_following_id['following_id'] == $follower_id);
 				$is_followed = $this->isFollowed($follower_id, $follower_following_id['following_id']);
-				$in_array = (in_array($follower_following_id['following_id'], $tmp_suggested_ids2));
+				$in_array = (in_array($follower_following_id['following_id'], $tmp_suggested_ids1));
 				
 				if (!$is_you && !$in_array && !$is_followed) {
 					$tmp_suggested_ids2[] = $follower_following_id['following_id'];
@@ -96,6 +96,17 @@ Class Follow_model extends CI_Model
 		if (count($ids) == 0) {
 			$ids = $this->_getRandomSuggestedIds($follower_id);
 		}
+
+        //return random 5 suggested users.
+        if (count($ids) > 5) {
+            $rand_keys = array_rand($ids, 5);
+            $rand_ids = array();
+            foreach ($rand_keys as $rand_key) {
+                $rand_ids[] = $ids[$rand_key];
+            }
+
+            $ids = $rand_ids;
+        }
 		
 		return $ids;
 		
@@ -130,7 +141,7 @@ Class Follow_model extends CI_Model
 		$rand_ids = array();
 		
 		//get users
-		$query = $this->common->selectWhere(self::USERS_TABLE, $where, $columns);
+		$query = $this->common->selectWhere(self::USERS_TABLE, $where, $columns, FALSE, 10);
 		$tmp_random_ids = $query->result_array();
 		
 		//get following

@@ -38,9 +38,7 @@
             <?php if (!isset($session['id']) || !isset($session['username'])) { ?>
             <div class="pull-right">
                 <button id="register" class="btn btn-primary">Register</button>
-	            <a href="#" class="btn btn-info">Log In</a>
-	            <!--<a href="<?php echo site_url('register'); ?>" class="btn btn-primary">Register</a>
-	            <a href="<?php echo site_url('login'); ?>" class="btn btn-info">Log In</a>-->
+	            <a href="<?php echo site_url('login'); ?>" class="btn btn-info">Log In</a>
             </div>
             <?php } ?>
         </div>

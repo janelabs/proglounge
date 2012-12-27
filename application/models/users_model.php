@@ -112,8 +112,8 @@ Class Users_model extends CI_Model
 			throw new Exception('Param must be an array.');
 		}
 
-		for($i = 0; $i < count($ids); $i++) {
-			$suggested_users[] = $this->retrieveById($ids[$i], $columns);
+		foreach ($ids as $id) {
+			$suggested_users[] = $this->retrieveById($id, $columns);
 		}
 		
 		return array($suggested_users, count($suggested_users));

@@ -28,7 +28,7 @@ Class Common extends CI_Model
 	 * Retrieve data using WHERE clause.
 	 */
 	public function selectWhere($table, $where, $columns = FALSE,
-	                            $order = FALSE, $limit = FALSE, $offset = FALSE)
+	                            $order = FALSE, $limit = FALSE, $offset = 0)
 	{
 		if (!is_array($where)) {
 			throw new Exception('Second param must be an array.');
@@ -47,7 +47,7 @@ Class Common extends CI_Model
 		}
 		
 		// add limit in query
-		if ($limit && $offset) {
+		if ($limit) {
 			$this->db->limit($limit, $offset);
 		}
 
