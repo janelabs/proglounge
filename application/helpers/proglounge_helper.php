@@ -15,7 +15,7 @@ if ( ! function_exists('filterPost'))
         if ($is_start_code && $is_end_code) {
             //get string inside the [code][/code] block
             $code_str = substr($string, $start_pos, $end_pos);
-            $code_str = htmlspecialchars($code_str);
+            //$code_str = htmlspecialchars($code_str);
             $code_str = str_replace("[code]\n", '[code]', $code_str);
             $code_str = str_replace("[code]", $open_highlight, $code_str); 
             $code_str = str_replace("[/code]", $close_highlight, $code_str);

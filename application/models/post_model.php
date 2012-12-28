@@ -7,6 +7,7 @@ Class Post_model extends CI_Model
 {
 	const TABLE_NAME = 'post';
 	const USERS_TABLE = 'users';
+	const FOLLOW_TABLE = 'follow';
 
 	function __construct()
 	{
@@ -45,7 +46,8 @@ Class Post_model extends CI_Model
     {
         return $this->getUserPosts($user_id, FALSE)->num_rows();
     }
-
+	
+	/* load more for profile */
     public function getUserPostsByLoadMore($user_id, $post_id, $limit, $offset = 0)
     {
         $where = array(self::TABLE_NAME.'.user_id' => $user_id,
@@ -60,7 +62,7 @@ Class Post_model extends CI_Model
 
         return array($query, $tmp_user_post['id']);
     }
-
+	
     private function _validateDelete($post_id, $user_id)
     {
         $where = array('id' => $post_id, 'user_id' => $user_id);

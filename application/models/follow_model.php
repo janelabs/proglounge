@@ -9,9 +9,9 @@ Class Follow_model extends CI_Model
 	const USERS_TABLE = 'users';
 	
 	function __construct()
-	{
+    {
 		parent::__construct();
-	}
+    }
 	
 	/*
 	 * Follow me!
@@ -20,10 +20,10 @@ Class Follow_model extends CI_Model
 	 * $following_id : other user.id
 	 */
 	public function followUser($follower_id, $following_id)
-	{
+    {
 		if (empty($follower_id) || empty($following_id)) {
 			throw new Exception('empty parameter');
-		}
+        }
 		
 		if ($this->isFollowed($follower_id, $following_id)) {
 			throw new Exception('Already followed the user');
@@ -53,17 +53,21 @@ Class Follow_model extends CI_Model
 		$this->common->deleteDataWhere(self::TABLE_NAME, $unfollow);
 	}
 	
+    /*
+     * Gets 5 random ids to be suggested on the user
+     * 
+     */
 	public function getSuggestedUserIds($follower_id)
 	{
 		$tmp_suggested_ids1 = array();
 		$tmp_suggested_ids2 = array();
 		
 		//users followed by the current user.
-		$user_following_ids = $this->_getUserFollowingIds($follower_id);
+		$user_following_ids = $this->getUserFollowingIds($follower_id);
 		
 		foreach ($user_following_ids as $user_following_id) {
 			//users followed by the current user's following.
-			$following_ids = $this->_getUserFollowingIds($user_following_id['following_id']);
+			$following_ids = $this->getUserFollowingIds($user_following_id['following_id']);
 			foreach ($following_ids as $following_id) {
 				$is_you = ($following_id['following_id'] == $follower_id);
 				$is_followed = $this->isFollowed($follower_id, $following_id['following_id']);
@@ -76,11 +80,11 @@ Class Follow_model extends CI_Model
 		}
 		
 		//follower of user.
-		$user_follower_ids = $this->_getUserFollowerIds($follower_id);
+		$user_follower_ids = $this->getUserFollowerIds($follower_id);
 		
 		foreach ($user_follower_ids as $user_follower_id) {
 			//users followed by the current user's follower.
-			$follower_following_ids = $this->_getUserFollowingIds($user_follower_id['follower_id']);
+			$follower_following_ids = $this->getUserFollowingIds($user_follower_id['follower_id']);
 			foreach ($follower_following_ids as $follower_following_id) {
 				$is_you = ($follower_following_id['following_id'] == $follower_id);
 				$is_followed = $this->isFollowed($follower_id, $follower_following_id['following_id']);
@@ -109,12 +113,9 @@ Class Follow_model extends CI_Model
         }
 		
 		return $ids;
-		
-	
-		
 	}
 	
-	private function _getUserFollowingIds($follower_id)
+	public function getUserFollowingIds($follower_id)
 	{
 		$where = array('follower_id' => $follower_id);
 		$columns = 'following_id';
@@ -124,7 +125,7 @@ Class Follow_model extends CI_Model
 		return $query->result_array();
 	}
 	
-	private function _getUserFollowerIds($following_id)
+	public function getUserFollowerIds($following_id)
 	{
 		$where = array('following_id' => $following_id);
 		$columns = 'follower_id';
@@ -145,7 +146,7 @@ Class Follow_model extends CI_Model
 		$tmp_random_ids = $query->result_array();
 		
 		//get following
-		$tmp_following_ids = $this->_getUserFollowingIds($follower_id);
+		$tmp_following_ids = $this->getUserFollowingIds($follower_id);
 		$following_ids = array();
 		foreach ($tmp_following_ids as $tmp_following_id) {
 			$following_ids[] = $tmp_following_id['following_id'];
