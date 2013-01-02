@@ -93,19 +93,20 @@
                                 <blockquote>
                                     <p><?php echo filterPost($post['content']) ?></p>
                                 </blockquote>
+                                <!-- Like and repost btn -->
                                 <div class="pull-right">
                                     <div class="btn-group">
-                                      <?php if (!$is_your_profile) { ?>
+                                      <?php if (!$is_your_profile && !$is_guest) { ?>
                                           <button class="btn btn-small"><i class="icon-thumbs-up"></i> Like</button>
                                           <button class="btn btn-small">Repost</button>
-                                      <?php } else { ?>
-
+                                      <?php } elseif (!$is_guest && $is_your_profile) { ?>
                                       <button post-id="<?php echo $post['id'] ?>" class="delete-modal btn btn-danger btn-mini">
                                            <i class="icon-trash icon-white"></i>
                                       </button>
                                       <?php } ?>
                                     </div>
                                 </div>
+                                <!-- end Like and repost btn -->
                             </div>
                         <?php endforeach; ?>
 
