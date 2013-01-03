@@ -1,9 +1,6 @@
 <div class="thumbnail span3 pull-left profile-picture">
     <?php
         $dp = base_url()."public/DP/".$user_info['image'];
-        if ($dp == base_url().'public/DP/') {
-            $dp = base_url()."public/img/default.jpg";
-        }
     ?>
     <img style="width: 220px; height: 220px; background-color: #000" src="<?php echo $dp ?>" class="thumbnails">
     <div class="caption">

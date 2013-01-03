@@ -3,4 +3,5 @@ nbproject/
 .project
 .settings/
 application/logs
-config/config.php
+application/config/config.php
+application/config/database.php

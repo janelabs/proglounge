@@ -24,6 +24,9 @@ Class Account extends CI_Controller
     	$input = $this->input->post(NULL, TRUE);
         $params = array('is_error' => FALSE);
 
+        //default profile picture
+        $input['image'] = "default.jpg";
+
         //encrypt password
     	$input['password'] = md5($input['password']);
     	
@@ -102,12 +105,6 @@ Class Account extends CI_Controller
     	
     	$this->session->unset_userdata($session_data);
     	redirect();
-    }
-    
-    //this is a sample function
-    public function sample_lang()
-    {
-        echo "sample.";
     }
     
 } // class Account
