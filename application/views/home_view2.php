@@ -50,14 +50,14 @@
                     <div id="div-pass" class="control-group">
                         <label class="control-label" for="password">Password</label>
                         <div class="controls">
-                            <input type="password" id="password" name="password" maxlength="20">
+                            <input type="password" id="password" name="password">
                             <span class="help-inline"></span>
                         </div>
                     </div>
                     <div id="div-repass" class="control-group">
                         <label class="control-label" for="repassword">Retype Password</label>
                         <div class="controls">
-                            <input type="password" id="repassword" name="password" maxlength="20">
+                            <input type="password" id="repassword" name="password">
                             <span class="help-inline"></span>
                         </div>
                     </div>

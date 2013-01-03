@@ -1,8 +1,3 @@
-<style>
-    .dp {
-        width: 220px; height: 220px; background-color: #000
-    }
-</style>
 <div class="thumbnail span3 pull-left profile-picture">
     <?php
         $dp = base_url()."public/DP/".$user_info['image'];

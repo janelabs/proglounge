@@ -104,7 +104,7 @@ class Profile extends CI_Controller {
     /* display followers. */
     public function followers($id)
     {
-    	$follow_columns = 'users.id, users.username, users.first_name, users.last_name,
+    	$follow_columns = 'users.id, users.username, users.image, users.first_name, users.last_name,
     	follow.following_id, follow.follower_id';
 
     	//user info
@@ -128,7 +128,7 @@ class Profile extends CI_Controller {
     /* display following. */
     public function following($id)
     {
-    	$follow_columns = 'users.id, users.username, users.first_name, users.last_name,
+    	$follow_columns = 'users.id, users.username, users.image, users.first_name, users.last_name,
     	follow.following_id, follow.follower_id';
 
     	//user info

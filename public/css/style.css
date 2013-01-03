@@ -20,6 +20,18 @@
 	height:70px;
 }
 
+.f_dp {
+    width: 130px; height: 130px; background-color: #000
+}
+
+.p_dp {
+    width: 35px; height: 35px; background-color: #000
+}
+
+.dp {
+    width: 220px; height: 220px; background-color: #000;
+}
+
 /* END PROFILE */
 
 /* HOME */

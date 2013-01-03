@@ -41,7 +41,10 @@
 		    			<?php foreach ($user_following->result('Follow_model') as $user_follow): ?>
 							<li class="span2">
 								<div class="thumbnail">
-									<img src="http://placehold.it/170x170" alt="">
+                                    <?php
+                                        $dp = base_url()."public/DP/".$user_follow->image;
+                                    ?>
+									<img class="f_dp" src="<?php echo $dp ?>" alt="">
 									<p></p>
 									<p class="pagination-centered">
 										<a href="<?php echo site_url($user_follow->username) ?>"

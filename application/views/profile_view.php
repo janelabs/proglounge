@@ -86,7 +86,7 @@
                         <?php foreach ($user_posts->result('Post_like_model') as $post) : ?>
                             <div class="post-contents">
                                 <div class="img-username">
-                                    <img src="http://placehold.it/35x35"/>
+                                    <img class="p_dp" src="<?php echo base_url()."public/DP/".$post->image ?>"/>
                                     <a href="#" class="link"><?php echo $post->username ?></a><br>
                                     <label><?php echo filterPostDate($post->date_created) ?></label>
                                 </div>
