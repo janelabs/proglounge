@@ -1,8 +1,13 @@
+<style>
+    .dp {
+        width: 220px; height: 220px; background-color: #000
+    }
+</style>
 <div class="thumbnail span3 pull-left profile-picture">
     <?php
         $dp = base_url()."public/DP/".$user_info['image'];
     ?>
-    <img style="width: 220px; height: 220px; background-color: #000" src="<?php echo $dp ?>" class="thumbnails">
+    <img src="<?php echo $dp ?>" class="thumbnails dp">
     <div class="caption">
         <?php if ($is_your_profile) { ?>
         <?php if ($this->session->flashdata('upload_status') == "error") { ?>

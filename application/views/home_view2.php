@@ -90,7 +90,7 @@
 </div>
 <!-- end register modal -->
 
-<div class="container">
+<div class="container" style="margin-top: 5px;">
 	<div class="container">
 		<?php echo $carousel ?>
 		<div class="row">
