@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('common');
+$autoload['model'] = array('common', 'notification_model');
 
 
 /* End of file autoload.php */

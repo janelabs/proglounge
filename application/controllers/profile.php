@@ -15,6 +15,7 @@ class Profile extends CI_Controller {
         $this->load->model('Users_model', 'user');
         $this->load->model('Follow_model', 'follow');
         $this->load->model('Post_model', 'posts');
+        $this->load->model('Post_like_model', 'like');
 
         $this->user_info_columns = 'first_name, last_name, username, quote, about_me, image';
 

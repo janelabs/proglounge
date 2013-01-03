@@ -1,7 +1,7 @@
 //fade in image after loading
 function fadeInImg(obj){
-    $(obj   ).attr('style', 'display:none;');
-    $(obj).fadeIn(1000);
+    $(obj).attr('style', 'display:none;');
+    $(obj).fadeIn('fast');
 }
 
 $(document).ready(function() {
@@ -299,6 +299,22 @@ $(document).ready(function() {
 		$(this).attr('class', 'followbtn btn btn-info');
 		$(this).html('<i class="icon-star icon-white"></i> Follow');
 	});
+
+    //like post ajax
+    $('.likebtn').live("click", function(){
+        var ajax_url = "/like";
+        $.post(ajax_url, {post_id:$(this).attr('post-id')});
+        $(this).attr('class', 'unlikebtn btn btn-small btn-primary');
+        $(this).html('<i class="icon-thumbs-down icon-white"></i> Unlike');
+    });
+
+    //like post ajax
+    $('.unlikebtn').live("click", function(){
+        var ajax_url = "/unlike";
+        $.post(ajax_url, {post_id:$(this).attr('post-id')});
+        $(this).attr('class', 'likebtn btn-small btn');
+        $(this).html('<i class="icon-thumbs-up"></i> Like');
+    });
 	
 	//delete post ajax
     $('#confirm-del').live("click", function(){

@@ -43,21 +43,21 @@
                     <div id="div-uname" class="control-group">
                         <label class="control-label" for="username">Username</label>
                         <div class="controls">
-                            <input type="text" id="username" name="username">
+                            <input type="text" id="username" name="username" maxlength="20">
                             <span class="help-inline"></span>
                         </div>
                     </div>
                     <div id="div-pass" class="control-group">
                         <label class="control-label" for="password">Password</label>
                         <div class="controls">
-                            <input type="password" id="password" name="password">
+                            <input type="password" id="password" name="password" maxlength="20">
                             <span class="help-inline"></span>
                         </div>
                     </div>
                     <div id="div-repass" class="control-group">
                         <label class="control-label" for="repassword">Retype Password</label>
                         <div class="controls">
-                            <input type="password" id="repassword" name="password">
+                            <input type="password" id="repassword" name="password" maxlength="20">
                             <span class="help-inline"></span>
                         </div>
                     </div>
@@ -66,13 +66,13 @@
                     <div class="control-group">
                         <label class="control-label" for="quote">Programming quote</label>
                         <div class="controls">
-                            <textarea id="quote" name="quote"></textarea>
+                            <textarea id="quote" name="quote" maxlength="60"></textarea>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="about_me">All about you</label>
                         <div class="controls">
-                            <textarea rows="10" id="about_me" name="about_me"></textarea>
+                            <textarea rows="10" id="about_me" name="about_me" maxlength="1000"></textarea>
                         </div>
                     </div>
                 </div>

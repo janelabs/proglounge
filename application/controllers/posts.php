@@ -12,6 +12,7 @@ class Posts extends CI_Controller {
         $this->load->model('Users_model', 'user');
         $this->load->model('Follow_model', 'follow');
         $this->load->model('Post_model', 'posts');
+        $this->load->model('Post_like_model', 'like');
     }
     
     /*
@@ -54,6 +55,18 @@ class Posts extends CI_Controller {
         
         echo json_encode($params);
         
+    }
+
+    public function likePost()
+    {
+        $post_id = $this->input->post('post_id', TRUE);
+        $this->like->likePost($this->user_session['id'], $post_id);
+    }
+
+    public function unlikePost()
+    {
+        $post_id = $this->input->post('post_id', TRUE);
+        $this->like->unlikePost($this->user_session['id'], $post_id);
     }
 
 }// class Posts

@@ -33,6 +33,15 @@
 				  <li><a href="<?php echo site_url('logout') ?>">Log out</a></li>
 			  </ul>
             </div>
+            <div class="btn-group pull-right" style="margin-right: 5px;">
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    <span class="badge badge-important">6</span>
+                    <span class="caret"></span>
+                </a>
+                <ul id="notif-center" class="dropdown-menu">
+                    <li><a href="javascript:return false">Chorvs started following you.</a></li>
+                </ul>
+            </div>
             <?php } ?>
             
             <?php if (!isset($session['id']) || !isset($session['username'])) { ?>

@@ -83,35 +83,44 @@
 				<!-- USER POSTS SECTION -->
 				<div class="post-container">
                     <?php if ($user_posts_count > 0) { ?>
-                        <?php foreach ($user_posts->result_array() as $post) : ?>
+                        <?php foreach ($user_posts->result('Post_like_model') as $post) : ?>
                             <div class="post-contents">
                                 <div class="img-username">
                                     <img src="http://placehold.it/35x35"/>
-                                    <a href="#" class="link"><?php echo $post['username'] ?></a><br>
-                                    <label><?php echo filterPostDate($post['date_created']) ?></label>
+                                    <a href="#" class="link"><?php echo $post->username ?></a><br>
+                                    <label><?php echo filterPostDate($post->date_created) ?></label>
                                 </div>
                                 <blockquote>
-                                    <p><?php echo filterPost($post['content']) ?></p>
+                                    <p><?php echo filterPost($post->content) ?></p>
                                 </blockquote>
                                 <!-- Like and repost btn -->
                                 <div class="pull-right">
                                     <div class="btn-group">
                                       <?php if (!$is_your_profile && !$is_guest) { ?>
-                                          <button class="btn btn-small"><i class="icon-thumbs-up"></i> Like</button>
-                                          <button class="btn btn-small">Repost</button>
+                                          <?php $is_liked = $post->isLiked($session['id'], $post->id);
+                                              if($is_liked) {
+                                          ?>
+                                              <button class="btn btn-primary btn-small unlikebtn" post-id="<?php echo $post->id ?>">
+                                                  <i class="icon-thumbs-down icon-white"></i> Unlike
+                                              </button>
+                                          <?php } else { ?>
+                                              <button class="btn btn-small likebtn" post-id="<?php echo $post->id ?>">
+                                                  <i class="icon-thumbs-up"></i> Like
+                                              </button>
+                                          <?php } ?>
                                       <?php } elseif (!$is_guest && $is_your_profile) { ?>
-                                      <button post-id="<?php echo $post['id'] ?>" class="delete-modal btn btn-danger btn-mini">
+                                      <button post-id="<?php echo $post->id ?>" class="delete-modal btn btn-danger btn-mini">
                                            <i class="icon-trash icon-white"></i>
                                       </button>
                                       <?php } ?>
                                     </div>
                                 </div>
-                                <!-- end Like and repost btn -->
+                                <!-- end Like and btn -->
                             </div>
                         <?php endforeach; ?>
 
                         <?php if ($user_posts_count > 10) { ?>
-                            <button class="btn btn-block btn-info" id="load-more" last-id="<?php echo $post['id'] ?>">
+                            <button class="btn btn-block btn-info" id="load-more" last-id="<?php echo $post->id ?>">
                                 load more
                             </button>
                         <?php } ?>

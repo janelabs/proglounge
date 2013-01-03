@@ -33,6 +33,8 @@ Class Follow_model extends CI_Model
                         'following_id' => $following_id);
 		
 		$this->common->insertData(self::TABLE_NAME, $follow);
+
+        $this->notification_model->addNotification($following_id, $follower_id, 1);
 	}
 	
 	/*
