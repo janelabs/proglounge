@@ -11,8 +11,6 @@ class Upload extends CI_Controller {
         //set up for uploading
         $config['upload_path'] = 'public/DP/';
         $config['allowed_types'] = 'gif|jpg|png';
-        $config['max_width'] = '220';
-        $config['max_height'] = '220';
         $config['overwrite'] = TRUE;
         $config['file_name'] = 'DP_'.$this->user_session['username'].'0'.$this->user_session['id'];
 
@@ -30,7 +28,7 @@ class Upload extends CI_Controller {
         {
             $this->session->set_flashdata('upload_msg', $this->upload->display_errors());
             $this->session->set_flashdata('upload_status', 'error');
-            redirect(site_url($this->user_session['username']));
+            redirect($_SERVER['HTTP_REFERER']);
         } else {
             $this->session->set_flashdata('upload_msg', 'Upload Successful');
             $this->session->set_flashdata('upload_status', 'success');
@@ -40,7 +38,7 @@ class Upload extends CI_Controller {
             $where = array('id' => $this->user_session['id']);
 
             $this->common->updateData(Users_model::TABLE_NAME, $data, $where);
-            redirect(site_url($this->user_session['username']));
+            redirect($_SERVER['HTTP_REFERER']);
         }
     }
 

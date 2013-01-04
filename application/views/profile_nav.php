@@ -6,11 +6,18 @@
 				<li><a href="<?php echo site_url($uname) ?>">Posts</a></li>
 			    <li><a href="<?php echo site_url($uname.'/followers'); ?>">Followers
 			         <span id="follower-count" class="badge badge-info"><?php echo $follower_count ?></span>
-			        </a></li>
+			        </a>
+                </li>
 			    <li><a href="<?php echo site_url($uname.'/following'); ?>">Following
 			         <span id="following-count" class="badge badge-info"><?php echo $following_count ?></span>
-			        </a></li>
+			        </a>
+                </li>
 			</ul>
+            <?php if ($is_your_profile) { ?>
+                <a class="pull-right btn" href="<?php echo site_url($uname.'/notifications'); ?>">
+                    <i class="icon-bell"></i> Notifications
+                </a>
+            <?php } ?>
 			<?php if (!$is_your_profile && !$is_guest) { ?>
 				<?php if (!$is_followed) { ?>
 				<button user-id="<?php echo $user_id ?>" class="followbtn btn btn-info" 

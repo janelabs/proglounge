@@ -38,16 +38,16 @@ class Profile extends CI_Controller {
     	$this->is_followed = FALSE;
     	if (array_key_exists('id', $this->user_session)) {
     		$this->is_followed = $this->follow->isFollowed($this->user_session['id'], $user['id']);
+
+            //notifications
+            $notif_center = $this->notification_model->getNotificationByUser($this->user_session['id'], 5);
+            $notif_all = $this->notification_model->getNotificationByUser($this->user_session['id'], 0);
+            $this->data['notif_center'] = $notif_center->result_array();
+            $this->data['notif_all'] = $notif_all->result_array();
+            $this->data['new_notif_count'] = $this->notification_model->getNewNotificationCountByUser($this->user_session['id']);
     	}
 
     	/* common data */
-        //notifications
-        $notif_center = $this->notification_model->getNotificationByUser($this->user_session['id'], 5);
-        $notif_all = $this->notification_model->getNotificationByUser($this->user_session['id'], 0);
-
-        $this->data['notif_center'] = $notif_center->result_array();
-        $this->data['notif_all'] = $notif_all->result_array();
-        $this->data['new_notif_count'] = $this->notification_model->getNewNotificationCountByUser($this->user_session['id']);
 
     	if (!$this->is_guest) {
     		//suggested users to follow.
@@ -83,7 +83,9 @@ class Profile extends CI_Controller {
     		$this->following($user['id']);
         } elseif ($method[0] == 'load_more') {
     		$this->loadMoreUserPost($user['id']);
-    	} else {
+    	} elseif ($method[0] == 'notifications') {
+            $this->notifications($user['id']);
+        } else {
             show_404();
         }
     }
@@ -206,6 +208,30 @@ class Profile extends CI_Controller {
         $params['success'] = TRUE;
 
         echo json_encode($params);
+    }
+
+    public function notifications($id)
+    {
+        if (!array_key_exists('id', $this->user_session) || $id != $this->user_session['id']) {
+            show_404();
+        }
+
+        //user info
+        $data['user_info'] = $this->user->retrieveById($id, $this->user_info_columns);
+
+        //get all notifications
+        $data['notifs'] = $this->notification_model->getNotificationByUser($id, 0);
+
+        //merge to common data
+        $data = array_merge($data, $this->data);
+
+        //templates
+        $data['header'] = $this->load->view('header', $data, TRUE);
+        $data['footer'] = $this->load->view('footer', $data, TRUE);
+        $data['profile_pic'] = $this->load->view('profile_pic_view', $data, TRUE);
+        $data['profile_nav'] = $this->load->view('profile_nav', $data, TRUE);
+
+        $this->load->view('notification_view', $data);
     }
 
     /* Checks if you are viewing your profile */

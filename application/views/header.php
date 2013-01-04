@@ -74,7 +74,7 @@
                         <?php } ?>
                             <li class="divider"></li>
                         <?php endforeach; ?>
-                        <a href="#" class="btn" style="margin-top: -12px;">See all notification</a>
+                        <a href="<?php echo site_url($session['username']."/notifications") ?>" class="btn" style="margin-top: -12px;">See all notification</a>
                     <?php } else { ?>
                         <li><a href="#" onclick="return false;">No new notification</a></li>
                     <?php } ?>

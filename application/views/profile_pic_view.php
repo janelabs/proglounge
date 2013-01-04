@@ -14,7 +14,7 @@
                 <?php echo $this->session->flashdata('upload_msg') ?>
             </div>
         <?php } ?>
-        <form action="upload" class="form-search" method="POST" enctype="multipart/form-data">
+        <form action="<?php echo site_url('upload'); ?>" class="form-search" method="POST" enctype="multipart/form-data">
             <a href="#" style="white-space: nowrap; overflow: hidden; max-width: 80px;" id="choose-pic" class="btn">Change</a>
             <input type="submit" id="btn-upload" class="btn disabled btn-info" disabled="disabled" value="Upload"/>
             <div style='height: 0px;width: 0px; overflow:hidden;'>

@@ -446,10 +446,10 @@ $(document).ready(function() {
                     $('#notif-header').html(json_data.notif_info.message);
                     $('#notif-info blockquote pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
                     $('#notif-modal').modal('show');
-                    return false;
                 }
             }
         });
+        return false;
     });
 
     $('#close-reg-form').live("click", function(){
