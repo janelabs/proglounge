@@ -167,36 +167,44 @@ class Profile extends CI_Controller {
         $html = '';
         list($user_posts, $last_id) = $this->posts->getUserPostsByLoadMore($id, $post_id, 10, 0);
         if ($user_posts) {
-            foreach ($user_posts->result_array() as $post) {
+            foreach ($user_posts->result('Post_like_model') as $post) {
                 $html .= '<div class="post-contents" style="display:none;">
                             <div class="img-username">
                               <img src="http://placehold.it/35x35"/>
-                              <a href="#" class="link">'.$post['username'].'</a><br>
-                              <label>'.filterPostDate($post['date_created']).'</label>
+                              <a href="#" class="link">'.$post->username.'</a><br>
+                              <label>'.filterPostDate($post->date_created).'</label>
                             </div>
-                            <blockquote class="loadmore"><p>'.filterPost($post['content']).'</p></blockquote>';
+                            <blockquote class="loadmore"><p>'.filterPost($post->content).'</p></blockquote>';
 
                if ($this->is_your_profile) {
                    $html .= '<div class="pull-right">
                               <div class="btn-group">
-                                <button post-id="'.$post['id'].'" class="delete-modal btn btn-danger btn-mini">
+                                <button post-id="'.$post->id.'" class="delete-modal btn btn-danger btn-mini">
                                   <i class="icon-trash icon-white"></i>
                                 </button>
                               </div>
                             </div>
                           </div>';
                } else {
-                   $html .= '<div class="pull-right">
+                   if ($post->isLiked($this->user_session['id'], $post->id)) {
+                       $html .= '<div class="pull-right">
+                                      <div class="btn-group">
+                                        <button class="btn btn-small btn-primary unlikebtn" post-id="'.$post->id.'"><i class="icon-thumbs-down icon-white"></i> Unlike</button>
+                                      </div>
+                                    </div>
+                                  </div>';
+                   } else {
+                       $html .= '<div class="pull-right">
                               <div class="btn-group">
-                                <button class="btn btn-small"><i class="icon-thumbs-up"></i> Like</button>
-                                <button class="btn btn-small">Repost</button>
+                                <button class="btn btn-small likebtn" post-id="'.$post->id.'"><i class="icon-thumbs-up"></i> Like</button>
                               </div>
                             </div>
                           </div>';
+                   }
                }
             }
-            if ($last_id != $post['id']) {
-                $html .= '<button class="btn btn-block btn-info" id="load-more" last-id="'.$post['id'].'">load more</button>';
+            if ($last_id != $post->id) {
+                $html .= '<button class="btn btn-block btn-info" id="load-more" last-id="'.$post->id.'">load more</button>';
             }
 
         } else {
