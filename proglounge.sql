@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 03, 2013 at 05:00 PM
+-- Generation Time: Jan 04, 2013 at 05:24 PM
 -- Server version: 5.5.28
 -- PHP Version: 5.3.10-1ubuntu3.4
 
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `follow` (
   `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   KEY `follower_id` (`follower_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=12 ;
 
 -- --------------------------------------------------------
 
@@ -58,13 +58,14 @@ CREATE TABLE IF NOT EXISTS `follow` (
 CREATE TABLE IF NOT EXISTS `notification` (
   `id` int(5) NOT NULL AUTO_INCREMENT,
   `user_id` int(5) NOT NULL,
+  `type` tinyint(3) NOT NULL,
   `message` varchar(100) COLLATE utf8_bin NOT NULL,
   `landing_id` int(5) NOT NULL DEFAULT '0',
   `status` tinyint(2) NOT NULL DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=14 ;
 
 -- --------------------------------------------------------
 
@@ -80,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   `date_updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=14 ;
 
 -- --------------------------------------------------------
 
@@ -111,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `post_like` (
   `post_id` int(5) NOT NULL,
   `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=9 ;
 
 -- --------------------------------------------------------
 
