@@ -33,13 +33,51 @@
 				  <li><a href="<?php echo site_url('logout') ?>">Log out</a></li>
 			  </ul>
             </div>
+
+            <!-- show notif modal -->
+            <div id="notif-modal" class="modal hide fade">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="notif-header"></h4>
+                </div>
+                <div class="modal-body">
+                    <p id="notif-info" style="color: black;"></p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-info" data-dismiss="modal" aria-hidden="true">Close</a>
+                </div>
+            </div>
+            <!-- end notif modal -->
+
             <div class="btn-group pull-right" style="margin-right: 5px;">
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                    <span class="badge badge-important">6</span>
+                    <i class="icon-bell"></i>
+                    <?php if ($new_notif_count > 0) { ?>
+                        <span class="badge badge-important"><?php echo $new_notif_count ?></span>
+                    <?php } ?>
                     <span class="caret"></span>
                 </a>
-                <ul id="notif-center" class="dropdown-menu">
-                    <li><a href="javascript:return false">Chorvs started following you.</a></li>
+                <ul id="notif-center" class="dropdown-menu" style="padding-bottom: 0px;">
+                    <?php if (count($notif_center) > 0) { ?>
+                        <?php foreach ($notif_center as $notif) : if ($notif['status'] == 1) { ?>
+                            <li style="background-color: #149bdf;">
+                                <a href="#" style="color: white;" id="<?php echo $notif['id']?>" class="show-notif">
+                                    <?php echo $notif['message'] ?>
+                                </a>
+                            </li>
+                         <?php } else { ?>
+                            <li>
+                                <a href="#" id="<?php echo $notif['id']?>" class="show-notif">
+                                    <?php echo $notif['message'] ?>
+                                </a>
+                            </li>
+                        <?php } ?>
+                            <li class="divider"></li>
+                        <?php endforeach; ?>
+                        <a href="#" class="btn" style="margin-top: -12px;">See all notification</a>
+                    <?php } else { ?>
+                        <li><a href="#" onclick="return false;">No new notification</a></li>
+                    <?php } ?>
                 </ul>
             </div>
             <?php } ?>

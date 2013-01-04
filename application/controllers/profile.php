@@ -41,6 +41,14 @@ class Profile extends CI_Controller {
     	}
 
     	/* common data */
+        //notifications
+        $notif_center = $this->notification_model->getNotificationByUser($this->user_session['id'], 5);
+        $notif_all = $this->notification_model->getNotificationByUser($this->user_session['id'], 0);
+
+        $this->data['notif_center'] = $notif_center->result_array();
+        $this->data['notif_all'] = $notif_all->result_array();
+        $this->data['new_notif_count'] = $this->notification_model->getNewNotificationCountByUser($this->user_session['id']);
+
     	if (!$this->is_guest) {
     		//suggested users to follow.
     		$suggested_ids = $this->follow->getSuggestedUserIds($this->user_session['id']);

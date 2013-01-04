@@ -429,6 +429,29 @@ $(document).ready(function() {
         });
     });
 
+    //notification ajax
+    $('.show-notif').live("click", function(){
+        $.post("/show_notif", {notif_id:$(this).attr('id')}, function(data){
+            json_data = $.parseJSON(data);
+            console.log(json_data);
+            if (!json_data.is_valid) {
+                alert(json_data.error_msg);
+            } else {
+                if (json_data.notif_info.type == 1) {
+                    window.location.replace("/"+json_data.the_follower);
+                }
+
+                if (json_data.notif_info.type == 2) {
+                    $('#notif-info').html('<blockquote>'+json_data.post_info.content+'</blockquote>');
+                    $('#notif-header').html(json_data.notif_info.message);
+                    $('#notif-info blockquote pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
+                    $('#notif-modal').modal('show');
+                    return false;
+                }
+            }
+        });
+    });
+
     $('#close-reg-form').live("click", function(){
         $('#registerModal').modal('hide');
     });

@@ -27,6 +27,14 @@ class Home extends CI_Controller {
     public function index()
     {
     	$id = $this->user_session['id'];
+
+        //notification
+        $notif_center = $this->notification_model->getNotificationByUser($id, 5);
+        $notif_all = $this->notification_model->getNotificationByUser($id, 0);
+
+        $data['notif_center'] = $notif_center->result_array();
+        $data['notif_all'] = $notif_all->result_array();
+        $data['new_notif_count'] = $this->notification_model->getNewNotificationCountByUser($id);
     	
         //list all users
         $data['users'] = $this->user->getUsersOrderBy();

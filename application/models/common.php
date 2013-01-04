@@ -58,7 +58,7 @@ Class Common extends CI_Model
 	 * Retrieve all
 	 */
 	public function retrieve($table, $columns = FALSE, $order = FALSE,
-                             $limit = FALSE, $offset = FALSE)
+                             $limit = FALSE, $offset = 0)
 	{
 		//select columns
 		if ($columns) {
@@ -71,7 +71,7 @@ Class Common extends CI_Model
 		}
 		
 		// add limit in query
-		if ($limit && $offset) {
+		if ($limit) {
 			$this->db->limit($limit, $offset);
 		}
 

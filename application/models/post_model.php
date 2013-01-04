@@ -62,6 +62,18 @@ Class Post_model extends CI_Model
 
         return array($query, $tmp_user_post['id']);
     }
+
+    public function getUserPostById($post_id)
+    {
+        $where = array('id' => $post_id);
+        $query = $this->common->selectWhere(self::TABLE_NAME, $where);
+
+        if ($query) {
+            return $query->row_array();
+        } else {
+            throw new Exception('Database Error');
+        }
+    }
 	
     private function _validateDelete($post_id, $user_id)
     {
