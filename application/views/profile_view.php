@@ -96,6 +96,10 @@
                                 <!-- Like and repost btn -->
                                 <div class="pull-right">
                                     <div class="btn-group">
+                                      <?php
+                                        $like_count = $post->getLikersByPostId($post->id)->num_rows();
+                                      ?>
+                                        <button class="btn btn-small"><?php echo $like_count; ?> like/s.</button>
                                       <?php if (!$is_your_profile && !$is_guest) { ?>
                                           <?php $is_liked = $post->isLiked($session['id'], $post->id);
                                               if($is_liked) {
@@ -109,7 +113,7 @@
                                               </button>
                                           <?php } ?>
                                       <?php } elseif (!$is_guest && $is_your_profile) { ?>
-                                      <button post-id="<?php echo $post->id ?>" class="delete-modal btn btn-danger btn-mini">
+                                      <button post-id="<?php echo $post->id ?>" class="delete-modal btn btn-danger btn-small">
                                            <i class="icon-trash icon-white"></i>
                                       </button>
                                       <?php } ?>

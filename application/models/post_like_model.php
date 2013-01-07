@@ -46,6 +46,23 @@ Class Post_like_model extends CI_Model
         $this->common->deleteDataWhere(self::TABLE_NAME, $unlike);
     }
 
+    public function getLikersByPostId($post_id)
+    {
+        if (empty($post_id)) {
+            throw new Exception('empty parameter');
+        }
+
+        $where = array('post_id' => $post_id);
+
+        $query = $this->common->selectWhere(self::TABLE_NAME, $where);
+
+        if ($query) {
+            return $query;
+        } else {
+            throw new Exception('Databse Error');
+        }
+    }
+
     public function isLiked($liker_user_id, $post_id)
     {
         $where = array('user_id' => $liker_user_id,
