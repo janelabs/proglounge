@@ -3,7 +3,7 @@
     <div class="span12" style="height: 320px;">
         <div id="myCarousel" class="carousel slide">
         <div class="carousel-inner">
-          <div class="item active">
+          <div style="width: 940px; height: 300px;" class="item active">
             <img src="<?php echo base_url() ?>public/img/940x300.gif" alt="">
             <div class="carousel-caption">
               <h4>First Thumbnail label</h4>

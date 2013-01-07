@@ -1,6 +1,5 @@
 //fade in image after loading
 function fadeInImg(obj){
-    $(obj).attr('style', 'display:none;');
     $(obj).fadeIn('fast');
 }
 
@@ -11,6 +10,7 @@ $(document).ready(function() {
  * -----------------------------------------------------------
  */
     //sets fade in to all image
+    $('img').attr('style', 'display:none;');
     $('img').attr('onload', 'fadeInImg(this);');
 
     /* profile pic upload */
