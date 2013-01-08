@@ -110,7 +110,6 @@ $(document).ready(function() {
                 $('#'+(next + 1)).fadeOut(100, function(){
                     if ((next) == 2) {
                         $('#registerModalLabel').html(modalHeader2);
-                        console.log($('#btn-register').html());
                         $('#btn-register').html('Next');
                         $('#btn-register').attr('id', 'next');
                     } else if (next == 1) {
@@ -320,7 +319,6 @@ $(document).ready(function() {
     $('#confirm-del').live("click", function(){
         var ajax_url = "delete_post";
         var remove_post_div = post_content_obj.parent().parent().parent('div.post-contents');
-        console.log(remove_post_div);
         $('#delete-modal').modal('hide');
         $.post(ajax_url, {post_id:del_id}, function(data){
             json_data = $.parseJSON(data);
@@ -328,7 +326,6 @@ $(document).ready(function() {
                 remove_post_div.fadeOut('slow', function(){
                     remove_post_div.remove();
                     if ($('.post-contents').size() <= 0) {
-                        console.log('pasok');
                         $('#no-post').fadeIn('fast');
                     }
                 });
@@ -398,7 +395,6 @@ $(document).ready(function() {
         var id = $(this).attr("last-id");
         $.post(ajax_url, {post_id:id}, function(data){
             json_data = $.parseJSON(data);
-            console.log(json_data);
             if (json_data.success) {
                 $('.post-container').append(json_data.html);
                 $('.post-contents').fadeIn('slow');
@@ -431,12 +427,10 @@ $(document).ready(function() {
 
     //notification ajax
     $('.show-notif').live("click", function(){
-        $(this).parent().attr('style', '');
-        $(this).attr('style', '');
         var notif_count = $('.notif-count').html();
+        var this_btn = $(this);
         $.post("/show_notif", {notif_id:$(this).attr('id')}, function(data){
             json_data = $.parseJSON(data);
-            console.log(json_data);
             if (!json_data.is_valid) {
                 alert(json_data.error_msg);
             } else {
@@ -456,6 +450,15 @@ $(document).ready(function() {
                     if ($('.notif-count').html() == 0) {
                         $('.notif-count').hide();
                     }
+
+                    if (this_btn.attr('data-from') == 'page') {
+                        this_btn.removeClass('btn-primary');
+                    }
+                }
+
+                if ($(this).attr('data-from') == 'header') {
+                    $(this).parent().attr('style', '');
+                    $(this).attr('style', '');
                 }
             }
         });

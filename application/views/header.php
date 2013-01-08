@@ -67,13 +67,13 @@
                     <?php if (count($notif_center) > 0) { ?>
                         <?php foreach ($notif_center as $notif) : if ($notif['status'] == 1) { ?>
                             <li style="background-color: #149bdf;">
-                                <a href="#" style="color: white;" id="<?php echo $notif['id']?>" class="show-notif">
+                                <a href="#" data-from="header" style="color: white;" id="<?php echo $notif['id']?>" class="show-notif">
                                     <?php echo $notif['message'] ?>
                                 </a>
                             </li>
                          <?php } else { ?>
                             <li>
-                                <a href="#" id="<?php echo $notif['id']?>" class="show-notif">
+                                <a href="#" data-from="header" id="<?php echo $notif['id']?>" class="show-notif">
                                     <?php echo $notif['message'] ?>
                                 </a>
                             </li>

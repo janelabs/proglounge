@@ -37,7 +37,7 @@
                 <div class="span8" style="margin-left:0px;">
                     <?php foreach ($notifs->result_array() as $notif) : ?>
                         <?php if ($notif['status'] == 1) { ?>
-                            <button class="btn btn-primary btn-block" style="text-align: left; padding-left: 10px;">
+                            <button class="btn btn-primary btn-block show-notif" data-from="page" style="text-align: left; padding-left: 10px;" id="<?php echo $notif['id'] ?>">
                                 <?php echo $notif['message'] ?>
                                 <?php $iso_date = date("c", strtotime($notif['created_at'])) ?>
                                 <abbr class="pull-right timeago" title="<?php echo $iso_date ?>" style="font-size:13px; padding-right: 10px;">
@@ -45,7 +45,7 @@
                                 </abbr>
                             </button>
                         <?php } else { ?>
-                            <button class="btn btn-block" style="text-align: left; padding-left: 10px;">
+                            <button class="btn btn-block show-notif" data-from="page" style="text-align: left; padding-left: 10px;" id="<?php echo $notif['id'] ?>">
                                 <?php echo $notif['message'] ?>
                                 <?php $iso_date = date("c", strtotime($notif['created_at'])) ?>
                                 <abbr class="pull-right timeago" title="<?php echo $iso_date ?>" style="font-size:13px; padding-right: 10px;">
