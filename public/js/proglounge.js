@@ -118,7 +118,7 @@ $(document).ready(function() {
                     $('#'+next).fadeIn("fast");
                 });
             }
-        })
+        });
 
 
         var is_existing_uname;
@@ -345,7 +345,7 @@ $(document).ready(function() {
         $("#counter").html("You have <strong>"+  remaining+"</strong> characters remaining");
 
         if (post == '') {
-            alert("you can't share nothing");
+            alert("you can't share nothing :|");
             return false;
         }
 
@@ -354,19 +354,21 @@ $(document).ready(function() {
             $('.progress').hide('fast');
             $('#post').val('');
             var post_data = $.parseJSON(data);
+            var dp = $('.p_dp').attr('src');
             var append_data = '<div class="post-contents" style="display:none;">'+
                                 '<div class="img-username">'+
-                                  '<img src="http://placehold.it/35x35"/>'+
+                                  '<img src="'+dp+'"/>'+
                                   '<a href="#" class="link">'+post_data.username+'</a><br>'+
                                   '<label>'+post_data.postdate+'</label>'+
                                 '</div>'+
                                 '<blockquote class="new"><p>'+post_data.content+'</p></blockquote>'+
                                 '<div class="pull-right">'+
                                   '<div class="btn-group">'+
-                                  '<button post-id="'+post_data.post_id+'" class="delete-modal btn btn-danger btn-mini">'+
-                                            '<i class="icon-trash icon-white"></i>'+
-                                      '</button>'+
-                                  '</div>'+
+                                  '<button class="btn btn-small">0 like/s.</button>'+
+                                  '<button post-id="'+post_data.post_id+'" class="delete-modal btn btn-danger btn-small">'+
+                                      '<i class="icon-trash icon-white"></i>'+
+                                  '</button>'+
+                                '</div>'+
                                 '</div>'+
                               '</div>';
 
@@ -401,6 +403,24 @@ $(document).ready(function() {
                 $('blockquote.loadmore pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
                 $('blockquote.loadmore').removeClass('loadmore');
                 $('#load-more').remove();
+            }
+        });
+        return false;
+    });
+
+    //load more post ajax (news feed)
+    $('#load-more-feed').live("click", function(){
+        $(this).html('loading...');
+        var ajax_url = window.location.pathname.split( '/' )[1]+"/load_more_feed";
+        var id = $(this).attr("last-id");
+        $.post(ajax_url, {post_id:id}, function(data){
+            json_data = $.parseJSON(data);
+            if (json_data.success) {
+                $('.post-container').append(json_data.html);
+                $('.post-contents').fadeIn('slow');
+                $('blockquote.loadmore pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
+                $('blockquote.loadmore').removeClass('loadmore');
+                $('#load-more-feed').remove();
             }
         });
         return false;

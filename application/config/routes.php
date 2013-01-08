@@ -45,6 +45,9 @@ $route['404_override'] = 'error/pageMissing';
 $route['follow'] = 'follow/followUser';
 $route['unfollow'] = 'follow/unfollowUser';
 
+//home
+$route['load_more_feed'] = 'home/load_more_feed';
+
 //notification
 $route['show_notif'] = 'notification/showNotificationInfo';
 

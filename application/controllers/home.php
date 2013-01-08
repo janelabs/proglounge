@@ -11,12 +11,19 @@ class Home extends CI_Controller {
         
         $this->load->model('Users_model', 'user');
         $this->load->model('Follow_model', 'follow');
+        $this->load->model('Post_model', 'posts');
+        $this->load->model('Post_like_model', 'post_like');
     }
     
-    public function _remap()
+    public function _remap($func = '')
     {
+        if ($func == 'load_more_feed') {
+            $this->loadMoreFeed();
+            return;
+        }
+
     	if ($this->is_logged_in) {
-    		$this->index($this->user_session['id']);
+    		$this->index();
     	}
     	
     	if (!$this->is_logged_in) {
@@ -58,6 +65,10 @@ class Home extends CI_Controller {
         
         $data['user_id'] = $id;
         $data['session'] = $this->user_session;
+
+        //news feed
+        $data['news_feed'] = $this->posts->getNewsFeedByUser($this->user_session['id'], 10);
+        $data['news_feed_count'] = $this->posts->getNewsFeedByUser($this->user_session['id'], 0)->num_rows();
         
         //templates
         $data['header'] = $this->load->view('header', $data, TRUE);
@@ -65,6 +76,61 @@ class Home extends CI_Controller {
         $data['carousel'] = $this->load->view('carousel', $data, TRUE);
         
         $this->load->view('home_view', $data);
+    }
+
+    public function loadMoreFeed()
+    {
+        $id = $this->user_session['id'];
+
+        $params = array();
+        $params['success'] = FALSE;
+        $post_id = $this->input->post('post_id', TRUE);
+        $html = '';
+        list($user_posts, $last_id) = $this->posts->getNewsFeedByLoadMore($id, $post_id, 10, 0);
+        if ($user_posts) {
+            foreach ($user_posts->result('Post_like_model') as $post) {
+                $dp = base_url()."public/DP/".$post->image;
+                $like_count = $post->getLikersByPostId($post->id)->num_rows();
+                $html .= '<div class="post-contents" style="width: 700px; display:none;">
+                            <div class="img-username">
+                              <img src="'.$dp.'"/>
+                              <a href="'.site_url($post->username).'" class="link">'.$post->username.'</a><br>
+                              <label>'.filterPostDate($post->date_created).'</label>
+                            </div>
+                            <blockquote class="loadmore"><p>'.filterPost($post->content).'</p></blockquote>';
+
+                if ($post->isLiked($this->user_session['id'], $post->id)) {
+                    $html .= '<div class="pull-right">
+                                  <div class="btn-group">
+                                    <button class="btn btn-small">'.$like_count.' like/s.</button>
+                                    <button class="btn btn-small btn-primary unlikebtn" post-id="'.$post->id.'"><i class="icon-thumbs-down icon-white"></i> Unlike</button>
+                                  </div>
+                                </div>
+                              </div>';
+                } else {
+                    $html .= '<div class="pull-right">
+                          <div class="btn-group">
+                            <button class="btn btn-small">'.$like_count.' like/s.</button>
+                            <button class="btn btn-small likebtn" post-id="'.$post->id.'"><i class="icon-thumbs-up"></i> Like</button>
+                          </div>
+                        </div>
+                      </div>';
+                }
+
+            }
+            if ($last_id != $post->id) {
+                $html .= '<button style="width: 700px;" class="btn btn-block btn-info" id="load-more-feed" last-id="'.$post->id.'">load more</button>';
+            }
+
+        } else {
+            echo json_encode($params);
+            return;
+        }
+
+        $params['html'] = $html;
+        $params['success'] = TRUE;
+
+        echo json_encode($params);
     }
     
     public function index2()
