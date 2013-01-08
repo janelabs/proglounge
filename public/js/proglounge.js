@@ -431,6 +431,9 @@ $(document).ready(function() {
 
     //notification ajax
     $('.show-notif').live("click", function(){
+        $(this).parent().attr('style', '');
+        $(this).attr('style', '');
+        var notif_count = $('.notif-count').html();
         $.post("/show_notif", {notif_id:$(this).attr('id')}, function(data){
             json_data = $.parseJSON(data);
             console.log(json_data);
@@ -446,6 +449,13 @@ $(document).ready(function() {
                     $('#notif-header').html(json_data.notif_info.message);
                     $('#notif-info blockquote pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
                     $('#notif-modal').modal('show');
+                }
+
+                if (json_data.notif_info.status == 1) {
+                    $('.notif-count').html(notif_count - 1);
+                    if ($('.notif-count').html() == 0) {
+                        $('.notif-count').hide();
+                    }
                 }
             }
         });

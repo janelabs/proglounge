@@ -168,9 +168,11 @@ class Profile extends CI_Controller {
         list($user_posts, $last_id) = $this->posts->getUserPostsByLoadMore($id, $post_id, 10, 0);
         if ($user_posts) {
             foreach ($user_posts->result('Post_like_model') as $post) {
+                $dp = base_url()."public/DP/".$post->image;
+                $like_count = $post->getLikersByPostId($post->id)->num_rows();
                 $html .= '<div class="post-contents" style="display:none;">
                             <div class="img-username">
-                              <img src="http://placehold.it/35x35"/>
+                              <img src="'.$dp.'"/>
                               <a href="#" class="link">'.$post->username.'</a><br>
                               <label>'.filterPostDate($post->date_created).'</label>
                             </div>
@@ -179,7 +181,8 @@ class Profile extends CI_Controller {
                if ($this->is_your_profile) {
                    $html .= '<div class="pull-right">
                               <div class="btn-group">
-                                <button post-id="'.$post->id.'" class="delete-modal btn btn-danger btn-mini">
+                                <button class="btn btn-small">'.$like_count.' like/s.</button>
+                                <button post-id="'.$post->id.'" class="delete-modal btn btn-danger btn-small">
                                   <i class="icon-trash icon-white"></i>
                                 </button>
                               </div>
@@ -189,6 +192,7 @@ class Profile extends CI_Controller {
                    if ($post->isLiked($this->user_session['id'], $post->id)) {
                        $html .= '<div class="pull-right">
                                       <div class="btn-group">
+                                        <button class="btn btn-small">'.$like_count.' like/s.</button>
                                         <button class="btn btn-small btn-primary unlikebtn" post-id="'.$post->id.'"><i class="icon-thumbs-down icon-white"></i> Unlike</button>
                                       </div>
                                     </div>
@@ -196,6 +200,7 @@ class Profile extends CI_Controller {
                    } else {
                        $html .= '<div class="pull-right">
                               <div class="btn-group">
+                                <button class="btn btn-small">'.$like_count.' like/s.</button>
                                 <button class="btn btn-small likebtn" post-id="'.$post->id.'"><i class="icon-thumbs-up"></i> Like</button>
                               </div>
                             </div>

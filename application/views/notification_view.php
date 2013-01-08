@@ -34,9 +34,25 @@
                 <?php echo $profile_nav ?>
                 <!-- END PROFILE NAV -->
 
-                <div class="span8">
+                <div class="span8" style="margin-left:0px;">
                     <?php foreach ($notifs->result_array() as $notif) : ?>
-                        <?php echo $notif['message']."<br>"; ?>
+                        <?php if ($notif['status'] == 1) { ?>
+                            <button class="btn btn-primary btn-block" style="text-align: left; padding-left: 10px;">
+                                <?php echo $notif['message'] ?>
+                                <?php $iso_date = date("c", strtotime($notif['created_at'])) ?>
+                                <abbr class="pull-right timeago" title="<?php echo $iso_date ?>" style="font-size:13px; padding-right: 10px;">
+                                    <?php echo date("M-d-Y H:i:s", strtotime($notif['created_at'])) ?>
+                                </abbr>
+                            </button>
+                        <?php } else { ?>
+                            <button class="btn btn-block" style="text-align: left; padding-left: 10px;">
+                                <?php echo $notif['message'] ?>
+                                <?php $iso_date = date("c", strtotime($notif['created_at'])) ?>
+                                <abbr class="pull-right timeago" title="<?php echo $iso_date ?>" style="font-size:13px; padding-right: 10px;">
+                                    <?php echo date("M-d-Y H:i:s", strtotime($notif['created_at'])) ?>
+                                </abbr>
+                            </button>
+                        <?php } ?>
                     <?php endforeach; ?>
                 </div>
             </div>

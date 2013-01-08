@@ -9,8 +9,14 @@
     <script type="text/javascript" src="<?php echo base_url('public/js/jquery.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo base_url('public/js/bootstrap.min.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo base_url('public/js/proglounge.js'); ?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('public/js/timeago.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo base_url('public/js/highlight.js'); ?>"></script>
 </head>
+<script>
+    $(document).ready(function() {
+        jQuery("abbr.timeago").timeago();
+    });
+</script>
 <body>
 <div class="navbar navbar-static-top">
     <div class="navbar-inner">
@@ -53,7 +59,7 @@
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="icon-bell"></i>
                     <?php if ($new_notif_count > 0) { ?>
-                        <span class="badge badge-important"><?php echo $new_notif_count ?></span>
+                        <span class="badge badge-important notif-count"><?php echo $new_notif_count ?></span>
                     <?php } ?>
                     <span class="caret"></span>
                 </a>

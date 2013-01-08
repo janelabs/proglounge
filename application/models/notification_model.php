@@ -44,7 +44,7 @@ Class Notification_model extends CI_Model
     public function getNotificationByUser($user_id, $limit)
     {
         $where = array('user_id' => $user_id);
-        $query = $this->common->selectWhere(self::TABLE_NAME, $where, FALSE, 'created_at desc', $limit);
+        $query = $this->common->selectWhere(self::TABLE_NAME, $where, FALSE, 'status desc,  created_at desc', $limit);
         if ($query) {
             return $query;
         } else {
