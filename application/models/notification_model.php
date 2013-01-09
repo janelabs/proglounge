@@ -25,18 +25,26 @@ Class Notification_model extends CI_Model
         if ($type == 1) {
             $msg = $who.self::FOLLOWED;
             $data = array('user_id' => $user_id, 'message' => $msg, 'type' => 1);
-            return $this->common->insertData(self::TABLE_NAME, $data);
         }
 
         if ($type == 2) {
             $msg = $who.self::LIKED;
             $data = array('user_id' => $user_id, 'message' => $msg, 'landing_id' => $post_id, 'type' => 2);
-            return $this->common->insertData(self::TABLE_NAME, $data);
         }
 
         if ($type == 3) {
             $msg = $who.self::COMMENTED;
             $data = array('user_id' => $user_id, 'message' => $msg, 'landing_id' => $post_id, 'type' => 3);
+        }
+
+        $is_exist = FALSE;
+        $notif = $this->common->selectWhere(self::TABLE_NAME, $data);
+        $count = $notif->num_rows();
+        $notif_info = $this->common->selectWhere(self::TABLE_NAME, $data)->row_array();
+
+        if ($count > 0) {
+            return $this->common->updateData(self::TABLE_NAME, array('status' => 1, 'created_at' => date("Y-m-d H:i:s")), array('id' => $notif_info['id']));
+        } else {
             return $this->common->insertData(self::TABLE_NAME, $data);
         }
     }

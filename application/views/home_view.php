@@ -59,7 +59,7 @@
                     load more
                 </button>
             <?php } ?>
-                <div id="no-post" style="display: none;" class="alert alert-info pagination-centered">
+                <div id="no-post" style="display: none; width: 650px;" class="alert alert-info pagination-centered">
                     <strong>No current post</strong>
                 </div>
         </div>
