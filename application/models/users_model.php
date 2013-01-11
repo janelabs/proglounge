@@ -17,6 +17,12 @@ Class Users_model extends CI_Model
 	{
 		return $this->common->insertData(self::TABLE_NAME, $user);
 	}
+
+    public function updateUser($user_id, $data)
+    {
+        $where = array('id' => $user_id);
+        return $this->common->updateData(self::TABLE_NAME, $data, $where);
+    }
 	
 	/*
 	 * Checking of user if existing.

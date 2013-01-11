@@ -36,7 +36,20 @@ Class Account extends CI_Controller
         }
     	
     	echo json_encode($params);
-    	
+    }
+
+    public function updateUser()
+    {
+        $user_session = $this->session->all_userdata();
+        $is_logged_in = $this->mylibrary->checkUserSession($user_session);
+
+        if(!$is_logged_in) {
+            throw new Exception('Invalid Access');
+        }
+
+        $data = $this->input->post(NULL, TRUE);
+
+        $this->user->updateUser($user_session['id'], $data);
     }
 
     public function checkUname()

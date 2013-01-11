@@ -53,6 +53,7 @@ $route['show_notif'] = 'notification/showNotificationInfo';
 
 //account
 $route['login'] = 'account/login';
+$route['update'] = 'account/updateUser';
 $route['validate'] = 'account/checkLogin';
 $route['save_user'] = 'account/saveUser';
 $route['check_uname'] = 'account/checkUname';

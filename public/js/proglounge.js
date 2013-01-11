@@ -277,6 +277,67 @@ $(document).ready(function() {
  * -----------------------------------------------------------
  */
 
+/* -----------------------------------------------------------
+ *  @EDITING PROFILE
+ * -----------------------------------------------------------
+ */
+    //for editing about me
+    $('.p_to_text').live("click", function(){
+        curr_about = $(this).html();
+        text_input = '<textarea id="about_me" name="about_me" class="input-block-level" rows="3" maxlength="300">'+curr_about+'</textarea>';
+        $(this).replaceWith(text_input);
+
+        //focus cursor in the end of the value
+        input_text = $('#about_me');
+        input_text.focus();
+        tmp_str = input_text.val();
+        input_text.val('');
+        input_text.val(tmp_str);
+
+        input_text.keypress(function(e){
+            if (e.which == 13 && !e.shiftKey) {
+                input_text.addClass('disabled');
+                input_text.attr('disabled', 'disabled');
+                back_to_p = '<p class="p_to_text">'+input_text.val()+'</p>';
+
+                $.post('update', {about_me:input_text.val()}, function(){
+                    input_text.replaceWith(back_to_p);
+                });
+            }
+        });
+    });
+
+    //for editing quote
+    $('.p_to_text_q').live("click", function(){
+        curr_about = $(this).html();
+        text_input = '<textarea id="quote" name="quote" class="input-block-level" rows="3" maxlength="60">'+curr_about+'</textarea>';
+        $(this).replaceWith(text_input);
+
+        //focus cursor in the end of the value
+        input_text = $('#quote');
+        input_text.focus();
+        tmp_str = input_text.val();
+        input_text.val('');
+        input_text.val(tmp_str);
+
+        input_text.keypress(function(e){
+            if (e.which == 13 && !e.shiftKey) {
+                input_text.addClass('disabled');
+                input_text.attr('disabled', 'disabled');
+                back_to_p = '<span class="p_to_text_q">'+input_text.val()+'</span>';
+
+                $.post('update', {quote:input_text.val()}, function(){
+                    input_text.replaceWith(back_to_p);
+                });
+            }
+        });
+    });
+
+/* -----------------------------------------------------------
+ *  @END EDITING PROFILE
+ * -----------------------------------------------------------
+ */
+
 
 /* -----------------------------------------------------------
  *  @JQUERY AJAX 
