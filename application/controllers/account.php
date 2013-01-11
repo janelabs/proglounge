@@ -81,8 +81,9 @@ Class Account extends CI_Controller
 		list($is_existing_user, $user) = $this->user->checkUser($user_input['username'], $user_input['password']);
 		
 		if ($is_existing_user) {
-			$session_data = array('id' => $user[0]['id'],
-                                  'username' => $user[0]['username']);
+			$session_data = array('id' => $user['id'],
+                                  'username' => $user['username'],
+                                  'image' => $user['image']);
 			$this->session->set_userdata($session_data);
 			redirect($user[0]['username']);
 		} else {

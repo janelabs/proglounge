@@ -8,6 +8,7 @@ Class Post_model extends CI_Model
 	const TABLE_NAME = 'post';
 	const USERS_TABLE = 'users';
 	const FOLLOW_TABLE = 'follow';
+    const NEWS_FEED_COUNT = 10;
 
 	function __construct()
 	{
@@ -67,29 +68,22 @@ Class Post_model extends CI_Model
     public function getNewsFeedByLoadMore($user_id, $post_id, $limit, $offset = 0)
     {
         $t_follow = Follow_model::TABLE_NAME;
-        $t_post = Post_model::TABLE_NAME;
+        $t_post = self::TABLE_NAME;
+        $t_users = self::USERS_TABLE;
 
-        $where = array($t_follow.'.follower_id' => $user_id,
-                       self::TABLE_NAME.'.id <' => $post_id);
+        $sql_query = "SELECT DISTINCT {$t_users}.username, {$t_users}.image, post.*
+                      FROM ( {$t_follow} LEFT JOIN {$t_users} ON {$t_users}.id = {$t_follow}.following_id )
+                      LEFT JOIN {$t_post} ON {$t_follow}.following_id = post.user_id
+                      WHERE ( {$t_follow}.follower_id = {$user_id} AND {$t_post}.id < {$post_id} )
+                      OR ( {$t_post}.user_id = {$user_id} AND {$t_post}.id < {$post_id} )
+                      ORDER BY {$t_post}.date_created DESC limit {$limit}";
 
-        $on_1 = self::USERS_TABLE.'.id = '.$t_follow.'.following_id';
-        $on_2 = $t_follow.'.following_id = '.$t_post.'.user_id';
-        $columns = self::USERS_TABLE.'.username, '.self::USERS_TABLE.'.image, '.$t_post.'.*';
+        log_message('info', $sql_query);
 
         $tmp_last_post = $this->getNewsFeedByUser($user_id, 0)->last_row('array');
+        $query = $this->db->query($sql_query);
 
-        $this->db->select($columns);
-        $this->db->from($t_follow);
-        $this->db->join(self::USERS_TABLE, $on_1, 'join');
-        $this->db->join($t_post, $on_2, 'join');
-        $this->db->where($where);
-        $this->db->order_by(self::TABLE_NAME.'.date_created desc');
-
-        if ($limit) {
-            $this->db->limit($limit, $offset);
-        }
-
-        return array($this->db->get(), $tmp_last_post['id']);
+        return array($query, $tmp_last_post['id']);
     }
 
     public function getNewsFeedByUser($user_id, $limit, $offset = 0)
@@ -98,6 +92,7 @@ Class Post_model extends CI_Model
         $t_post = Post_model::TABLE_NAME;
 
         $where = array($t_follow.'.follower_id' => $user_id);
+        $where2 = array($t_post.'.user_id' => $user_id);
         $on_1 = self::USERS_TABLE.'.id = '.$t_follow.'.following_id';
         $on_2 = $t_follow.'.following_id = '.$t_post.'.user_id';
         $columns = self::USERS_TABLE.'.username, '.self::USERS_TABLE.'.image, '.$t_post.'.*';
@@ -107,11 +102,14 @@ Class Post_model extends CI_Model
         $this->db->join(self::USERS_TABLE, $on_1, 'join');
         $this->db->join($t_post, $on_2, 'join');
         $this->db->where($where);
+        $this->db->or_where($where2);
         $this->db->order_by(self::TABLE_NAME.'.date_created desc');
 
         if ($limit) {
             $this->db->limit($limit, $offset);
         }
+
+        $this->db->distinct();
 
         return $this->db->get();
     }

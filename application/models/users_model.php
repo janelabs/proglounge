@@ -29,7 +29,7 @@ Class Users_model extends CI_Model
 		
 		$query = $this->common->selectWhere(self::TABLE_NAME, $where, $columns);
 		$is_exists = ($query->num_rows() > 0);
-		$user_info = $query->result_array();
+		$user_info = $query->row_array();
 		
 		return array($is_exists, $user_info);
 	}

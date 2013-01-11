@@ -67,7 +67,7 @@ class Home extends CI_Controller {
         $data['session'] = $this->user_session;
 
         //news feed
-        $data['news_feed'] = $this->posts->getNewsFeedByUser($this->user_session['id'], 10);
+        $data['news_feed'] = $this->posts->getNewsFeedByUser($this->user_session['id'], Post_model::NEWS_FEED_COUNT);
         $data['news_feed_count'] = $this->posts->getNewsFeedByUser($this->user_session['id'], 0)->num_rows();
         
         //templates

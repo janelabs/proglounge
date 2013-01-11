@@ -128,11 +128,10 @@
                                 load more
                             </button>
                         <?php } ?>
-                    <?php } else { ?>
-                        <div id="no-post" style="display: none;" class="alert alert-info pagination-centered">
-                            <strong>No current post</strong>
-                        </div>
                     <?php } ?>
+                    <div id="no-post" style="display: none;" class="alert alert-info pagination-centered">
+                        <strong>No current post</strong>
+                    </div>
 				</div>
 				<!-- END USER POSTS SECTION -->
 		    </div>

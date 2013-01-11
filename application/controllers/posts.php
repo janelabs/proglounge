@@ -36,6 +36,7 @@ class Posts extends CI_Controller {
         $now = date("Y-m-d H:i:s");
         $params['postdate'] = filterPostDate($now);
         $params['post_id'] = $this->db->insert_id();
+        $params['user_image'] = base_url()."public/DP/".$this->user_session['image'];
         
         echo json_encode($params);
     }

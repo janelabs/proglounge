@@ -10,12 +10,16 @@
 		</div>
 		<!-- share -->
 		<div class="span9">
-			<div class="post-div well">
-				<textarea rows="3" class="input-block-level	"></textarea>
-				<button id="share" class="btn btn-large btn-info btn-block">
-					<i class="icon-share icon-white"></i> Share your idea
-				</button>
-			</div>
+            <div class="post-div well">
+                <label id="counter"></label>
+                <textarea rows="3" class="input-block-level" id="post"></textarea>
+                <div class="progress progress-striped active" style="height:10px; display:none;">
+                    <div class="bar" style="width:100%"></div>
+                </div>
+                <button class="btn btn-large btn-info btn-block" id="share">
+                    <i class="icon-share icon-white"></i> Share your idea
+                </button>
+            </div>
 		</div>
 		<!-- end share -->
 		<!-- posts -->

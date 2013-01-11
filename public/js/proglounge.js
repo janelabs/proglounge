@@ -325,7 +325,8 @@ $(document).ready(function() {
             if (json_data.success) {
                 remove_post_div.fadeOut('slow', function(){
                     remove_post_div.remove();
-                    if ($('.post-contents').size() <= 0) {
+                    console.log($('.post-contents').size());
+                    if ($('.post-contents').size() < 1) {
                         $('#no-post').fadeIn('fast');
                     }
                 });
@@ -354,10 +355,9 @@ $(document).ready(function() {
             $('.progress').hide('fast');
             $('#post').val('');
             var post_data = $.parseJSON(data);
-            var dp = $('.p_dp').attr('src');
             var append_data = '<div class="post-contents" style="display:none;">'+
                                 '<div class="img-username">'+
-                                  '<img src="'+dp+'"/>'+
+                                  '<img src="'+post_data.user_image+'"/>'+
                                   '<a href="#" class="link">'+post_data.username+'</a><br>'+
                                   '<label>'+post_data.postdate+'</label>'+
                                 '</div>'+
@@ -393,6 +393,8 @@ $(document).ready(function() {
     //load more post ajax (profile)
     $('#load-more').live("click", function(){
         $(this).html('loading...');
+        $(this).addClass('disabled');
+        $(this).attr('disabled', 'disabled');
         var ajax_url = window.location.pathname.split( '/' )[1]+"/load_more";
         var id = $(this).attr("last-id");
         $.post(ajax_url, {post_id:id}, function(data){
@@ -411,7 +413,9 @@ $(document).ready(function() {
     //load more post ajax (news feed)
     $('#load-more-feed').live("click", function(){
         $(this).html('loading...');
-        var ajax_url = window.location.pathname.split( '/' )[1]+"/load_more_feed";
+        $(this).addClass('disabled');
+        $(this).attr('disabled', 'disabled');
+        var ajax_url = "load_more_feed";
         var id = $(this).attr("last-id");
         $.post(ajax_url, {post_id:id}, function(data){
             json_data = $.parseJSON(data);
