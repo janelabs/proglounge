@@ -1,6 +1,6 @@
 <?php echo $header ?>
 <?php echo $modals ?>
-<div class="container">
+<div class="container" style="margin-top:20px;">
 	<div class="row">
 		<?php if (array_key_exists('is_new', $session) && $session['is_new'] && $is_your_profile) { ?>
 		<div class="span12">
@@ -120,7 +120,26 @@
                                     </div>
                                 </div>
                                 <!-- end Like and btn -->
+
+                                <!-- comment section -->
+                                <div class="comment-box">
+                                    <div class="span7">
+                                        <div class="img-username">
+                                            <img src="http://placehold.it/35x35"/>
+                                            <a href="#" class="link"><?php echo $post->username ?></a><br>
+                                            <label><?php echo filterPostDate($post->date_created) ?></label>
+                                        </div>
+                                        <blockquote>
+                                            <p>Sample comment here :)</p>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                                <div class="commnet-txtbox">
+                                    <input type="text" class="input-block-level" placeholder="write a comment...">
+                                </div>
+                                <!-- end comment section -->
                             </div>
+                            
                         <?php endforeach; ?>
 
                         <?php if ($user_posts_count > 10) { ?>

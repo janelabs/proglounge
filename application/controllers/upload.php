@@ -38,6 +38,10 @@ class Upload extends CI_Controller {
             $where = array('id' => $this->user_session['id']);
 
             $this->common->updateData(Users_model::TABLE_NAME, $data, $where);
+            
+            //change image session
+            $this->session->set_userdata('image', $upload_data['file_name']);
+            
             redirect($_SERVER['HTTP_REFERER']);
         }
     }

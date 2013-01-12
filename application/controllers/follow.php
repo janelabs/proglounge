@@ -13,14 +13,22 @@ class Follow extends CI_Controller {
 
     public function followUser()
     {
-    	$following_id = $this->input->post('id', TRUE);
-        $this->follow->followUser($this->user_session['id'], $following_id);
+        try{
+            $following_id = $this->input->post('id', TRUE);
+            $this->follow->followUser($this->user_session['id'], $following_id);
+        } catch (Exception $e) {
+            die('Error: '.$e->getMessage());
+        }
     }
 
     public function unfollowUser()
     {
-    	$following_id = $this->input->post('id', TRUE);
-        $this->follow->unfollowUser($this->user_session['id'], $following_id);
+    	try{
+    	   $following_id = $this->input->post('id', TRUE);
+            $this->follow->unfollowUser($this->user_session['id'], $following_id);
+        } catch (Exception $e) {
+            die('Error: '.$e->getMessage());
+        }
     }
 
 }
