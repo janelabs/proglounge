@@ -1,5 +1,6 @@
 //fade in image after loading
 function fadeInImg(obj){
+    $(obj).attr('style', 'display:none;');
     $(obj).fadeIn('fast');
 }
 
@@ -10,7 +11,6 @@ $(document).ready(function() {
  * -----------------------------------------------------------
  */
     //sets fade in to all image
-    $('img').attr('style', 'display:none;');
     $('img').attr('onload', 'fadeInImg(this);');
 
     /* profile pic upload */
@@ -300,7 +300,7 @@ $(document).ready(function() {
                 input_text.attr('disabled', 'disabled');
                 back_to_p = '<p class="p_to_text">'+input_text.val()+'</p>';
 
-                $.post('update', {about_me:input_text.val()}, function(){
+                $.post('/update', {about_me:input_text.val()}, function(){
                     input_text.replaceWith(back_to_p);
                 });
             }
@@ -326,7 +326,7 @@ $(document).ready(function() {
                 input_text.attr('disabled', 'disabled');
                 back_to_p = '<span class="p_to_text_q">'+input_text.val()+'</span>';
 
-                $.post('update', {quote:input_text.val()}, function(){
+                $.post('/update', {quote:input_text.val()}, function(){
                     input_text.replaceWith(back_to_p);
                 });
             }

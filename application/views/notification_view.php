@@ -19,15 +19,7 @@
 
             <div class="span8" style="margin-left:0px;">
                 <!-- PROFILE HEADER SECTION -->
-                <div class="hero-unit profile-header">
-                    <h4>function </h4>
-                    <h1 style="margin-left:0px;"><?php echo $user_info['username']; ?>() </h1>
-                    <?php if ($user_info['quote'] != '') { ?>
-                    <p>{ <?php echo $user_info['quote'] ?> }</p>
-                    <?php } else { ?>
-                    <p>{ " Don't mess with the programmers... " }</p>
-                    <?php } ?>
-                </div>
+                <?php echo $profile_header ?>
                 <!-- END PROFILE HEADER SECTION -->
 
                 <!-- PROFILE NAV -->

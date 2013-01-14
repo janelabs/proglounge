@@ -2,15 +2,6 @@
 <?php echo $modals ?>
 <div class="container">
 	<div class="row">
-		<?php if (array_key_exists('is_new', $session) && $session['is_new'] && $is_your_profile) { ?>
-		<div class="span12">
-			<div class="alert alert-info">
-				<button type="button" class="close" data-dismiss="alert">×</button>
-				<h2>Welcome <?php echo $user_info['username']; ?>!</h2>
-			</div>
-		</div>
-		<?php } ?>
-		
 		<div class="row">
 		    <div class="span4" style="margin-right:0px;">
 		    	<!-- ABOUT ME AND DP SECTION -->
@@ -50,15 +41,7 @@
 			
 			<div class="span8" style="margin-left:0px;">
 				<!-- PROFILE HEADER SECTION -->
-		    	<div class="hero-unit profile-header">
-		    		<h4>function </h4>
-		    		<h1 style="margin-left:0px;"><?php echo $user_info['username']; ?>() </h1>
-		    		<?php if ($user_info['quote'] != '') { ?>
-		    			<p>{ <span class="<?php echo ($is_your_profile) ? "p_to_text_q" : "" ?>"><?php echo $user_info['quote'] ?></span> }</p>
-		    		<?php } else { ?>
-		    			<p>{ <span class="<?php echo ($is_your_profile) ? "p_to_text_q" : "" ?>">Don't mess with the programmers...</span> }</p>
-		    		<?php } ?>
-		    	</div>
+		    	<?php echo $profile_header; ?>
 		    	<!-- END PROFILE HEADER SECTION -->
 		    	 
 		    	<!-- PROFILE NAV -->
@@ -93,7 +76,7 @@
                                 <blockquote>
                                     <p><?php echo filterPost($post->content) ?></p>
                                 </blockquote>
-                                <!-- Like and repost btn -->
+                                <!-- Like and Comment -->
                                 <div class="pull-right">
                                     <div class="btn-group">
                                       <?php
@@ -119,7 +102,28 @@
                                       <?php } ?>
                                     </div>
                                 </div>
-                                <!-- end Like and btn -->
+
+                                <!-- comment section -->
+                                <div class="comment-box">
+                                    <div class="span7 comment_sec">
+                                        <div class="img-username-comment">
+                                            <img src="http://placehold.it/35x35"/>
+                                            <a href="#" class="link"><?php echo $post->username ?></a><br>
+                                            <label><?php echo filterPostDate($post->date_created) ?></label>
+                                        </div>
+                                        <blockquote>
+                                            <p style="font-size: 13px;">Sample comment here :)</p>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                                <?php if (!$is_guest) { ?>
+                                    <div class="comment-txtbox">
+                                        <input type="text" class="input-block-level" placeholder="write a comment...">
+                                    </div>
+                                <?php } ?>
+                                <!-- end comment section -->
+
+                                <!-- end Like and Comment -->
                             </div>
                         <?php endforeach; ?>
 

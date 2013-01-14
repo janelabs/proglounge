@@ -107,6 +107,7 @@ class Profile extends CI_Controller {
         $data['modals'] = $this->load->view('modals_view', $data, TRUE);
         $data['profile_pic'] = $this->load->view('profile_pic_view', $data, TRUE);
     	$data['profile_nav'] = $this->load->view('profile_nav', $data, TRUE);
+        $data['profile_header'] = $this->load->view('profile_header_view', $data, TRUE);
 
     	$this->load->view('profile_view', $data);
     }
@@ -131,6 +132,7 @@ class Profile extends CI_Controller {
     	$data['footer'] = $this->load->view('footer', $data, TRUE);
         $data['profile_pic'] = $this->load->view('profile_pic_view', $data, TRUE);
     	$data['profile_nav'] = $this->load->view('profile_nav', $data, TRUE);
+        $data['profile_header'] = $this->load->view('profile_header_view', $data, TRUE);
 
     	$this->load->view('follower_view', $data);
     }
@@ -155,6 +157,7 @@ class Profile extends CI_Controller {
     	$data['footer'] = $this->load->view('footer', $data, TRUE);
         $data['profile_pic'] = $this->load->view('profile_pic_view', $data, TRUE);
     	$data['profile_nav'] = $this->load->view('profile_nav', $data, TRUE);
+        $data['profile_header'] = $this->load->view('profile_header_view', $data, TRUE);
 
     	$this->load->view('following_view', $data);
     }
@@ -243,6 +246,7 @@ class Profile extends CI_Controller {
         $data['footer'] = $this->load->view('footer', $data, TRUE);
         $data['profile_pic'] = $this->load->view('profile_pic_view', $data, TRUE);
         $data['profile_nav'] = $this->load->view('profile_nav', $data, TRUE);
+        $data['profile_header'] = $this->load->view('profile_header_view', $data, TRUE);
 
         $this->load->view('notification_view', $data);
     }
