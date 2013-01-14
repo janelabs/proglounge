@@ -1,4 +1,5 @@
 <?php echo $header; ?>
+<?php echo $modals; ?>
 <br>
 <div class="container">
 	<div class="row">
@@ -16,7 +17,7 @@
                 <div class="progress progress-striped active" style="height:10px; display:none;">
                     <div class="bar" style="width:100%"></div>
                 </div>
-                <button class="btn btn-large btn-info btn-block" id="share">
+                <button class="btn btn-large btn-info btn-block" id="share_home">
                     <i class="icon-share icon-white"></i> Share your idea
                 </button>
             </div>
@@ -31,30 +32,36 @@
                         <a href="<?php echo site_url($post->username) ?>" class="link"><?php echo $post->username ?></a><br>
                         <label><?php echo filterPostDate($post->date_created) ?></label>
                     </div>
-                    <blockquote>
+                    <blockquote style="width: 700px;">
                         <p><?php echo filterPost($post->content) ?></p>
                     </blockquote>
-                    <!-- Like and repost btn -->
+                    <!-- Like and Comment -->
                     <div class="pull-right">
                         <div class="btn-group">
                             <?php
                             $like_count = $post->getLikersByPostId($post->id)->num_rows();
                             ?>
                             <button class="btn btn-small"><?php echo $like_count; ?> like/s.</button>
-                            <?php $is_liked = $post->isLiked($session['id'], $post->id);
-                                if($is_liked) {
-                            ?>
-                            <button class="btn btn-primary btn-small unlikebtn" post-id="<?php echo $post->id ?>">
-                                <i class="icon-thumbs-down icon-white"></i> Unlike
-                            </button>
-                            <?php } else { ?>
-                            <button class="btn btn-small likebtn" post-id="<?php echo $post->id ?>">
-                                <i class="icon-thumbs-up"></i> Like
-                            </button>
+                            <?php if ($is_logged_id && ($session['id'] == $post->user_id)) { ?>
+                                <button post-id="<?php echo $post->id ?>" class="delete-modal btn btn-small">
+                                    &times;
+                                </button>
+                             <?php } else { ?>
+                                <?php $is_liked = $post->isLiked($session['id'], $post->id);
+                                    if($is_liked) {
+                                ?>
+                                <button class="btn btn-primary btn-small unlikebtn" post-id="<?php echo $post->id ?>">
+                                    <i class="icon-thumbs-down icon-white"></i> Unlike
+                                </button>
+                                <?php } else { ?>
+                                <button class="btn btn-small likebtn" post-id="<?php echo $post->id ?>">
+                                    <i class="icon-thumbs-up"></i> Like
+                                </button>
+                                <?php } ?>
                             <?php } ?>
                         </div>
                     </div>
-                    <!-- end Like and btn -->
+                    <!-- end Like and Comment -->
                 </div>
                 <?php endforeach; ?>
 

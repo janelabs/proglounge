@@ -25,7 +25,7 @@
 						<div class="suggested-content">
 							<div class="row">
 								<div class="span1">
-								<img src="http://placehold.it/60x60" class="thumbnail" height="60" width="60">
+								<img src="<?php echo base_url()."public/DP/".$suggested_user['image'] ?>" class="thumbnail su_dp">
 								</div>
 								<div class="span2">
 								<a href="<?php echo site_url($suggested_user['username']) ?>"
@@ -113,8 +113,8 @@
                                               </button>
                                           <?php } ?>
                                       <?php } elseif (!$is_guest && $is_your_profile) { ?>
-                                      <button post-id="<?php echo $post->id ?>" class="delete-modal btn btn-danger btn-small">
-                                           <i class="icon-trash icon-white"></i>
+                                      <button post-id="<?php echo $post->id ?>" class="delete-modal btn btn-small">
+                                          &times;
                                       </button>
                                       <?php } ?>
                                     </div>

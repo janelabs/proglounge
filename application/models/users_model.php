@@ -111,7 +111,7 @@ Class Users_model extends CI_Model
 	 */
 	public function getSuggestedUsersInfo($ids, $user_id)
 	{
-		$columns = 'id, last_name, first_name, username';
+		$columns = 'id, last_name, first_name, username, image';
 		$suggested_users = array();
 		
 		if (!is_array($ids)) {

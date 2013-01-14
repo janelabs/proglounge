@@ -74,6 +74,8 @@ class Home extends CI_Controller {
         $data['header'] = $this->load->view('header', $data, TRUE);
         $data['footer'] = $this->load->view('footer', $data, TRUE);
         $data['carousel'] = $this->load->view('carousel', $data, TRUE);
+        $data['modals'] = $this->load->view('modals_view', $data, TRUE);
+        $data['is_logged_id'] = $this->is_logged_in;
         
         $this->load->view('home_view', $data);
     }
@@ -97,24 +99,39 @@ class Home extends CI_Controller {
                               <a href="'.site_url($post->username).'" class="link">'.$post->username.'</a><br>
                               <label>'.filterPostDate($post->date_created).'</label>
                             </div>
-                            <blockquote class="loadmore"><p>'.filterPost($post->content).'</p></blockquote>';
-
-                if ($post->isLiked($this->user_session['id'], $post->id)) {
+                            <blockquote class="loadmore" style="width: 680px;"><p>'.filterPost($post->content).'</p></blockquote>';
+                if ($this->is_logged_in && ($this->user_session['id'] == $post->user_id)) {
                     $html .= '<div class="pull-right">
-                                  <div class="btn-group">
+                                <div class="btn-group">
                                     <button class="btn btn-small">'.$like_count.' like/s.</button>
-                                    <button class="btn btn-small btn-primary unlikebtn" post-id="'.$post->id.'"><i class="icon-thumbs-down icon-white"></i> Unlike</button>
-                                  </div>
+                                    <button post-id="'.$post->id.'" class="delete-modal btn btn-small">
+                                        &times;
+                                    </button>
                                 </div>
-                              </div>';
+                             </div>
+                             </div>';
                 } else {
-                    $html .= '<div class="pull-right">
-                          <div class="btn-group">
-                            <button class="btn btn-small">'.$like_count.' like/s.</button>
-                            <button class="btn btn-small likebtn" post-id="'.$post->id.'"><i class="icon-thumbs-up"></i> Like</button>
-                          </div>
-                        </div>
-                      </div>';
+                    if ($post->isLiked($this->user_session['id'], $post->id)) {
+                        $html .= '<div class="pull-right">
+                                      <div class="btn-group">
+                                        <button class="btn btn-small">'.$like_count.' like/s.</button>
+                                        <button class="btn btn-small btn-primary unlikebtn" post-id="'.$post->id.'">
+                                            <i class="icon-thumbs-down icon-white"></i> Unlike
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>';
+                    } else {
+                        $html .= '<div class="pull-right">
+                              <div class="btn-group">
+                                <button class="btn btn-small">'.$like_count.' like/s.</button>
+                                <button class="btn btn-small likebtn" post-id="'.$post->id.'">
+                                    <i class="icon-thumbs-up"></i> Like
+                                </button>
+                              </div>
+                            </div>
+                          </div>';
+                    }
                 }
 
             }

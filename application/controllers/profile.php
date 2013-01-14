@@ -57,7 +57,7 @@ class Profile extends CI_Controller {
     		     $this->user->getSuggestedUsersInfo($suggested_ids, $this->user_session['id']);
     	}
 
-        $follow_columns = 'users.id, users.username, users.first_name, users.last_name,
+        $follow_columns = 'users.id, users.username, users.image, users.first_name, users.last_name,
         follow.following_id, follow.follower_id';
         //followers
         $user_follower = $this->user->getUserFollowers($user['id'], $follow_columns);
@@ -182,8 +182,8 @@ class Profile extends CI_Controller {
                    $html .= '<div class="pull-right">
                               <div class="btn-group">
                                 <button class="btn btn-small">'.$like_count.' like/s.</button>
-                                <button post-id="'.$post->id.'" class="delete-modal btn btn-danger btn-small">
-                                  <i class="icon-trash icon-white"></i>
+                                <button post-id="'.$post->id.'" class="delete-modal btn btn-small">
+                                    &times;
                                 </button>
                               </div>
                             </div>

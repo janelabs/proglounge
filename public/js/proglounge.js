@@ -426,8 +426,8 @@ $(document).ready(function() {
                                 '<div class="pull-right">'+
                                   '<div class="btn-group">'+
                                   '<button class="btn btn-small">0 like/s.</button>'+
-                                  '<button post-id="'+post_data.post_id+'" class="delete-modal btn btn-danger btn-small">'+
-                                      '<i class="icon-trash icon-white"></i>'+
+                                  '<button post-id="'+post_data.post_id+'" class="delete-modal btn btn-small">'+
+                                      '&times;'+
                                   '</button>'+
                                 '</div>'+
                                 '</div>'+
@@ -450,6 +450,58 @@ $(document).ready(function() {
             }
         });
 	});
+
+    //share ajax (home)
+    $('#share_home').live("click", function(){
+        var ajax_url = "new_post";
+        var post = $('#post').val();
+        remaining = 1000;
+        $("#counter").html("You have <strong>"+  remaining+"</strong> characters remaining");
+
+        if (post == '') {
+            alert("you can't share nothing :|");
+            return false;
+        }
+
+        $('.progress').show('fast');
+        $.post(ajax_url, {content:post}, function(data){
+            $('.progress').hide('fast');
+            $('#post').val('');
+            var post_data = $.parseJSON(data);
+            var append_data = '<div class="post-contents" style="width: 700px; display:none;">'+
+                '<div class="img-username">'+
+                '<img src="'+post_data.user_image+'"/>'+
+                '<a href="#" class="link">'+post_data.username+'</a><br>'+
+                '<label>'+post_data.postdate+'</label>'+
+                '</div>'+
+                '<blockquote class="new" style="width: 700px;"><p>'+post_data.content+'</p></blockquote>'+
+                '<div class="pull-right">'+
+                '<div class="btn-group">'+
+                '<button class="btn btn-small">0 like/s.</button>'+
+                '<button post-id="'+post_data.post_id+'" class="delete-modal btn btn-small">'+
+                '&times;'+
+                '</button>'+
+                '</div>'+
+                '</div>'+
+                '</div>';
+
+            if (!post_data.is_error) {
+                $('.post-container').prepend(append_data);
+                $('.post-contents').fadeIn('slow');
+                $('blockquote.new pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
+                $('blockquote.new').removeClass('new');
+                $('#no-post').hide();
+                if ($('.post-contents').size() > 10) {
+                    $('.post-contents').each(function(i){
+                        if (i == 10) {
+                            $(this).fadeOut('slow');
+                            $(this).remove();
+                        }
+                    });
+                }
+            }
+        });
+    });
 
     //load more post ajax (profile)
     $('#load-more').live("click", function(){
