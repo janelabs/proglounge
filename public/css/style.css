@@ -29,11 +29,15 @@
 }
 
 .dp {
-    width: 220px; height: 220px; background-color: #000;
+    width: 220px; height: auto; background-color: #000;
 }
 
 .su_dp {
     width: 60px; height: 60px;
+}
+
+.n_dp {
+    width: 20px; height: auto;
 }
 
 .comment_sec {

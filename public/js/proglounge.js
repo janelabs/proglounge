@@ -431,6 +431,11 @@ $(document).ready(function() {
                                   '</button>'+
                                 '</div>'+
                                 '</div>'+
+                                '<div class="comment-box'+post_data.post_id+'">'+
+                                '</div>'+
+                                '<div class="comment-txtbox">'+
+                                    '<input id="'+post_data.post_id+'" type="text" class="input-block-level comment-txt" placeholder="write a comment...">'+
+                                '</div>'+
                               '</div>';
 
             if (!post_data.is_error) {
@@ -469,21 +474,26 @@ $(document).ready(function() {
             $('#post').val('');
             var post_data = $.parseJSON(data);
             var append_data = '<div class="post-contents" style="width: 700px; display:none;">'+
-                '<div class="img-username">'+
-                '<img src="'+post_data.user_image+'"/>'+
-                '<a href="#" class="link">'+post_data.username+'</a><br>'+
-                '<label>'+post_data.postdate+'</label>'+
-                '</div>'+
-                '<blockquote class="new" style="width: 700px;"><p>'+post_data.content+'</p></blockquote>'+
-                '<div class="pull-right">'+
-                '<div class="btn-group">'+
-                '<button class="btn btn-small">0 like/s.</button>'+
-                '<button post-id="'+post_data.post_id+'" class="delete-modal btn btn-small">'+
-                '&times;'+
-                '</button>'+
-                '</div>'+
-                '</div>'+
-                '</div>';
+                                '<div class="img-username">'+
+                                    '<img src="'+post_data.user_image+'"/>'+
+                                    '<a href="#" class="link">'+post_data.username+'</a><br>'+
+                                    '<label>'+post_data.postdate+'</label>'+
+                                '</div>'+
+                                '<blockquote class="new" style="width: 700px;"><p>'+post_data.content+'</p></blockquote>'+
+                                '<div class="pull-right">'+
+                                    '<div class="btn-group">'+
+                                    '<button class="btn btn-small">0 like/s.</button>'+
+                                    '<button post-id="'+post_data.post_id+'" class="delete-modal btn btn-small">'+
+                                    '&times;'+
+                                    '</button>'+
+                                    '</div>'+
+                                '</div>'+
+                                '<div class="comment-box'+post_data.post_id+'">'+
+                                '</div>'+
+                                '<div class="comment-txtbox">'+
+                                    '<input id="'+post_data.post_id+'" type="text" class="input-block-level comment-txt" placeholder="write a comment...">'+
+                                '</div>'+
+                              '</div>';
 
             if (!post_data.is_error) {
                 $('.post-container').prepend(append_data);
@@ -575,10 +585,28 @@ $(document).ready(function() {
                     window.location.replace("/"+json_data.the_follower);
                 }
 
-                if (json_data.notif_info.type == 2) {
-                    $('#notif-info').html('<blockquote>'+json_data.post_info.content+'</blockquote>');
+                if (json_data.notif_info.type == 2 || json_data.notif_info.type == 3) {
+                    //clear first
+                    $('#notif-header').html('');
+                    $('.modal-body').html('');
+
+                    $('.modal-body').append('<p id="notif-info" style="color: black;"><blockquote>'+json_data.post_info.content+'</blockquote></p>');
                     $('#notif-header').html(json_data.notif_info.message);
+
+                    //get comments
+                    $.each(json_data.comments, function(i){
+                        $('.modal-body').append('<blockquote>' +
+                                                    '<p style="font-size: 13px;">' +
+                                                        '<img class="thumbnails n_dp" src="/public/DP/'+json_data.comments[i].image+'">' +
+                                                        ' <b>'+json_data.comments[i].username+'</b><br> ' +
+                                                         json_data.comments[i].content +
+                                                    '</p>' +
+                                                '</blockquote>');
+                    });
+
                     $('#notif-info blockquote pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
+                    $('.modal-body blockquote pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
+
                     $('#notif-modal').modal('show');
                 }
 
@@ -593,13 +621,43 @@ $(document).ready(function() {
                     }
                 }
 
-                if ($(this).attr('data-from') == 'header') {
-                    $(this).parent().attr('style', '');
-                    $(this).attr('style', '');
+                console.log(this_btn.attr('data-from'))
+
+                if (this_btn.attr('data-from') == 'header') {
+                    this_btn.parent().attr('style', '');
+                    this_btn.attr('style', '');
                 }
             }
         });
         return false;
+    });
+
+    //adding comment
+    $('.comment-txt').live("keypress", function(e){
+        if (e.which == 13 && !e.shiftKey) {
+            comment_box = $(this);
+            comment_box.addClass('disabled');
+            comment_box.attr('disabled', 'disabled');
+            $.post('/new_comment', {post_id:comment_box.attr('id'), content:comment_box.val()}, function(data){
+                var comment = $.parseJSON(data);
+                var append = '<div class="span7 comment_sec" style="display: none;">'+
+                                 '<div class="img-username-comment">'+
+                                     '<img src="'+comment.user_image+'"/>'+
+                                     '<a href="#" class="link">'+comment.username+'</a><br>'+
+                                     '<label>'+comment.commentdate+'</label>'+
+                                 '</div>'+
+                                 '<blockquote>'+
+                                     '<p style="font-size: 13px;">'+comment.content+'</p>'+
+                                 '</blockquote>'+
+                             '</div>';
+
+                $('.comment-box'+comment_box.attr('id')).append(append);
+                $('.comment_sec').fadeIn('fast');
+                comment_box.removeClass('disabled');
+                comment_box.removeAttr('disabled');
+                $('.comment-txt').val('');
+            });
+        }
     });
 
     $('#close-reg-form').live("click", function(){

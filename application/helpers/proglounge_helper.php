@@ -2,7 +2,7 @@
 
 if ( ! function_exists('filterPost'))
 {
-    function filterPost($string)
+    function    filterPost($string)
     {
         // for syntax highlighting
         $start_pos = strpos($string, '[code]');
@@ -43,6 +43,6 @@ if ( ! function_exists('filterPost'))
     //returns Dec 04, 2012 12:12 PM date format
     function filterPostDate($timestamp)
     {
-        return date("M d, Y g:h a", strtotime($timestamp));
+        return date("m-d-y g:h a", strtotime($timestamp));
     }
 }

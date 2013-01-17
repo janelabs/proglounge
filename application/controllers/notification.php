@@ -45,8 +45,12 @@ class Notification extends CI_Controller {
         }
 
         //if like notification
-        if ($notif_info['type'] == 2) {
+        if ($notif_info['type'] == 2 || $notif_info['type'] == 3) {
             $params['post_info'] = $this->posts->getUserPostById($notif_info['landing_id']);
+            $params['comments'] = $this->posts->getCommentsByPostId($notif_info['landing_id'])->result_array();
+            foreach ($params['comments'] as $key => $comment) {
+                $params['comments'][$key]['content'] = filterPost($comment['content']);
+            }
             $params['post_info']['content'] = filterPost($params['post_info']['content']);
         }
 

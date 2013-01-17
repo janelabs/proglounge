@@ -13,11 +13,9 @@ class Posts extends CI_Controller {
         $this->load->model('Follow_model', 'follow');
         $this->load->model('Post_model', 'posts');
         $this->load->model('Post_like_model', 'like');
+        $this->load->model('Post_comment_model', 'comment');
     }
-    
-    /*
-     *  saves user's post
-     */
+
     public function newPost()
     {
         $params = array();
@@ -68,6 +66,29 @@ class Posts extends CI_Controller {
     {
         $post_id = $this->input->post('post_id', TRUE);
         $this->like->unlikePost($this->user_session['id'], $post_id);
+    }
+
+    public function newComment()
+    {
+        $params = array();
+        $comment = $this->input->post(NULL, TRUE);
+        $comment['user_id'] = $this->user_session['id'];
+        $params['is_error'] = TRUE;
+
+        if (!$this->comment->addNewComment($comment)) {
+            echo json_encode($params);
+            return;
+        }
+
+        $params['is_error'] = FALSE;
+        $params['content'] = filterPost($comment['content']);
+        $params['username'] = $this->user_session['username'];
+        $now = date("Y-m-d H:i:s");
+        $params['commentdate'] = filterPostDate($now);
+        $params['comment_id'] = $this->db->insert_id();
+        $params['user_image'] = base_url()."public/DP/".$this->user_session['image'];
+
+        echo json_encode($params);
     }
 
 }// class Posts

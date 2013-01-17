@@ -46,8 +46,8 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 style="color: black;" id="notif-header"></h4>
                 </div>
-                <div class="modal-body">
-                    <p id="notif-info" style="color: black;"></p>
+                <div class="modal-body" style="max-height: 300px;">
+
                 </div>
                 <div class="modal-footer">
                     <a href="#" class="btn btn-info" data-dismiss="modal" aria-hidden="true">Close</a>

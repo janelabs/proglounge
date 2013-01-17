@@ -2,8 +2,9 @@
 /**
  * Post_like table class
  */
+require_once('post_comment_model.php');
 
-Class Post_like_model extends CI_Model
+Class Post_like_model extends Post_comment_model
 {
     const TABLE_NAME = 'post_like';
     const USERS_TABLE = 'users';

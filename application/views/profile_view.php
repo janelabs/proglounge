@@ -66,7 +66,7 @@
 				<!-- USER POSTS SECTION -->
 				<div class="post-container">
                     <?php if ($user_posts_count > 0) { ?>
-                        <?php foreach ($user_posts->result('Post_like_model') as $post) : ?>
+                        <?php foreach ($user_posts->result('Post_model') as $post) : ?>
                             <div class="post-contents">
                                 <div class="img-username">
                                     <img class="p_dp" src="<?php echo base_url()."public/DP/".$post->image ?>"/>
@@ -104,21 +104,23 @@
                                 </div>
 
                                 <!-- comment section -->
-                                <div class="comment-box">
+                                <div class="comment-box<?php echo $post->id ?>">
+                                <?php foreach ($post->getCommentsByPostId($post->id)->result_array() as $comment) { ?>
                                     <div class="span7 comment_sec">
                                         <div class="img-username-comment">
-                                            <img src="http://placehold.it/35x35"/>
-                                            <a href="#" class="link"><?php echo $post->username ?></a><br>
-                                            <label><?php echo filterPostDate($post->date_created) ?></label>
+                                            <img src="<?php echo base_url()."public/DP/".$comment['image']; ?>"/>
+                                            <a href="<?php echo site_url($comment['username']) ?>" class="link"><?php echo $comment['username'] ?></a><br>
+                                            <label><?php echo filterPostDate($comment['date_created']) ?></label>
                                         </div>
                                         <blockquote>
-                                            <p style="font-size: 13px;">Sample comment here :)</p>
+                                            <p style="font-size: 13px;"><?php echo filterPost($comment['content']) ?></p>
                                         </blockquote>
                                     </div>
+                                <?php } ?>
                                 </div>
                                 <?php if (!$is_guest) { ?>
                                     <div class="comment-txtbox">
-                                        <input type="text" class="input-block-level" placeholder="write a comment...">
+                                        <input id="<?php echo $post->id ?>" type="text" class="input-block-level comment-txt" placeholder="write a comment...">
                                     </div>
                                 <?php } ?>
                                 <!-- end comment section -->

@@ -42,10 +42,12 @@ Class Notification_model extends CI_Model
         $count = $notif->num_rows();
         $notif_info = $this->common->selectWhere(self::TABLE_NAME, $data)->row_array();
 
-        if ($count > 0) {
-            return $this->common->updateData(self::TABLE_NAME, array('status' => 1, 'created_at' => date("Y-m-d H:i:s")), array('id' => $notif_info['id']));
-        } else {
-            return $this->common->insertData(self::TABLE_NAME, $data);
+        if($who_id != $user_id) {
+            if ($count > 0) {
+                return $this->common->updateData(self::TABLE_NAME, array('status' => 1, 'created_at' => date("Y-m-d H:i:s")), array('id' => $notif_info['id']));
+            } else {
+                return $this->common->insertData(self::TABLE_NAME, $data);
+            }
         }
     }
 
