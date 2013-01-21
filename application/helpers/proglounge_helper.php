@@ -2,7 +2,7 @@
 
 if ( ! function_exists('filterPost'))
 {
-    function    filterPost($string)
+    function filterPost($string)
     {
         // for syntax highlighting
         $start_pos = strpos($string, '[code]');

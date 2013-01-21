@@ -11,7 +11,12 @@ $(document).ready(function() {
  * -----------------------------------------------------------
  */
     //sets fade in to all image
-    $('img').attr('onload', 'fadeInImg(this);');
+    //$('img').attr('onload', 'fadeInImg(this);');
+
+    //close reg-form
+    $('#close-reg-form').live("click", function(){
+        $('#registerModal').modal('hide');
+    });
 
     /* profile pic upload */
 
@@ -635,6 +640,10 @@ $(document).ready(function() {
     //adding comment
     $('.comment-txt').live("keypress", function(e){
         if (e.which == 13 && !e.shiftKey) {
+            if ($(this).val() == '') {
+                alert('nothing to say? :(');
+                return false;
+            }
             comment_box = $(this);
             comment_box.addClass('disabled');
             comment_box.attr('disabled', 'disabled');
@@ -646,22 +655,19 @@ $(document).ready(function() {
                                      '<a href="#" class="link">'+comment.username+'</a><br>'+
                                      '<label>'+comment.commentdate+'</label>'+
                                  '</div>'+
-                                 '<blockquote>'+
+                                 '<blockquote class="newcomment">'+
                                      '<p style="font-size: 13px;">'+comment.content+'</p>'+
                                  '</blockquote>'+
                              '</div>';
 
                 $('.comment-box'+comment_box.attr('id')).append(append);
                 $('.comment_sec').fadeIn('fast');
+                $('.comment_sec blockquote.newcomment pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
                 comment_box.removeClass('disabled');
                 comment_box.removeAttr('disabled');
                 $('.comment-txt').val('');
             });
         }
-    });
-
-    $('#close-reg-form').live("click", function(){
-        $('#registerModal').modal('hide');
     });
 	
 /* -----------------------------------------------------------

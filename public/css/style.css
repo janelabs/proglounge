@@ -1,3 +1,7 @@
+img {
+    background: url('/public/img/loading.gif') no-repeat;
+}
+
 /* PROFILE */
 
 .profile-buttons {
@@ -104,7 +108,7 @@ textarea {
     width: 100%;
 }
 
-.img-username-comment a, label {
+.img-username-comment a, .img-username-comment label {
     font-size: 11px;
     float: left;
     margin-left:10px;
