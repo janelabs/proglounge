@@ -45,4 +45,10 @@ if ( ! function_exists('filterPost'))
     {
         return date("m-d-y g:h a", strtotime($timestamp));
     }
+
+    function getOffset($page, $rowsperpage)
+    {
+        $offset = ($page - 1) * $rowsperpage;
+        return ($offset < 0) ? 0 : $offset;
+    }
 }

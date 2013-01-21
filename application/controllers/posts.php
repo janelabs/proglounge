@@ -100,12 +100,18 @@ class Posts extends CI_Controller {
         $html = '';
         $html2 = '';
 
-        list($comments, $last_comment_id) = $this->comment->getCommentsByLoadMore($post_id, $last_id, 5);
+        $offset = getOffset($last_id, 5);
 
-        if (!$comments) {
+        list($comments, $last_comment_id) = $this->comment->getCommentsByLoadMore($post_id, $last_id, $offset.", 5");
+
+        if (!$comments || !$last_comment_id) {
             $params['success'] = FALSE;
             echo json_encode($params);
             return;
+        }
+
+        if (($last_id - 1) > 0) {
+            $html .= '<button href="#" class="show-more-comments btn-link" last-id="'.($last_id - 1).'" class="pull-right btn-link">Show previous comments</button>';
         }
 
         foreach ($comments->result_array() as $comment) {
@@ -121,20 +127,7 @@ class Posts extends CI_Controller {
                      </div>';
         }
 
-        $html2 .= '<div class="comment-txtbox">';
-        $html2 .= '<input id="'.$post_id.'" type="text" class="input-block-level comment-txt" placeholder="write a comment...">';
-
-        log_message('info', $comment['id']);
-        log_message('info', $last_comment_id);
-
-        if ($last_comment_id != $comment['id']) {
-            $html2 .= '<a href="#" class="show-more-comments" last-id="'.$comment['id'].'" class="pull-right btn-link">Show more comments</a>';
-        }
-
-        $html2 .= '</div>';
-
         $params['html'] = $html;
-        $params['html2'] = $html2;
 
         echo json_encode($params);
     }

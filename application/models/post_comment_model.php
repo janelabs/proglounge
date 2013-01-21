@@ -50,7 +50,7 @@ Class Post_comment_model extends CI_Model
         $sql_query = "SELECT pc.*, u.username, u.image
                       FROM ".self::TABLE_NAME." pc
                       INNER JOIN ".self::USERS_TABLE." u ON u.id = pc.user_id
-                      WHERE pc.post_id = {$post_id} order by pc.date_created asc {$limit}";
+                      WHERE pc.post_id = {$post_id} order by pc.id asc {$limit}";
 
         $query = $this->db->query($sql_query);
 
@@ -72,12 +72,10 @@ Class Post_comment_model extends CI_Model
         $sql_query = "SELECT pc.*, u.username, u.image
                       FROM ".self::TABLE_NAME." pc
                       INNER JOIN ".self::USERS_TABLE." u ON u.id = pc.user_id
-                      WHERE pc.post_id = {$post_id} and pc.id > {$last_id} order by pc.date_created,pc.id asc {$limit}";
+                      WHERE pc.post_id = {$post_id} order by pc.id asc {$limit}";
 
         $tmp_last_comment = $this->getCommentsByPostId($post_id)->last_row('array');
         $query = $this->db->query($sql_query);
-
-        log_message('info', print_r($query->result_array(), true));
 
         return array($query, $tmp_last_comment['id']);
     }

@@ -65,10 +65,17 @@
                     </div>
 
                     <!-- comment section -->
+                    <?php
+                        $comments_count = $post->getCommentsCountByPostId($post->id);
+                        $page = ceil($comments_count/5);
+                        $offset = getOffset($page, 5);
+                        $comments = $post->getCommentsByPostId($post->id, $offset.", 3");
+                    ?>
                     <div class="comment-box<?php echo $post->id ?>">
+                        <?php if ($comments_count > 3) { ?>
+                            <button class="show-more-comments btn-link" last-id="<?php echo $page - 1 ?>">Show previous comments</button>
+                        <?php } ?>
                         <?php
-                            $comments = $post->getCommentsByPostId($post->id, 3);
-                            $comments_count = $post->getCommentsCountByPostId($post->id);
                             if ($comments_count > 0) {
                         ?>
                         <?php foreach ($comments->result_array() as $comment) { ?>
@@ -86,9 +93,6 @@
                     </div>
                     <div class="comment-txtbox pagination-centered">
                         <input id="<?php echo $post->id ?>" type="text" class="input-block-level comment-txt" placeholder="write a comment...">
-                        <?php if ($comments_count > 3) { ?>
-                            <button class="show-more-comments btn-link" last-id="<?php echo $comment['id'] ?>">Show all comments</button>
-                        <?php } ?>
                     </div>
                     <!-- end comment section -->
 

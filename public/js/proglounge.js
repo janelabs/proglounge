@@ -565,15 +565,15 @@ $(document).ready(function() {
         $(this).attr('disabled', 'disabled');
         var ajax_url = "show_more_comment";
         var id = $(this).attr("last-id");
-        var post_id = $(this).parent().children('input').attr('id');
+        var post_id = $(this).parent().parent().children('.comment-txtbox').children('input').attr('id');
+
+        console.log(post_id);
 
         $.post(ajax_url, {post_id:post_id, comment_id:id}, function(data){
             json_data = $.parseJSON(data);
             if (json_data.success) {
                 $('.show-more-comments').remove();
-                $('#'+post_id).remove();
-                $('.comment-box'+post_id).append(json_data.html);
-                $('.comment-box'+post_id).parent().children('.comment-txtbox').append(json_data.html2);
+                $('.comment-box'+post_id).prepend(json_data.html);
                 $('.comment_sec').fadeIn('slow');
                 $('blockquote.new-comment pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
                 $('blockquote.new-comment').removeClass('loadmore');
