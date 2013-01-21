@@ -18,7 +18,13 @@ Class Common extends CI_Model
 	public function insertData($table, $data)
 	{
 		if (is_array($data)) {
-			return $this->db->insert($table, $data);
+			$query = $this->db->insert($table, $data);
+
+            if (!$query) {
+                throw new Exception('Database Error: '.$this->db->_error_message());
+            }
+
+            return $query;
 		} else {
 			throw new Exception('Second param must be an array');
 		}
@@ -51,7 +57,13 @@ Class Common extends CI_Model
 			$this->db->limit($limit, $offset);
 		}
 
-		return $this->db->get($table);
+		$query = $this->db->get($table);
+
+        if (!$query) {
+            throw new Exception('Database Error: '.$this->db->_error_message());
+        }
+
+        return $query;
 	}
 	
 	/*
@@ -75,7 +87,13 @@ Class Common extends CI_Model
 			$this->db->limit($limit, $offset);
 		}
 
-		return $this->db->get($table);
+        $query = $this->db->get($table);
+
+        if (!$query) {
+            throw new Exception('Database Error: '.$this->db->_error_message());
+        }
+
+		return $query;
 	}
 	
 	/*
@@ -109,7 +127,13 @@ Class Common extends CI_Model
 			$this->db->limit($limit, $offset);
 		}
 
-		return $this->db->get();
+		$query = $this->db->get();
+
+        if (!$query) {
+            throw new Exception('Database Error: '.$this->db->_error_message());
+        }
+
+        return $query;
 	}
 	
 	public function deleteDataWhere($table, $where)
@@ -119,7 +143,13 @@ Class Common extends CI_Model
 		}
 
 		$this->db->where($where);
-		return $this->db->delete($table);
+		$query = $this->db->delete($table);
+
+        if (!$query) {
+            throw new Exception('Database Error: '.$this->db->_error_message());
+        }
+
+        return $query;
 	}
 
     public function updateData($table, $data, $where = '')
@@ -136,7 +166,13 @@ Class Common extends CI_Model
             $this->db->where($where);
         }
 
-        return $this->db->update($table, $data);
+        $query = $this->db->update($table, $data);
+
+        if (!$query) {
+            throw new Exception('Database Error: '.$this->db->_error_message());
+        }
+
+        return $query;
     }
 		
 } // Class Common

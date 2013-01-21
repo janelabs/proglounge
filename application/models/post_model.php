@@ -30,6 +30,12 @@ Class Post_model extends Post_like_model
         }
 		
 		$where = array('id' => $post_id);
+
+        //delete notification, likes, comments
+        $this->common->deleteDataWhere(Post_comment_model::TABLE_NAME, array('post_id' => $post_id));
+        $this->common->deleteDataWhere(Post_like_model::TABLE_NAME, array('post_id' => $post_id));
+        $this->common->deleteDataWhere(Notification_model::TABLE_NAME, array('landing_id' => $post_id, 'type >' => 1));
+
 		return $this->common->deleteDataWhere(self::TABLE_NAME, $where);
 	}
 	
@@ -79,8 +85,6 @@ Class Post_model extends Post_like_model
                       OR ( {$t_post}.user_id = {$user_id} AND {$t_post}.id < {$post_id} )
                       ORDER BY {$t_post}.date_created DESC limit {$limit}";
 
-        log_message('info', $sql_query);
-
         $tmp_last_post = $this->getNewsFeedByUser($user_id, 0)->last_row('array');
         $query = $this->db->query($sql_query);
 
@@ -120,11 +124,7 @@ Class Post_model extends Post_like_model
         $where = array('id' => $post_id);
         $query = $this->common->selectWhere(self::TABLE_NAME, $where);
 
-        if ($query) {
-            return $query->row_array();
-        } else {
-            throw new Exception('Database Error');
-        }
+        return $query->row_array();
     }
 	
     private function _validateDelete($post_id, $user_id)

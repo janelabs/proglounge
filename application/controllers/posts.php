@@ -91,6 +91,54 @@ class Posts extends CI_Controller {
         echo json_encode($params);
     }
 
+    public function showMoreComment()
+    {
+        $params = array();
+        $params['success'] = TRUE;
+        $last_id = $this->input->post('comment_id', TRUE);
+        $post_id = $this->input->post('post_id', TRUE);
+        $html = '';
+        $html2 = '';
+
+        list($comments, $last_comment_id) = $this->comment->getCommentsByLoadMore($post_id, $last_id, 5);
+
+        if (!$comments) {
+            $params['success'] = FALSE;
+            echo json_encode($params);
+            return;
+        }
+
+        foreach ($comments->result_array() as $comment) {
+            $html .= '<div class="span7 comment_sec" style="display: none;">
+                         <div class="img-username-comment">
+                             <img src="'.base_url()."public/DP/".$comment['image'].'"/>
+                             <a href="'.site_url($comment['username']).'" class="link">'.$comment['username'].'</a><br>
+                             <label>'.filterPostDate($comment['date_created']).'</label>
+                         </div>
+                         <blockquote class="new-comment">
+                             <p style="font-size: 13px;">'.filterPost($comment['content']).'</p>
+                         </blockquote>
+                     </div>';
+        }
+
+        $html2 .= '<div class="comment-txtbox">';
+        $html2 .= '<input id="'.$post_id.'" type="text" class="input-block-level comment-txt" placeholder="write a comment...">';
+
+        log_message('info', $comment['id']);
+        log_message('info', $last_comment_id);
+
+        if ($last_comment_id != $comment['id']) {
+            $html2 .= '<a href="#" class="show-more-comments" last-id="'.$comment['id'].'" class="pull-right btn-link">Show more comments</a>';
+        }
+
+        $html2 .= '</div>';
+
+        $params['html'] = $html;
+        $params['html2'] = $html2;
+
+        echo json_encode($params);
+    }
+
 }// class Posts
 
 /* EOF posts.php */

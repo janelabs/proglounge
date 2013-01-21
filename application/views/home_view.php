@@ -23,6 +23,7 @@
             </div>
 		</div>
 		<!-- end share -->
+
 		<!-- posts -->
         <div class="span9 offset3 post-container">
             <?php foreach ($news_feed->result('Post_like_model') as $post) : ?>
@@ -35,6 +36,7 @@
                     <blockquote style="width: 700px;">
                         <p><?php echo filterPost($post->content) ?></p>
                     </blockquote>
+
                     <!-- Like and Comment -->
                     <div class="pull-right">
                         <div class="btn-group">
@@ -64,23 +66,32 @@
 
                     <!-- comment section -->
                     <div class="comment-box<?php echo $post->id ?>">
-                        <?php foreach ($post->getCommentsByPostId($post->id)->result_array() as $comment) { ?>
-                        <div class="span7 comment_sec">
-                            <div class="img-username-comment">
-                                <img src="<?php echo base_url()."public/DP/".$comment['image']; ?>"/>
-                                <a href="<?php echo site_url($comment['username']) ?>" class="link"><?php echo $comment['username'] ?></a><br>
-                                <label><?php echo filterPostDate($comment['date_created']) ?></label>
+                        <?php
+                            $comments = $post->getCommentsByPostId($post->id, 3);
+                            $comments_count = $post->getCommentsCountByPostId($post->id);
+                            if ($comments_count > 0) {
+                        ?>
+                        <?php foreach ($comments->result_array() as $comment) { ?>
+                            <div class="span7 comment_sec">
+                                <div class="img-username-comment">
+                                    <img src="<?php echo base_url()."public/DP/".$comment['image']; ?>"/>
+                                    <a href="<?php echo site_url($comment['username']) ?>" class="link"><?php echo $comment['username'] ?></a><br>
+                                    <label><?php echo filterPostDate($comment['date_created']) ?></label>
+                                </div>
+                                <blockquote>
+                                    <p style="font-size: 13px;"><?php echo filterPost($comment['content']) ?></p>
+                                </blockquote>
                             </div>
-                            <blockquote>
-                                <p style="font-size: 13px;"><?php echo filterPost($comment['content']) ?></p>
-                            </blockquote>
-                        </div>
+                        <?php }} ?>
+                    </div>
+                    <div class="comment-txtbox pagination-centered">
+                        <input id="<?php echo $post->id ?>" type="text" class="input-block-level comment-txt" placeholder="write a comment...">
+                        <?php if ($comments_count > 3) { ?>
+                            <button class="show-more-comments btn-link" last-id="<?php echo $comment['id'] ?>">Show all comments</button>
                         <?php } ?>
                     </div>
-                    <div class="comment-txtbox">
-                        <input id="<?php echo $post->id ?>" type="text" class="input-block-level comment-txt" placeholder="write a comment...">
-                    </div>
                     <!-- end comment section -->
+
                     <!-- end Like and Comment -->
                 </div>
                 <?php endforeach; ?>

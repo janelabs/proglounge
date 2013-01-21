@@ -37,20 +37,49 @@ Class Post_comment_model extends CI_Model
         return $this->common->deleteDataWhere(self::TABLE_NAME, $where);
     }
 
-    public function getCommentsByPostId($post_id)
+    public function getCommentsByPostId($post_id, $limit = "")
     {
         if (!$post_id) {
             throw new Exception('empty parameter');
         }
 
+        if ($limit != "") {
+            $limit = "LIMIT {$limit}";
+        }
+
         $sql_query = "SELECT pc.*, u.username, u.image
                       FROM ".self::TABLE_NAME." pc
                       INNER JOIN ".self::USERS_TABLE." u ON u.id = pc.user_id
-                      WHERE pc.post_id = {$post_id} order by pc.date_created asc";
+                      WHERE pc.post_id = {$post_id} order by pc.date_created asc {$limit}";
 
         $query = $this->db->query($sql_query);
 
         return $query;
+    }
+
+    public function getCommentsCountByPostId($post_id)
+    {
+        return $this->getCommentsByPostId($post_id)->num_rows();
+    }
+
+    /* load more for comments */
+    public function getCommentsByLoadMore($post_id, $last_id, $limit = "")
+    {
+        if ($limit != "") {
+            $limit = "LIMIT {$limit}";
+        }
+
+        $sql_query = "SELECT pc.*, u.username, u.image
+                      FROM ".self::TABLE_NAME." pc
+                      INNER JOIN ".self::USERS_TABLE." u ON u.id = pc.user_id
+                      WHERE pc.post_id = {$post_id} and pc.id > {$last_id} order by pc.date_created,pc.id asc {$limit}";
+
+        $tmp_last_comment = $this->getCommentsByPostId($post_id)->last_row('array');
+        $query = $this->db->query($sql_query);
+
+        log_message('info', print_r($query->result_array(), true));
+
+        return array($query, $tmp_last_comment['id']);
     }
 
     private function _validateDelete($comment_id, $user_id)

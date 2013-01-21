@@ -68,6 +68,7 @@ $route['unlike'] = 'posts/unlikePost';
 $route['new_post'] = 'posts/newPost';
 $route['delete_post'] = 'posts/deletePost';
 $route['new_comment'] = 'posts/newComment';
+$route['show_more_comment'] = 'posts/showMoreComment';
 $route['load_more'] = 'posts/loadMoreUserPost';
 
 //upload

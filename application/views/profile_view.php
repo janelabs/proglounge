@@ -105,7 +105,12 @@
 
                                 <!-- comment section -->
                                 <div class="comment-box<?php echo $post->id ?>">
-                                <?php foreach ($post->getCommentsByPostId($post->id)->result_array() as $comment) { ?>
+                                <?php
+                                    $comments = $post->getCommentsByPostId($post->id, 3);
+                                    $comments_count = $post->getCommentsCountByPostId($post->id);
+                                    if ($comments_count > 0) {
+                                ?>
+                                <?php foreach ($post->getCommentsByPostId($post->id, 3)->result_array() as $comment) { ?>
                                     <div class="span7 comment_sec">
                                         <div class="img-username-comment">
                                             <img src="<?php echo base_url()."public/DP/".$comment['image']; ?>"/>
@@ -116,13 +121,14 @@
                                             <p style="font-size: 13px;"><?php echo filterPost($comment['content']) ?></p>
                                         </blockquote>
                                     </div>
-                                <?php } ?>
+                                <?php } } ?>
                                 </div>
-                                <?php if (!$is_guest) { ?>
-                                    <div class="comment-txtbox">
-                                        <input id="<?php echo $post->id ?>" type="text" class="input-block-level comment-txt" placeholder="write a comment...">
-                                    </div>
-                                <?php } ?>
+                                <div class="comment-txtbox pagination-centered">
+                                    <input id="<?php echo $post->id ?>" type="text" class="input-block-level comment-txt" placeholder="write a comment...">
+                                    <?php if ($comments_count > 3) { ?>
+                                        <a href="#" class="show-more-comments btn-link" last-id="<?php echo $comment['id'] ?>">Show all comments</a>
+                                    <?php } ?>
+                                </div>
                                 <!-- end comment section -->
 
                                 <!-- end Like and Comment -->

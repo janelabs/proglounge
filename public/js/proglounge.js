@@ -558,6 +558,30 @@ $(document).ready(function() {
         return false;
     });
 
+    //show more comment ajax (news feed)
+    $('.show-more-comments').live("click", function(){
+        $(this).html('loading...');
+        $(this).addClass('disabled');
+        $(this).attr('disabled', 'disabled');
+        var ajax_url = "show_more_comment";
+        var id = $(this).attr("last-id");
+        var post_id = $(this).parent().children('input').attr('id');
+
+        $.post(ajax_url, {post_id:post_id, comment_id:id}, function(data){
+            json_data = $.parseJSON(data);
+            if (json_data.success) {
+                $('.show-more-comments').remove();
+                $('#'+post_id).remove();
+                $('.comment-box'+post_id).append(json_data.html);
+                $('.comment-box'+post_id).parent().children('.comment-txtbox').append(json_data.html2);
+                $('.comment_sec').fadeIn('slow');
+                $('blockquote.new-comment pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
+                $('blockquote.new-comment').removeClass('loadmore');
+            }
+        });
+        return false;
+    });
+
     //register user ajax
     $('#btn-register').live("click", function(){
         var form_data = $('#reg-form').serialize();
