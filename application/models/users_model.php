@@ -124,6 +124,21 @@ Class Users_model extends CI_Model
 		
 		return array($suggested_users, count($suggested_users));
 	}
+
+    /**
+     * Get user based on the given email or username
+     */
+    public function getUserByUsernameEmail($options)
+    {
+        $query = NULL;
+
+        if($options):
+            $this->db->where($options);
+            if(!$query = $this->db->get('users')->row()) $query = NULL;
+        endif;
+
+        return $query;
+    }
 	
 } // Class Users_model
 

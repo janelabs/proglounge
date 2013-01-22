@@ -55,13 +55,14 @@ $route['show_notif'] = 'notification/showNotificationInfo';
 $route['login'] = 'account/login';
 $route['update'] = 'account/updateUser';
 $route['validate'] = 'account/checkLogin';
-$route['recover_password'] = 'account/password_recovery';
 $route['save_user'] = 'account/saveUser';
 $route['check_uname'] = 'account/checkUname';
 $route['logout'] = 'account/logout';
 $route['register'] = 'account/register';
 $route['account'] = 'error/pageMissing';
 $route['account/(:any)'] = 'error/pageMissing';
+$route['recover_password'] = 'account/password_recovery';
+$route['validate_recover'] = 'account/validate_pword_recovery';
 
 //posts
 $route['like'] = 'posts/likePost';

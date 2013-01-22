@@ -120,6 +120,36 @@ Class Account extends CI_Controller
     	$this->session->unset_userdata($session_data);
     	redirect();
     }
+
+    /**
+     * View the form for password recovery
+     */
+    public function password_recovery()
+    {
+        $this->load->view('password_recovery');
+    }
+
+    /**
+     * Validates the information given (Password Recovery)
+     */
+    public function validate_pword_recovery()
+    {
+        $recoveryTxt = trim($this->input->post('recoveryTxt', TRUE));
+
+        if(strlen($recoveryTxt) == 0):
+            $this->session->set_flashdata('recover_error', 'Please input your Username or Email Address');
+            redirect('recover_password');
+        else:
+            $where = "username LIKE '%$recoveryTxt%' OR email_address LIKE '%$recoveryTxt%'";
+            $userInfo = $this->user->getUserByUsernameEmail($where);
+            if($userInfo):
+                var_dump($userInfo);
+            else:
+                $this->session->set_flashdata('recover_error', 'Username or Email Address not existing');
+                redirect('recover_password');
+            endif;
+        endif;
+    }
     
 } // class Account
 

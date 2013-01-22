@@ -92,6 +92,7 @@
         rel="tooltip" data-placement="right" data-original-title="Password">
         <button type="submit" id="btnlog" class="btn btn-info" data-loading-text="Logging in...">Log In</button>
         <a href="<?php echo site_url(); ?>" class="btn btn-info">Cancel</a>
+        <a href="<?php echo site_url('recover_password'); ?>">Recover Password</a>
       </form>
     </div> <!-- /container -->
   </body>
