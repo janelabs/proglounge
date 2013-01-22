@@ -92,6 +92,32 @@
 
 <div class="container" style="margin-top: 5px;">
 	<div class="container">
+        <div class="row">
+            <div>
+                <?php
+                if($this->session->flashdata('stat_error')):
+                    ?>
+                    <div class="alert alert-error">
+                        <strong><?php echo $this->session->flashdata('stat_error'); ?></strong>
+                    </div>
+                    <?php
+                endif;
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <?php
+                if($this->session->flashdata('change_success')):
+                    ?>
+                    <div class="alert">
+                        <strong><?php echo $this->session->flashdata('change_success'); ?></strong>
+                    </div>
+                    <?php
+                endif;
+                ?>
+            </div>
+        </div>
 		<?php echo $carousel ?>
 		<div class="row">
 			<div class="span12">

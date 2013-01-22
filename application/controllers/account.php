@@ -10,6 +10,7 @@ Class Account extends CI_Controller
 		$this->load->library('encrypt');
 		$this->load->library('email');
 		$this->load->model('Users_model', 'user');
+		$this->load->model('Pword_recovery_model', 'pword_recover');
         $this->key = $this->config->item('encryption_key');
 	}
 	
@@ -164,6 +165,26 @@ Class Account extends CI_Controller
 
                 $this->email->send();
 
+                // save password recovery status
+                $id = md5($userInfo->id . $this->key);
+                $recoveryStat = $this->pword_recover->selectRecoveryStatus($id);
+                if($recoveryStat){
+                    if($recoveryStat->status == 1):
+                        $dataoptions = array(
+                            'status' => 0
+                        );
+                        $this->pword_recover->updateStatus($id, $dataoptions);
+                    endif;
+                }
+                else{
+                    $dataoptions = array(
+                        'user_id' => md5($userInfo->id . $this->key),
+                        'status' => 0
+                    );
+                    $this->pword_recover->insertStatus($dataoptions);
+                }
+
+                // set success message
                 $this->session->set_flashdata('recover_success', "Please check your email for instructions.\n(inbox/spam)");
                 redirect('recover_password');
             else:
@@ -180,8 +201,20 @@ Class Account extends CI_Controller
      */
     public function change_password($id)
     {
-        $userInfo['uid'] = $id;
-        $this->load->view('change_password', $userInfo);
+        $recoveryStat = $this->pword_recover->selectRecoveryStatus($id);
+        if($recoveryStat){
+            if($recoveryStat->status == 1):
+                $this->session->set_flashdata('stat_error', 'Your link has expired.');
+                redirect(site_url());
+            else:
+                $userInfo['uid'] = $id;
+                $this->load->view('change_password', $userInfo);
+            endif;
+        }
+        else{
+            $this->session->set_flashdata('stat_error', 'Your link has expired.');
+            redirect(site_url());
+        }
     }
 
     /**
@@ -206,7 +239,15 @@ Class Account extends CI_Controller
                     );
 
                     $update = $this->user->updateUser($user->id, $userInfo);
+
+                    //update status
+                    $dataoptions = array(
+                        'status' => 1
+                    );
+                    $this->pword_recover->updateStatus($id, $dataoptions);
+
                     if($update):
+                        $this->session->set_flashdata('change_success', 'Password successfully changed.');
                         redirect(site_url());
                     else:
                         $this->session->set_flashdata('change_error', 'Something went wrong while saving your password. Please try again.');
