@@ -63,15 +63,34 @@
 <div class="container">
     <form name="recover" class="form-pwordRecover" method="post" action="<?php echo site_url('validate_recover') ?>">
         <h2 class="form-pwordRecover-heading">Password Recovery</h2>
-        <?php $recover_error = $this->session->flashdata('recover_error');
-        if (!empty($recover_error)) { ?>
-        <div class="alert alert-error">
-            <strong>Error: </strong><?php echo $recover_error ?>
-        </div>
-        <?php } ?>
-        <input type="text" id="recoveryTxt" name="recoveryTxt" class="input-block-level" placeholder="Username or Email Address" rel="tooltip" data-placement="right" data-original-title="Username or Email Address" />
-        <button type="submit" id="btnlog" class="btn btn-info" data-loading-text="Please wait...">Recover Password</button>
-        <a href="<?php echo site_url(); ?>" class="btn btn-info">Cancel</a>
+
+        <?php
+            // After the process of recovery
+            if($this->session->flashdata('recover_success')):
+                ?>
+                <div class="alert">
+                    <?php echo $this->session->flashdata('recover_success'); ?>
+                </div>
+                <a href="<?php echo site_url(); ?>" class="btn btn-info">Back to home</a>
+                <?php
+
+            // before the process
+            else:
+                ?>
+                <div>
+                    <?php $recover_error = $this->session->flashdata('recover_error');
+                    if (!empty($recover_error)) { ?>
+                        <div class="alert alert-error">
+                            <strong>Error: </strong><?php echo $recover_error ?>
+                        </div>
+                        <?php } ?>
+                    <input type="text" id="recoveryTxt" name="recoveryTxt" class="input-block-level" placeholder="Username or Email Address" rel="tooltip" data-placement="right" data-original-title="Username or Email Address" />
+                    <button type="submit" id="btnlog" class="btn btn-info" data-loading-text="Please wait...">Recover Password</button>
+                    <a href="<?php echo site_url(); ?>" class="btn btn-info">Cancel</a>
+                </div>
+                <?php
+            endif;
+        ?>
     </form>
 </div> <!-- /container -->
 </body>

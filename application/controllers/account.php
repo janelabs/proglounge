@@ -6,6 +6,7 @@ Class Account extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->library('encrypt');
+		$this->load->library('email');
 		$this->load->model('Users_model', 'user');
 	}
 	
@@ -143,7 +144,21 @@ Class Account extends CI_Controller
             $where = "username LIKE '%$recoveryTxt%' OR email_address LIKE '%$recoveryTxt%'";
             $userInfo = $this->user->getUserByUsernameEmail($where);
             if($userInfo):
-                var_dump($userInfo);
+                //send email
+                $config['protocol'] = 'sendmail';
+                $config['mailtype'] = 'html';
+                $this->email->initialize($config);
+
+                $this->email->from('noreply@proglounge.com', "Programmer's Lounge");
+                $this->email->to($userInfo->email_address);
+
+                $this->email->subject('Password Recovery');
+                $this->email->message('Testing the email class.');
+
+                $this->email->send();
+
+                $this->session->set_flashdata('recover_success', 'Please check your email for instructions.');
+                redirect('recover_password');
             else:
                 $this->session->set_flashdata('recover_error', 'Username or Email Address not existing');
                 redirect('recover_password');
