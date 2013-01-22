@@ -153,17 +153,27 @@ Class Account extends CI_Controller
                 $this->email->to($userInfo->email_address);
 
                 $this->email->subject('Password Recovery');
-                $this->email->message('Testing the email class.');
+
+                $link = site_url('change_password/'.md5($userInfo->id));
+                $message = 'Hi '.ucwords($userInfo->first_name).'!<br><br>Unfortunately, we cannot grant your request in recovering your password for some security concerns, however, you may change your password through this: <a href="'.$link.'">Change my Password</a><br><br>Best Regards!<br>PL Team';
+                $note = '<p style="font-size: 11px; color: #8b0000">If this is not you who requested to change your password, please ignore this message. Thank you.</p>';
+                $this->email->message($message."<br><br>".$note);
 
                 $this->email->send();
 
-                $this->session->set_flashdata('recover_success', 'Please check your email (inbox/spam) for instructions.');
+                $this->session->set_flashdata('recover_success', "Please check your email for instructions.\n(inbox/spam)");
                 redirect('recover_password');
             else:
                 $this->session->set_flashdata('recover_error', 'Username or Email Address not existing');
                 redirect('recover_password');
             endif;
         endif;
+    }
+
+    public function change_password($id)
+    {
+        $uid['uid'] = $id;
+        $this->load->view('change_password', $uid);
     }
     
 } // class Account
