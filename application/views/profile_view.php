@@ -108,10 +108,10 @@
                                     $comments_count = $post->getCommentsCountByPostId($post->id);
                                     $offset = getOffset($comments_count);
                                     $comments = $post->getCommentsByPostId($post->id, $offset.", 3");
-                                    $last_id = $comments->first_row()->id;
                                 ?>
                                 <div class="comment-box<?php echo $post->id ?>">
                                     <?php if ($comments_count > 3) { ?>
+                                        <?php $last_id = $comments->first_row()->id; ?>
                                         <button class="btn btn-link pull-left show-more-comments" last-id="<?php echo $last_id ?>">
                                             Show previous comments
                                         </button>
