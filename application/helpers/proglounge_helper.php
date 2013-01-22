@@ -17,11 +17,11 @@ if ( ! function_exists('filterPost'))
             $code_str = substr($string, $start_pos, $end_pos);
             //$code_str = htmlspecialchars($code_str);
             $code_str = str_replace("[code]\n", '[code]', $code_str);
-            $code_str = str_replace("[code]", $open_highlight, $code_str); 
+            $code_str = str_replace("[code]", $open_highlight, $code_str);
             $code_str = str_replace("[/code]", $close_highlight, $code_str);
             
             //get string before [code]
-            $tmp_str1 = explode('[code]', $string); 
+            $tmp_str1 = explode('[code]', $string);
             $str_bef_code = strip_tags($tmp_str1['0']);
             $str_bef_code = str_replace("\n", '<br>', $str_bef_code);
             
@@ -40,15 +40,15 @@ if ( ! function_exists('filterPost'))
         return $string;
     }
     
-    //returns Dec 04, 2012 12:12 PM date format
+    //returns 01-17-13 1:01 pm date format
     function filterPostDate($timestamp)
     {
         return date("m-d-y g:h a", strtotime($timestamp));
     }
 
-    function getOffset($page, $rowsperpage)
+    function getOffset($count)
     {
-        $offset = ($page - 1) * $rowsperpage;
-        return ($offset < 0) ? 0 : $offset;
+        $offset = $count - 3;
+            return ($offset < 0) ? 0 : $offset;
     }
 }

@@ -75,7 +75,7 @@ class Home extends CI_Controller {
         $data['footer'] = $this->load->view('footer', $data, TRUE);
         $data['carousel'] = $this->load->view('carousel', $data, TRUE);
         $data['modals'] = $this->load->view('modals_view', $data, TRUE);
-        $data['is_logged_id'] = $this->is_logged_in;
+        $data['is_logged_in'] = $this->is_logged_in;
         
         $this->load->view('home_view', $data);
     }
@@ -90,7 +90,7 @@ class Home extends CI_Controller {
         $html = '';
         list($user_posts, $last_id) = $this->posts->getNewsFeedByLoadMore($id, $post_id, 10, 0);
         if ($user_posts) {
-            foreach ($user_posts->result('Post_like_model') as $post) {
+            foreach ($user_posts->result('Post_model') as $post) {
                 $dp = base_url()."public/DP/".$post->image;
                 $like_count = $post->getLikersByPostId($post->id)->num_rows();
                 $html .= '<div class="post-contents" style="width: 700px; display:none;">
@@ -108,7 +108,6 @@ class Home extends CI_Controller {
                                         &times;
                                     </button>
                                 </div>
-                             </div>
                              </div>';
                 } else {
                     if ($post->isLiked($this->user_session['id'], $post->id)) {
@@ -119,8 +118,7 @@ class Home extends CI_Controller {
                                             <i class="icon-thumbs-down icon-white"></i> Unlike
                                         </button>
                                       </div>
-                                    </div>
-                                  </div>';
+                                    </div>';
                     } else {
                         $html .= '<div class="pull-right">
                               <div class="btn-group">
@@ -129,10 +127,38 @@ class Home extends CI_Controller {
                                     <i class="icon-thumbs-up"></i> Like
                                 </button>
                               </div>
-                            </div>
-                          </div>';
+                            </div>';
                     }
                 }
+
+                if ($this->is_logged_in) {
+                    $comments_count = $post->getCommentsCountByPostId($post->id);
+                    $page = ceil($comments_count/5);
+                    $offset = getOffset($page, 5);
+                    $comments = $post->getCommentsByPostId($post->id, $offset.", 5");
+
+                    $html .= '<div class="comment-box'.$post->id.'">';
+                    if ($comments_count > 3 && (($page - 1) > 0)) {
+                        $html .= '<button class="show-more-comments btn-link" last-id="'.($page - 1).'">Show previous comments</button>';
+                    }
+
+                    if ($comments_count > 0) {
+                        foreach ($comments->result_array() as $comment) {
+                            $html .= '<div class="span7 comment_sec">';
+                            $html .= '<div class="img-username-comment">';
+                            $html .= '<img src="'.base_url().'public/DP/'.$comment['image'].'"/>';
+                            $html .= '<a href="'.site_url($comment['username']).' class="link">'.$comment['username'].'</a><br>';
+                            $html .= '<label>'.filterPostDate($comment['date_created']).'</label>';
+                            $html .= '</div><blockquote><p style="font-size: 13px;">'.filterPost($comment['content']).'</p></blockquote></div>';
+                        }
+                    }
+                    $html .= '</div>';
+                    $html .= '<div class="comment-txtbox pagination-centered">
+                                <input id="'.$post->id.'" type="text" class="input-block-level comment-txt" placeholder="write a comment...">
+                              </div>';
+                }
+
+                $html .= '</div>';
 
             }
             if ($last_id != $post->id) {

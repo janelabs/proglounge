@@ -98,11 +98,8 @@ class Posts extends CI_Controller {
         $last_id = $this->input->post('comment_id', TRUE);
         $post_id = $this->input->post('post_id', TRUE);
         $html = '';
-        $html2 = '';
 
-        $offset = getOffset($last_id, 5);
-
-        list($comments, $last_comment_id) = $this->comment->getCommentsByLoadMore($post_id, $last_id, $offset.", 5");
+        list($comments, $last_comment_id) = $this->comment->getCommentsByLoadMore($post_id, $last_id, 3);
 
         if (!$comments || !$last_comment_id) {
             $params['success'] = FALSE;
@@ -110,11 +107,13 @@ class Posts extends CI_Controller {
             return;
         }
 
-        if (($last_id - 1) > 0) {
-            $html .= '<button href="#" class="show-more-comments btn-link" last-id="'.($last_id - 1).'" class="pull-right btn-link">Show previous comments</button>';
-        }
+        $last_id_for_button = $comments->last_row()->id;
 
-        foreach ($comments->result_array() as $comment) {
+        if ($last_id_for_button != $last_comment_id) {
+            $html .= '<button href="#" class="show-more-comments btn-link" last-id="'.$last_id_for_button.'" class="pull-right btn-link">Show previous comments</button>';
+        }
+        $comments = array_reverse($comments->result_array());
+        foreach ($comments as $comment) {
             $html .= '<div class="span7 comment_sec" style="display: none;">
                          <div class="img-username-comment">
                              <img src="'.base_url()."public/DP/".$comment['image'].'"/>

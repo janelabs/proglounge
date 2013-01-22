@@ -104,33 +104,41 @@
                                 </div>
 
                                 <!-- comment section -->
-                                <div class="comment-box<?php echo $post->id ?>">
                                 <?php
-                                    $comments = $post->getCommentsByPostId($post->id, 3);
                                     $comments_count = $post->getCommentsCountByPostId($post->id);
-                                    if ($comments_count > 0) {
+                                    $offset = getOffset($comments_count);
+                                    $comments = $post->getCommentsByPostId($post->id, $offset.", 3");
+                                    $last_id = $comments->first_row()->id;
                                 ?>
-                                <?php foreach ($post->getCommentsByPostId($post->id, 3)->result_array() as $comment) { ?>
-                                    <div class="span7 comment_sec">
-                                        <div class="img-username-comment">
-                                            <img src="<?php echo base_url()."public/DP/".$comment['image']; ?>"/>
-                                            <a href="<?php echo site_url($comment['username']) ?>" class="link"><?php echo $comment['username'] ?></a><br>
-                                            <label><?php echo filterPostDate($comment['date_created']) ?></label>
+                                <div class="comment-box<?php echo $post->id ?>">
+                                    <?php if ($comments_count > 3) { ?>
+                                        <button class="btn btn-link pull-left show-more-comments" last-id="<?php echo $last_id ?>">
+                                            Show previous comments
+                                        </button>
+                                    <?php } ?>
+                                    <?php
+                                    if ($comments_count > 0) { ?>
+                                    <?php foreach ($comments->result_array() as $comment) { ?>
+                                        <div class="span7 comment_sec">
+                                            <div class="img-username-comment">
+                                                <img src="<?php echo base_url()."public/DP/".$comment['image']; ?>"/>
+                                                <a href="<?php echo site_url($comment['username']) ?>" class="link"><?php echo $comment['username'] ?></a><br>
+                                                <label><?php echo filterPostDate($comment['date_created']) ?></label>
+                                            </div>
+                                            <blockquote>
+                                                <p style="font-size: 13px;"><?php echo filterPost($comment['content']) ?></p>
+                                            </blockquote>
                                         </div>
-                                        <blockquote>
-                                            <p style="font-size: 13px;"><?php echo filterPost($comment['content']) ?></p>
-                                        </blockquote>
-                                    </div>
-                                <?php } } ?>
+                                    <?php }} ?>
                                 </div>
                                 <div class="comment-txtbox pagination-centered">
-                                    <input id="<?php echo $post->id ?>" type="text" class="input-block-level comment-txt" placeholder="write a comment...">
-                                    <?php if ($comments_count > 3) { ?>
-                                        <a href="#" class="show-more-comments btn-link" last-id="<?php echo $comment['id'] ?>">Show all comments</a>
+                                    <?php if(!$is_guest) { ?>
+                                        <input id="<?php echo $post->id ?>" type="text" class="input-block-level comment-txt" placeholder="write a comment...">
+                                    <?php } else { ?>
+                                        <input type="hidden" id="<?php echo $post->id ?>">
                                     <?php } ?>
                                 </div>
                                 <!-- end comment section -->
-
                                 <!-- end Like and Comment -->
                             </div>
                         <?php endforeach; ?>

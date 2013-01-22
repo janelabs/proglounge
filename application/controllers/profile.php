@@ -189,27 +189,59 @@ class Profile extends CI_Controller {
                                     &times;
                                 </button>
                               </div>
-                            </div>
-                          </div>';
-               } else {
+                            </div>';
+               } else if (!$this->is_your_profile && !$this->is_guest) {
                    if ($post->isLiked($this->user_session['id'], $post->id)) {
                        $html .= '<div class="pull-right">
                                       <div class="btn-group">
                                         <button class="btn btn-small">'.$like_count.' like/s.</button>
                                         <button class="btn btn-small btn-primary unlikebtn" post-id="'.$post->id.'"><i class="icon-thumbs-down icon-white"></i> Unlike</button>
                                       </div>
-                                    </div>
-                                  </div>';
+                                    </div>';
                    } else {
                        $html .= '<div class="pull-right">
                               <div class="btn-group">
                                 <button class="btn btn-small">'.$like_count.' like/s.</button>
                                 <button class="btn btn-small likebtn" post-id="'.$post->id.'"><i class="icon-thumbs-up"></i> Like</button>
                               </div>
-                            </div>
-                          </div>';
+                            </div>';
                    }
+               } else {
+                   $html .= '<div class="pull-right">
+                              <div class="btn-group">
+                                <button class="btn btn-small">'.$like_count.' like/s.</button>
+                              </div>
+                            </div>';
                }
+
+                if ($this->is_logged_in) {
+                    $comments_count = $post->getCommentsCountByPostId($post->id);
+                    $page = ceil($comments_count/5);
+                    $offset = getOffset($page, 5);
+                    $comments = $post->getCommentsByPostId($post->id, $offset.", 3");
+
+                    $html .= '<div class="comment-box'.$post->id.'">';
+                    if ($comments_count > 3 && (($page - 1) > 0)) {
+                        $html .= '<button class="show-more-comments btn-link" last-id="'.($page - 1).'">Show previous comments</button>';
+                    }
+
+                    if ($comments_count > 0) {
+                        foreach ($comments->result_array() as $comment) {
+                            $html .= '<div class="span7 comment_sec">';
+                            $html .= '<div class="img-username-comment">';
+                            $html .= '<img src="'.base_url().'public/DP/'.$comment['image'].'"/>';
+                            $html .= '<a href="'.site_url($comment['username']).' class="link">'.$comment['username'].'</a><br>';
+                            $html .= '<label>'.filterPostDate($comment['date_created']).'</label>';
+                            $html .= '</div><blockquote><p style="font-size: 13px;">'.filterPost($comment['content']).'</p></blockquote></div>';
+                        }
+                    }
+                    $html .= '</div>';
+                    $html .= '<div class="comment-txtbox pagination-centered">
+                                <input id="'.$post->id.'" type="text" class="input-block-level comment-txt" placeholder="write a comment...">
+                              </div>';
+                }
+
+                $html .= '</div>';
             }
             if ($last_id != $post->id) {
                 $html .= '<button class="btn btn-block btn-info" id="load-more" last-id="'.$post->id.'">load more</button>';

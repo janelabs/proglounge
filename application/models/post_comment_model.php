@@ -72,12 +72,13 @@ Class Post_comment_model extends CI_Model
         $sql_query = "SELECT pc.*, u.username, u.image
                       FROM ".self::TABLE_NAME." pc
                       INNER JOIN ".self::USERS_TABLE." u ON u.id = pc.user_id
-                      WHERE pc.post_id = {$post_id} order by pc.id asc {$limit}";
+                      WHERE pc.post_id = {$post_id} and pc.id < {$last_id} order by pc.id desc {$limit}";
 
-        $tmp_last_comment = $this->getCommentsByPostId($post_id)->last_row('array');
+        $tmp_last_comment = $this->getCommentsByPostId($post_id)->first_row()->id;
+
         $query = $this->db->query($sql_query);
 
-        return array($query, $tmp_last_comment['id']);
+        return array($query, $tmp_last_comment);
     }
 
     private function _validateDelete($comment_id, $user_id)

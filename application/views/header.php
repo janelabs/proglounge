@@ -11,24 +11,39 @@
     <script type="text/javascript" src="<?php echo base_url('public/js/proglounge.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo base_url('public/js/timeago.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo base_url('public/js/highlight.js'); ?>"></script>
+    <link href='http://fonts.googleapis.com/css?family=Oxygen:400,700' rel='stylesheet' type='text/css'>
 </head>
 <script>
     $(document).ready(function() {
         jQuery("abbr.timeago").timeago();
     });
 </script>
-<body>
-<div class="navbar navbar-static-top">
+<body style="font-family: 'Oxygen', sans-serif;">
+<!-- show notif modal -->
+<div id="notif-modal" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 style="color: black;" id="notif-header"></h4>
+    </div>
+    <div class="modal-body" style="max-height: 300px;">
+
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn btn-info" data-dismiss="modal" aria-hidden="true">Close</a>
+    </div>
+</div>
+<!-- end notif modal -->
+<div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-            <a href="<?php echo site_url(); ?>" class="brand">{ Programmers Lounge }</a>
+            <a href="<?php echo site_url(); ?>" class="brand">Programmers Lounge</a>
             <?php if (isset($session['id']) && isset($session['username'])) { ?>
             <div class="btn-group pull-right">
             <a href="<?php echo site_url() ?>" 
-               class="btn btn-info">Home
+               class="btn btn-info"><i class="icon-home icon-white"></i>
             </a>
             <a href="<?php echo site_url($session['username']) ?>" 
-               class="btn btn-info"><i class="icon-user"></i>   Profile
+               class="btn btn-info"><?php echo $session['username'] ?>
             </a>
 			  <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">
 			    <i class="icon-chevron-down icon-white"></i>
@@ -40,28 +55,12 @@
 			  </ul>
             </div>
 
-            <!-- show notif modal -->
-            <div id="notif-modal" class="modal hide fade">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 style="color: black;" id="notif-header"></h4>
-                </div>
-                <div class="modal-body" style="max-height: 300px;">
-
-                </div>
-                <div class="modal-footer">
-                    <a href="#" class="btn btn-info" data-dismiss="modal" aria-hidden="true">Close</a>
-                </div>
-            </div>
-            <!-- end notif modal -->
-
-            <div class="btn-group pull-right" style="margin-right: 5px;">
+            <div class="btn-group pull-left" style="margin-right: 5px;">
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="icon-bell"></i>
                     <?php if ($new_notif_count > 0) { ?>
                         <span class="badge badge-important notif-count"><?php echo $new_notif_count ?></span>
                     <?php } ?>
-                    <span class="caret"></span>
                 </a>
                 <ul id="notif-center" class="dropdown-menu" style="padding-bottom: 0px;">
                     <?php if (count($notif_center) > 0) { ?>
@@ -97,3 +96,4 @@
         </div>
     </div>
 </div>
+<div class="span12" style="margin-bottom: 50px;"></div>
