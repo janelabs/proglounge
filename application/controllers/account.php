@@ -149,6 +149,7 @@ Class Account extends CI_Controller
             $userInfo = $this->user->getUserByUsernameEmail($where);
             if($userInfo):
                 //send email
+                //email configuration
                 $config['protocol'] = 'sendmail';
                 $config['mailtype'] = 'html';
                 $this->email->initialize($config);
@@ -168,6 +169,7 @@ Class Account extends CI_Controller
                 // save password recovery status
                 $id = md5($userInfo->id . $this->key);
                 $recoveryStat = $this->pword_recover->selectRecoveryStatus($id);
+                //if user id exists, update status
                 if($recoveryStat){
                     if($recoveryStat->status == 1):
                         $dataoptions = array(
@@ -176,6 +178,7 @@ Class Account extends CI_Controller
                         $this->pword_recover->updateStatus($id, $dataoptions);
                     endif;
                 }
+                //if user id not exists, insert as new status
                 else{
                     $dataoptions = array(
                         'user_id' => md5($userInfo->id . $this->key),
@@ -232,6 +235,7 @@ Class Account extends CI_Controller
             $users = $this->user->getUsers();
 
             foreach($users AS $user):
+                //if user is match change status and password
                 if(md5($user->id . $this->key) == $id){
                     $userInfo = array(
                         'password' => md5($new_password),
