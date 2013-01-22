@@ -157,7 +157,7 @@ Class Account extends CI_Controller
 
                 $this->email->send();
 
-                $this->session->set_flashdata('recover_success', 'Please check your email for instructions.');
+                $this->session->set_flashdata('recover_success', 'Please check your email (inbox/spam) for instructions.');
                 redirect('recover_password');
             else:
                 $this->session->set_flashdata('recover_error', 'Username or Email Address not existing');
