@@ -2,11 +2,16 @@
 
 Class Account extends CI_Controller
 {
+    private $key = '';
+
 	function __construct()
 	{
 		parent::__construct();
 		$this->load->library('encrypt');
+		$this->load->library('email');
 		$this->load->model('Users_model', 'user');
+		$this->load->model('Pword_recovery_model', 'pword_recover');
+        $this->key = $this->config->item('encryption_key');
 	}
 	
 	/*
@@ -119,6 +124,143 @@ Class Account extends CI_Controller
     	
     	$this->session->unset_userdata($session_data);
     	redirect();
+    }
+
+    /**
+     * View the form for password recovery
+     */
+    public function password_recovery()
+    {
+        $this->load->view('password_recovery');
+    }
+
+    /**
+     * Validates the information given (Password Recovery)
+     */
+    public function validate_pword_recovery()
+    {
+        $recoveryTxt = trim($this->input->post('recoveryTxt', TRUE));
+
+        if(strlen($recoveryTxt) == 0):
+            $this->session->set_flashdata('recover_error', 'Please input your Username or Email Address');
+            redirect('recover_password');
+        else:
+            $where = "username LIKE '%$recoveryTxt%' OR email_address LIKE '%$recoveryTxt%'";
+            $userInfo = $this->user->getUserByUsernameEmail($where);
+            if($userInfo):
+                //send email
+                $config['protocol'] = 'sendmail';
+                $config['mailtype'] = 'html';
+                $this->email->initialize($config);
+
+                $this->email->from('noreply@proglounge.com', "Programmer's Lounge");
+                $this->email->to($userInfo->email_address);
+
+                $this->email->subject('Password Recovery');
+
+                $link = site_url('change_password/'.md5($userInfo->id . $this->key));
+                $message = 'Hi '.ucwords($userInfo->first_name).'!<br><br>Unfortunately, we cannot grant your request in recovering your password for some security concerns, however, you may change your password through this: <a href="'.$link.'">Change my Password</a><br><br>Best Regards!<br>PL Team';
+                $note = '<p style="font-size: 11px; color: #8b0000">If this is not you who requested to change your password, please ignore this message. Thank you.</p>';
+                $this->email->message($message."<br><br>".$note);
+
+                $this->email->send();
+
+                // save password recovery status
+                $id = md5($userInfo->id . $this->key);
+                $recoveryStat = $this->pword_recover->selectRecoveryStatus($id);
+                if($recoveryStat){
+                    if($recoveryStat->status == 1):
+                        $dataoptions = array(
+                            'status' => 0
+                        );
+                        $this->pword_recover->updateStatus($id, $dataoptions);
+                    endif;
+                }
+                else{
+                    $dataoptions = array(
+                        'user_id' => md5($userInfo->id . $this->key),
+                        'status' => 0
+                    );
+                    $this->pword_recover->insertStatus($dataoptions);
+                }
+
+                // set success message
+                $this->session->set_flashdata('recover_success', "Please check your email for instructions.\n(inbox/spam)");
+                redirect('recover_password');
+            else:
+                $this->session->set_flashdata('recover_error', 'Username or Email Address not existing');
+                redirect('recover_password');
+            endif;
+        endif;
+    }
+
+    /**
+     * View change password form
+     *
+     * @param $id
+     */
+    public function change_password($id)
+    {
+        $recoveryStat = $this->pword_recover->selectRecoveryStatus($id);
+        if($recoveryStat){
+            if($recoveryStat->status == 1):
+                $this->session->set_flashdata('stat_error', 'Your link has expired.');
+                redirect(site_url());
+            else:
+                $userInfo['uid'] = $id;
+                $this->load->view('change_password', $userInfo);
+            endif;
+        }
+        else{
+            $this->session->set_flashdata('stat_error', 'Your link has expired.');
+            redirect(site_url());
+        }
+    }
+
+    /**
+     * Change password
+     */
+    public function changePassword()
+    {
+        $id = trim($this->input->post('uid', TRUE));
+        $new_password = trim($this->input->post('password', TRUE));
+
+        if(strlen($new_password) == 0):
+            $this->session->set_flashdata('change_error', 'Please enter a password. Note: White spaces in your password will be removed.');
+            redirect(site_url("change_password/".$id));
+        else:
+            $users = $this->user->getUsers();
+
+            foreach($users AS $user):
+                if(md5($user->id . $this->key) == $id){
+                    $userInfo = array(
+                        'password' => md5($new_password),
+                        'date_modified' => date('Y-m-d')
+                    );
+
+                    $update = $this->user->updateUser($user->id, $userInfo);
+
+                    //update status
+                    $dataoptions = array(
+                        'status' => 1
+                    );
+                    $this->pword_recover->updateStatus($id, $dataoptions);
+
+                    if($update):
+                        $this->session->set_flashdata('change_success', 'Password successfully changed.');
+                        redirect(site_url());
+                    else:
+                        $this->session->set_flashdata('change_error', 'Something went wrong while saving your password. Please try again.');
+                        redirect(site_url("change_password/".$id));
+                    endif;
+                    break;
+                }
+                else{
+                    $this->session->set_flashdata('change_error', 'It seems that you have been removed from the site.');
+                    redirect(site_url("change_password/".$id));
+                }
+            endforeach;
+        endif;
     }
     
 } // class Account
