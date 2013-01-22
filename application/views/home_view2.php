@@ -91,49 +91,43 @@
 <!-- end register modal -->
 
 <div class="container" style="margin-top: 5px;">
-	<div class="container">
-        <div class="row">
-            <div>
-                <?php
-                if($this->session->flashdata('stat_error')):
-                    ?>
-                    <div class="alert alert-error">
-                        <strong><?php echo $this->session->flashdata('stat_error'); ?></strong>
-                    </div>
-                    <?php
-                endif;
-                ?>
+    <div class="row">
+        <?php
+        if($this->session->flashdata('stat_error')):
+            ?>
+            <div class="span12">
+                <div class="alert alert-error">
+                    <strong><?php echo $this->session->flashdata('stat_error'); ?></strong>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div>
-                <?php
-                if($this->session->flashdata('change_success')):
-                    ?>
-                    <div class="alert">
-                        <strong><?php echo $this->session->flashdata('change_success'); ?></strong>
-                    </div>
-                    <?php
-                endif;
-                ?>
+            <?php
+        endif;
+        ?>
+        <?php
+        if($this->session->flashdata('change_success')):
+            ?>
+            <div class="span12">
+                <div class="alert alert-success">
+                    <strong><?php echo $this->session->flashdata('change_success'); ?></strong>
+                </div>
             </div>
-        </div>
-		<?php echo $carousel ?>
-		<div class="row">
-			<div class="span12">
-				<div class="row">
-					<div class="span3">
-                        test
-					</div>
-					<div class="span6">
-						test
-					</div>
-                    <div class="span3">
+            <?php
+        endif;
+        ?>
+        <?php echo $carousel ?>
+        <div class="span12">
+            <div class="row">
+                <div class="span3">
+                    test
+                </div>
+                <div class="span6">
+                    test
+                </div>
+                <div class="span3">
 
-                    </div>
-				</div>
-			</div>
-		</div>
-	</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <?php echo $footer; ?>

@@ -1,5 +1,4 @@
 <!-- carousel -->
-<div class="row">
     <div class="span12" style="height: 320px;">
         <div id="myCarousel" class="carousel slide">
         <div class="carousel-inner">
@@ -29,5 +28,4 @@
         <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
       </div>
     </div>
-</div>
 <!-- end carousel -->
