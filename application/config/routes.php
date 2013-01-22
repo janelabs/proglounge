@@ -64,6 +64,7 @@ $route['account/(:any)'] = 'error/pageMissing';
 $route['recover_password'] = 'account/password_recovery';
 $route['validate_recover'] = 'account/validate_pword_recovery';
 $route['change_password/(:any)'] = 'account/change_password/$1';
+$route['changePassword'] = 'account/changePassword';
 
 //posts
 $route['like'] = 'posts/likePost';

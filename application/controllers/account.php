@@ -2,12 +2,15 @@
 
 Class Account extends CI_Controller
 {
+    private $key = '';
+
 	function __construct()
 	{
 		parent::__construct();
 		$this->load->library('encrypt');
 		$this->load->library('email');
 		$this->load->model('Users_model', 'user');
+        $this->key = $this->config->item('encryption_key');
 	}
 	
 	/*
@@ -154,7 +157,7 @@ Class Account extends CI_Controller
 
                 $this->email->subject('Password Recovery');
 
-                $link = site_url('change_password/'.md5($userInfo->id));
+                $link = site_url('change_password/'.md5($userInfo->id . $this->key));
                 $message = 'Hi '.ucwords($userInfo->first_name).'!<br><br>Unfortunately, we cannot grant your request in recovering your password for some security concerns, however, you may change your password through this: <a href="'.$link.'">Change my Password</a><br><br>Best Regards!<br>PL Team';
                 $note = '<p style="font-size: 11px; color: #8b0000">If this is not you who requested to change your password, please ignore this message. Thank you.</p>';
                 $this->email->message($message."<br><br>".$note);
@@ -170,10 +173,53 @@ Class Account extends CI_Controller
         endif;
     }
 
+    /**
+     * View change password form
+     *
+     * @param $id
+     */
     public function change_password($id)
     {
-        $uid['uid'] = $id;
-        $this->load->view('change_password', $uid);
+        $userInfo['uid'] = $id;
+        $this->load->view('change_password', $userInfo);
+    }
+
+    /**
+     * Change password
+     */
+    public function changePassword()
+    {
+        $id = trim($this->input->post('uid', TRUE));
+        $new_password = trim($this->input->post('password', TRUE));
+
+        if(strlen($new_password) == 0):
+            $this->session->set_flashdata('change_error', 'Please enter a password. Note: White spaces in your password will be removed.');
+            redirect(site_url("change_password/".$id));
+        else:
+            $users = $this->user->getUsers();
+
+            foreach($users AS $user):
+                if(md5($user->id . $this->key) == $id){
+                    $userInfo = array(
+                        'password' => md5($new_password),
+                        'date_modified' => date('Y-m-d')
+                    );
+
+                    $update = $this->user->updateUser($user->id, $userInfo);
+                    if($update):
+                        redirect(site_url());
+                    else:
+                        $this->session->set_flashdata('change_error', 'Something went wrong while saving your password. Please try again.');
+                        redirect(site_url("change_password/".$id));
+                    endif;
+                    break;
+                }
+                else{
+                    $this->session->set_flashdata('change_error', 'It seems that you have been removed from the site.');
+                    redirect(site_url("change_password/".$id));
+                }
+            endforeach;
+        endif;
     }
     
 } // class Account

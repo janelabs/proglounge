@@ -79,16 +79,16 @@
 
     <body>
         <div class="container">
-            <form name="recover" class="form-pwordRecover" method="post" action="<?php echo site_url('validate_recover') ?>">
+            <form name="recover" class="form-pwordRecover" method="post" action="<?php echo site_url('changePassword') ?>">
                 <h2 class="form-pwordRecover-heading">Change Password</h2>
-                <?php $recover_error = $this->session->flashdata('recover_error');
+                <?php $recover_error = $this->session->flashdata('change_error');
                     if (!empty($recover_error)) { ?>
                     <div class="alert alert-error">
                         <strong>Error: </strong><?php echo $recover_error ?>
                     </div>
                 <?php } ?>
 
-                <input type="hidden" id="uid" readonly="readonly" value="<?php echo !empty($uid) ? $uid:''; ?>" />
+                <input type="hidden" id="uid" name="uid" readonly="readonly" value="<?php echo !empty($uid) ? $uid:''; ?>" />
 
                 <div id="masked"><input type="password" id="password" name="password" class="input-block-level" placeholder="New Password" rel="tooltip" data-placement="right" data-original-title="New Password" /></div>
 

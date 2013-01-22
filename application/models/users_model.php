@@ -139,6 +139,15 @@ Class Users_model extends CI_Model
 
         return $query;
     }
+
+    /**
+     * Get all user
+     */
+    public function getUsers()
+    {
+        if(!$query = $this->db->get('users')->result()) $query = NULL;
+        return $query;
+    }
 	
 } // Class Users_model
 
