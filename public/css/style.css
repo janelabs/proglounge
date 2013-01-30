@@ -63,6 +63,10 @@ textarea {
 	background-image: url('/public/img/loading.gif');
 }
 
+.random-users {
+    width: 106px; height: 106px;
+}
+
 /* END HOME */
 
 /* POSTS */

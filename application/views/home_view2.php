@@ -116,17 +116,20 @@
         ?>
         <?php echo $carousel ?>
         <div class="span12">
-            <div class="row">
-                <div class="span3">
-                    test
-                </div>
-                <div class="span6">
-                    test
-                </div>
-                <div class="span3">
+            <ul class="thumbnails">
+                <?php foreach ($random_users->result_array() as $random_user) : ?>
+                <?php $image_path = base_url()."public/DP/".$random_user['image']; ?>
+                <li>
+                    <a href="<?php echo $random_user['username'] ?>" class="thumbnail">
+                        <img class="random-users" src="<?php echo $image_path ?>">
+                    </a>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
 
-                </div>
-            </div>
+        <div class="span12">
+            test
         </div>
     </div>
 </div>

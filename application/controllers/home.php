@@ -42,10 +42,6 @@ class Home extends CI_Controller {
         $data['notif_center'] = $notif_center->result_array();
         $data['notif_all'] = $notif_all->result_array();
         $data['new_notif_count'] = $this->notification_model->getNewNotificationCountByUser($id);
-    	
-        //list all users
-        $data['users'] = $this->user->getUsersOrderBy();
-        $data['user_count'] = $data['users']->num_rows();
         
         $columns = 'users.id, users.username, users.first_name, users.last_name,
                     follow.following_id, follow.follower_id';
@@ -179,6 +175,9 @@ class Home extends CI_Controller {
     public function index2()
     {
     	$data['session'] = $this->user_session;
+
+        //get random users
+        $data['random_users'] = $this->user->getUsersOrderBy('RAND()', 'id, username, image', 7, 0);
     	
     	//templates
     	$data['header'] = $this->load->view('header', $data, TRUE);
