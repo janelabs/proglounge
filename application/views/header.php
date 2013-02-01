@@ -13,7 +13,8 @@
     <script type="text/javascript" src="<?php echo base_url('public/js/highlight.js'); ?>"></script>
     <link href='http://fonts.googleapis.com/css?family=Oxygen:400,700' rel='stylesheet' type='text/css'>
     
-    <link rel="shortcut icon" href="favicon.ico" >
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" >
+    <link rel="icon" href="favicon.ico" type="image/x-icon" >
 </head>
 <script>
     $(document).ready(function() {
