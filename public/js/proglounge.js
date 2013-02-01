@@ -600,10 +600,10 @@ $(document).ready(function() {
 
                     //get comments
                     $.each(json_data.comments, function(i){
-                        $('.modal-body').append('<blockquote>' +
+                        $('.modal-body').append('<img class="thumbnails n_dp" src="/public/DP/'+json_data.comments[i].image_thumb+'">' +
+                                                ' &nbsp;&nbsp;<b>'+json_data.comments[i].username+'</b> ' +
+                                                '<blockquote style="margin-left: 25px;">' +
                                                     '<p style="font-size: 13px;">' +
-                                                        '<img class="thumbnails n_dp" src="/public/DP/'+json_data.comments[i].image+'">' +
-                                                        ' <b>'+json_data.comments[i].username+'</b><br> ' +
                                                          json_data.comments[i].content +
                                                     '</p>' +
                                                 '</blockquote>');

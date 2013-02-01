@@ -47,7 +47,7 @@ Class Post_comment_model extends CI_Model
             $limit = "LIMIT {$limit}";
         }
 
-        $sql_query = "SELECT pc.*, u.username, u.image
+        $sql_query = "SELECT pc.*, u.username, u.image, u.image_thumb
                       FROM ".self::TABLE_NAME." pc
                       INNER JOIN ".self::USERS_TABLE." u ON u.id = pc.user_id
                       WHERE pc.post_id = {$post_id} order by pc.id asc {$limit}";
@@ -69,7 +69,7 @@ Class Post_comment_model extends CI_Model
             $limit = "LIMIT {$limit}";
         }
 
-        $sql_query = "SELECT pc.*, u.username, u.image
+        $sql_query = "SELECT pc.*, u.username, u.image, u.image_thumb
                       FROM ".self::TABLE_NAME." pc
                       INNER JOIN ".self::USERS_TABLE." u ON u.id = pc.user_id
                       WHERE pc.post_id = {$post_id} and pc.id < {$last_id} order by pc.id desc {$limit}";

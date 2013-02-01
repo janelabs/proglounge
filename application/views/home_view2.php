@@ -80,7 +80,6 @@
                     Registration Successful! You may now log in your account.
                 </div>
             </form>
-        </p>
     </div>
     <div class="modal-footer">
         <button class="btn btn-danger" id="back"><i class="icon-chevron-left icon-white"></i> Back</button>
@@ -90,36 +89,29 @@
 </div>
 <!-- end register modal -->
 
-<div class="container" style="margin-top: 5px;">
+<div class="container" style="min-height: 100%; height: 100%; margin-top: 5px;">
     <div class="row">
-        <?php
-        if($this->session->flashdata('stat_error')):
-            ?>
+        <?php if($this->session->flashdata('stat_error')) : ?>
             <div class="span12">
                 <div class="alert alert-error">
                     <strong><?php echo $this->session->flashdata('stat_error'); ?></strong>
                 </div>
             </div>
-            <?php
-        endif;
-        ?>
-        <?php
-        if($this->session->flashdata('change_success')):
-            ?>
+        <?php endif; ?>
+
+        <?php if($this->session->flashdata('change_success')): ?>
             <div class="span12">
                 <div class="alert alert-success">
                     <strong><?php echo $this->session->flashdata('change_success'); ?></strong>
                 </div>
             </div>
-            <?php
-        endif;
-        ?>
+        <?php endif; ?>
         <?php echo $carousel ?>
         <div class="span12">
             <ul class="thumbnails">
                 <?php foreach ($random_users->result_array() as $random_user) : ?>
-                <?php $image_path = base_url()."public/DP/".$random_user['image']; ?>
-                <li>
+                <?php $image_path = base_url()."public/DP/".$random_user['image_thumb']; ?>
+                <li title="<?php echo $random_user['username'] ?>">
                     <a href="<?php echo $random_user['username'] ?>" class="thumbnail">
                         <img class="random-users" src="<?php echo $image_path ?>">
                     </a>
@@ -129,7 +121,7 @@
         </div>
 
         <div class="span12">
-            test
+
         </div>
     </div>
 </div>

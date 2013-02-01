@@ -43,7 +43,7 @@ Class Post_model extends Post_like_model
 	{
 		$where = array(self::TABLE_NAME.'.user_id' => $user_id);
 		$on = self::USERS_TABLE . '.id = '.self::TABLE_NAME.'.user_id';
-		$columns = self::TABLE_NAME.'.*, '.self::USERS_TABLE.'.username, '.self::USERS_TABLE.'.image';
+		$columns = self::TABLE_NAME.'.*, '.self::USERS_TABLE.'.username, '.self::USERS_TABLE.'.image, '.self::USERS_TABLE.'.image_thumb';
 		$order = self::TABLE_NAME.'.id desc';
         
 		return $this->common->selectJoin(self::TABLE_NAME, self::USERS_TABLE, $on, $join_type = 'join', 
@@ -61,7 +61,7 @@ Class Post_model extends Post_like_model
         $where = array(self::TABLE_NAME.'.user_id' => $user_id,
                        self::TABLE_NAME.'.id <' => $post_id);
         $on = self::USERS_TABLE . '.id = '.self::TABLE_NAME.'.user_id';
-        $columns = self::TABLE_NAME.'.*, '.self::USERS_TABLE.'.username, '.self::USERS_TABLE.'.image';
+        $columns = self::TABLE_NAME.'.*, '.self::USERS_TABLE.'.username, '.self::USERS_TABLE.'.image, '.self::USERS_TABLE.'.image_thumb';
         $order = self::TABLE_NAME.'.id desc';
 
         $tmp_user_post = $this->getUserPosts($user_id, FALSE)->last_row('array');
@@ -78,7 +78,7 @@ Class Post_model extends Post_like_model
         $t_post = self::TABLE_NAME;
         $t_users = self::USERS_TABLE;
 
-        $sql_query = "SELECT DISTINCT {$t_users}.username, {$t_users}.image, post.*
+        $sql_query = "SELECT DISTINCT {$t_users}.username, {$t_users}.image, {$t_users}.image_thumb,  post.*
                       FROM ( {$t_follow} LEFT JOIN {$t_users} ON {$t_users}.id = {$t_follow}.following_id )
                       LEFT JOIN {$t_post} ON {$t_follow}.following_id = post.user_id
                       WHERE ( {$t_follow}.follower_id = {$user_id} AND {$t_post}.id < {$post_id} )
@@ -100,7 +100,7 @@ Class Post_model extends Post_like_model
         $where2 = array($t_post.'.user_id' => $user_id);
         $on_1 = self::USERS_TABLE.'.id = '.$t_follow.'.following_id';
         $on_2 = $t_follow.'.following_id = '.$t_post.'.user_id';
-        $columns = self::USERS_TABLE.'.username, '.self::USERS_TABLE.'.image, '.$t_post.'.*';
+        $columns = self::USERS_TABLE.'.username, '.self::USERS_TABLE.'.image, '.self::USERS_TABLE.'.image_thumb, '.$t_post.'.*';
 
         $this->db->select($columns);
         $this->db->from($t_follow);

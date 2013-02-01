@@ -1,6 +1,6 @@
 <?php echo $header ?>
 <?php echo $modals ?>
-<div class="container">
+<div class="container wrap">
 	<div class="row">
 		<div class="row">
 		    <div class="span4" style="margin-right:0px;">
@@ -16,7 +16,7 @@
 						<div class="suggested-content">
 							<div class="row">
 								<div class="span1">
-								<img src="<?php echo base_url()."public/DP/".$suggested_user['image'] ?>" class="thumbnail su_dp">
+								    <img src="<?php echo base_url()."public/DP/".$suggested_user['image_thumb'] ?>" class="thumbnail su_dp">
 								</div>
 								<div class="span2">
 								<a href="<?php echo site_url($suggested_user['username']) ?>"
@@ -69,7 +69,7 @@
                         <?php foreach ($user_posts->result('Post_model') as $post) : ?>
                             <div class="post-contents">
                                 <div class="img-username">
-                                    <img class="p_dp" src="<?php echo base_url()."public/DP/".$post->image ?>"/>
+                                    <img class="p_dp" src="<?php echo base_url()."public/DP/".$post->image_thumb ?>"/>
                                     <a href="#" class="link"><?php echo $post->username ?></a><br>
                                     <label><?php echo filterPostDate($post->date_created) ?></label>
                                 </div>
@@ -121,7 +121,7 @@
                                     <?php foreach ($comments->result_array() as $comment) { ?>
                                         <div class="span7 comment_sec">
                                             <div class="img-username-comment">
-                                                <img src="<?php echo base_url()."public/DP/".$comment['image']; ?>"/>
+                                                <img src="<?php echo base_url()."public/DP/".$comment['image_thumb']; ?>"/>
                                                 <a href="<?php echo site_url($comment['username']) ?>" class="link"><?php echo $comment['username'] ?></a><br>
                                                 <label><?php echo filterPostDate($comment['date_created']) ?></label>
                                             </div>

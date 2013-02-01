@@ -16,7 +16,7 @@
                 <div class="suggested-content">
                     <div class="row">
                         <div class="span1">
-                            <img src="<?php echo base_url()."public/DP/".$suggested_user['image'] ?>" class="thumbnail su_dp">
+                            <img src="<?php echo base_url()."public/DP/".$suggested_user['image_thumb'] ?>" class="thumbnail su_dp">
                         </div>
                         <div class="span2">
                             <a href="<?php echo site_url($suggested_user['username']) ?>"
@@ -57,7 +57,7 @@
                 <?php foreach ($news_feed->result('Post_model') as $post) : ?>
                 <div class="post-contents" style="width: 700px;">
                     <div class="img-username">
-                        <img class="p_dp" src="<?php echo base_url()."public/DP/".$post->image ?>"/>
+                        <img class="p_dp" src="<?php echo base_url()."public/DP/".$post->image_thumb ?>"/>
                         <a href="<?php echo site_url($post->username) ?>" class="link"><?php echo $post->username ?></a><br>
                         <label><?php echo filterPostDate($post->date_created) ?></label>
                     </div>
@@ -110,7 +110,7 @@
                             <?php foreach ($comments->result_array() as $comment) { ?>
                                 <div class="span7 comment_sec" style="width:680px;">
                                     <div class="img-username-comment">
-                                        <img src="<?php echo base_url()."public/DP/".$comment['image']; ?>"/>
+                                        <img src="<?php echo base_url()."public/DP/".$comment['image_thumb']; ?>"/>
                                         <a href="<?php echo site_url($comment['username']) ?>" class="link"><?php echo $comment['username'] ?></a><br>
                                         <label><?php echo filterPostDate($comment['date_created']) ?></label>
                                     </div>

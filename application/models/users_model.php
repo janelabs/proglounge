@@ -31,7 +31,7 @@ Class Users_model extends CI_Model
 	{
 		$where = array('username' => $username,
                        'password' => $password);
-		$columns = 'id, username, image';
+		$columns = 'id, username, image, image_thumb';
 		
 		$query = $this->common->selectWhere(self::TABLE_NAME, $where, $columns);
 		$is_exists = ($query->num_rows() > 0);
@@ -111,7 +111,7 @@ Class Users_model extends CI_Model
 	 */
 	public function getSuggestedUsersInfo($ids, $user_id)
 	{
-		$columns = 'id, last_name, first_name, username, image';
+		$columns = 'id, last_name, first_name, username, image, image_thumb';
 		$suggested_users = array();
 		
 		if (!is_array($ids)) {

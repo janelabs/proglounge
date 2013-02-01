@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Programmers Lounge</title>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('public/css/bootstrap.min.css'); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('public/css/bootstrap-responsiVe.min.css'); ?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('public/css/style.css'); ?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('public/css/highlight.css'); ?>">
     <script type="text/javascript" src="<?php echo base_url('public/js/jquery.js'); ?>"></script>
@@ -13,7 +15,7 @@
     <script type="text/javascript" src="<?php echo base_url('public/js/highlight.js'); ?>"></script>
     <link href='http://fonts.googleapis.com/css?family=Oxygen:400,700' rel='stylesheet' type='text/css'>
     
-    <link rel="shortcut icon" href="favicon.ico" >
+    <link rel="shortcut icon" href="favicon.ico">
 </head>
 <script>
     $(document).ready(function() {
@@ -35,7 +37,7 @@
     </div>
 </div>
 <!-- end notif modal -->
-<div class="navbar navbar-fixed-top">
+<div class="navbar navbar-static-top">
     <div class="navbar-inner">
         <div class="container">
             <a href="<?php echo site_url(); ?>" class="brand">Programmers Lounge</a>
@@ -98,4 +100,4 @@
         </div>
     </div>
 </div>
-<div class="span12" style="margin-bottom: 50px;"></div>
+<!--<div class="span12" style="margin-bottom: 50px;"></div>-->

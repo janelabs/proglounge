@@ -1,7 +1,9 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * Common model class
- * This Class uses CodeIngniter's Active Record Class 
+ * This Class uses CodeIngniter's Active Record Class
+ *
+ * @author Jo Erik San Jose
  */
 
 Class Common extends CI_Model
@@ -12,8 +14,13 @@ Class Common extends CI_Model
 		parent::__construct();
 	}
 	
-	/*
+	/**
 	 * Insert data using an array
+     *
+     * @param string
+     * @param array
+     *
+     * @return boolean
 	 */
 	public function insertData($table, $data)
 	{
@@ -30,11 +37,18 @@ Class Common extends CI_Model
 		}
 	}
 	
-	/*
+	/**
 	 * Retrieve data using WHERE clause.
+	 *
+	 * @param string    $table
+	 * @param array     $where
+     * @param string    $columns
+     * @param
+	 *
+	 * @return object
 	 */
-	public function selectWhere($table, $where, $columns = FALSE,
-	                            $order = FALSE, $limit = FALSE, $offset = 0)
+	public function selectWhere($table, $where, $columns = null,
+	                            $order = null, $limit = null, $offset = 0)
 	{
 		if (!is_array($where)) {
 			throw new Exception('Second param must be an array.');
@@ -66,11 +80,13 @@ Class Common extends CI_Model
         return $query;
 	}
 	
-	/*
+	/**
 	 * Retrieve all
+     *
+     * @
 	 */
-	public function retrieve($table, $columns = FALSE, $order = FALSE,
-                             $limit = FALSE, $offset = 0)
+	public function retrieve($table, $columns = null, $order = null,
+                             $limit = null, $offset = 0)
 	{
 		//select columns
 		if ($columns) {
@@ -100,8 +116,8 @@ Class Common extends CI_Model
 	 * Retrieve data using join(inner, left, right, outer) statements
 	 */
 	public function selectJoin($table1, $table2, $on, $join_type = 'join', 
-                               $columns = FALSE, $where = FALSE, $order = FALSE,
-                               $limit = FALSE, $offset = 0)
+                               $columns = null, $where = null, $order = null,
+                               $limit = null, $offset = 0)
 	{
 		if (!$columns) {
 			$this->db->select('*');

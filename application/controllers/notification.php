@@ -44,7 +44,7 @@ class Notification extends CI_Controller {
             $params['the_follower'] = $tmp_follower[0];
         }
 
-        //if like notification
+        //if like or comment notification
         if ($notif_info['type'] == 2 || $notif_info['type'] == 3) {
             $params['post_info'] = $this->posts->getUserPostById($notif_info['landing_id']);
             $params['comments'] = $this->posts->getCommentsByPostId($notif_info['landing_id'])->result_array();

@@ -34,7 +34,7 @@ class Posts extends CI_Controller {
         $now = date("Y-m-d H:i:s");
         $params['postdate'] = filterPostDate($now);
         $params['post_id'] = $this->db->insert_id();
-        $params['user_image'] = base_url()."public/DP/".$this->user_session['image'];
+        $params['user_image'] = base_url()."public/DP/".$this->user_session['image_thumb'];
         
         echo json_encode($params);
     }
@@ -86,7 +86,7 @@ class Posts extends CI_Controller {
         $now = date("Y-m-d H:i:s");
         $params['commentdate'] = filterPostDate($now);
         $params['comment_id'] = $this->db->insert_id();
-        $params['user_image'] = base_url()."public/DP/".$this->user_session['image'];
+        $params['user_image'] = base_url()."public/DP/".$this->user_session['image_thumb'];
 
         echo json_encode($params);
     }
@@ -116,7 +116,7 @@ class Posts extends CI_Controller {
         foreach ($comments as $comment) {
             $html .= '<div class="span7 comment_sec" style="display: none;">
                          <div class="img-username-comment">
-                             <img src="'.base_url()."public/DP/".$comment['image'].'"/>
+                             <img src="'.base_url()."public/DP/".$comment['image_thumb'].'"/>
                              <a href="'.site_url($comment['username']).'" class="link">'.$comment['username'].'</a><br>
                              <label>'.filterPostDate($comment['date_created']).'</label>
                          </div>

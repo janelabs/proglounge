@@ -87,7 +87,7 @@ class Home extends CI_Controller {
         list($user_posts, $last_id) = $this->posts->getNewsFeedByLoadMore($id, $post_id, 10, 0);
         if ($user_posts) {
             foreach ($user_posts->result('Post_model') as $post) {
-                $dp = base_url()."public/DP/".$post->image;
+                $dp = base_url()."public/DP/".$post->image_thumb;
                 $like_count = $post->getLikersByPostId($post->id)->num_rows();
                 $html .= '<div class="post-contents" style="width: 700px; display:none;">
                             <div class="img-username">
@@ -142,7 +142,7 @@ class Home extends CI_Controller {
                         foreach ($comments->result_array() as $comment) {
                             $html .= '<div class="span7 comment_sec">';
                             $html .= '<div class="img-username-comment">';
-                            $html .= '<img src="'.base_url().'public/DP/'.$comment['image'].'"/>';
+                            $html .= '<img src="'.base_url().'public/DP/'.$comment['image_thumb'].'"/>';
                             $html .= '<a href="'.site_url($comment['username']).' class="link">'.$comment['username'].'</a><br>';
                             $html .= '<label>'.filterPostDate($comment['date_created']).'</label>';
                             $html .= '</div><blockquote><p style="font-size: 13px;">'.filterPost($comment['content']).'</p></blockquote></div>';
@@ -174,10 +174,10 @@ class Home extends CI_Controller {
     
     public function index2()
     {
-    	$data['session'] = $this->user_session;
+        $data['session'] = $this->user_session;
 
         //get random users
-        $data['random_users'] = $this->user->getUsersOrderBy('RAND()', 'id, username, image', 7, 0);
+        $data['random_users'] = $this->user->getUsersOrderBy('RAND()', 'id, username, image_thumb', 7, 0);
     	
     	//templates
     	$data['header'] = $this->load->view('header', $data, TRUE);

@@ -17,7 +17,7 @@ class Profile extends CI_Controller {
         $this->load->model('Post_model', 'posts');
         $this->load->model('Post_like_model', 'like');
 
-        $this->user_info_columns = 'first_name, last_name, username, quote, about_me, image';
+        $this->user_info_columns = 'first_name, last_name, username, quote, about_me, image, image_thumb';
 
 		//for benchmarking
         //$this->output->enable_profiler(TRUE);
@@ -57,8 +57,9 @@ class Profile extends CI_Controller {
     		     $this->user->getSuggestedUsersInfo($suggested_ids, $this->user_session['id']);
     	}
 
-        $follow_columns = 'users.id, users.username, users.image, users.first_name, users.last_name,
+        $follow_columns = 'users.id, users.username, users.image, users.image_thumb, users.first_name, users.last_name,
         follow.following_id, follow.follower_id';
+
         //followers
         $user_follower = $this->user->getUserFollowers($user['id'], $follow_columns);
         $this->data['follower_count'] = $user_follower->num_rows();
@@ -115,7 +116,7 @@ class Profile extends CI_Controller {
     /* display followers. */
     public function followers($id)
     {
-    	$follow_columns = 'users.id, users.username, users.image, users.first_name, users.last_name,
+    	$follow_columns = 'users.id, users.username, users.image, users.image_thumb, users.first_name, users.last_name,
     	follow.following_id, follow.follower_id';
 
     	//user info
@@ -140,7 +141,7 @@ class Profile extends CI_Controller {
     /* display following. */
     public function following($id)
     {
-    	$follow_columns = 'users.id, users.username, users.image, users.first_name, users.last_name,
+    	$follow_columns = 'users.id, users.username, users.image, users.image_thumb, users.first_name, users.last_name,
     	follow.following_id, follow.follower_id';
 
     	//user info
@@ -171,7 +172,7 @@ class Profile extends CI_Controller {
         list($user_posts, $last_id) = $this->posts->getUserPostsByLoadMore($id, $post_id, 10, 0);
         if ($user_posts) {
             foreach ($user_posts->result('Post_like_model') as $post) {
-                $dp = base_url()."public/DP/".$post->image;
+                $dp = base_url()."public/DP/".$post->image_thumb;
                 $like_count = $post->getLikersByPostId($post->id)->num_rows();
                 $html .= '<div class="post-contents" style="display:none;">
                             <div class="img-username">
@@ -229,7 +230,7 @@ class Profile extends CI_Controller {
                         foreach ($comments->result_array() as $comment) {
                             $html .= '<div class="span7 comment_sec">';
                             $html .= '<div class="img-username-comment">';
-                            $html .= '<img src="'.base_url().'public/DP/'.$comment['image'].'"/>';
+                            $html .= '<img src="'.base_url().'public/DP/'.$comment['image_thumb'].'"/>';
                             $html .= '<a href="'.site_url($comment['username']).' class="link">'.$comment['username'].'</a><br>';
                             $html .= '<label>'.filterPostDate($comment['date_created']).'</label>';
                             $html .= '</div><blockquote><p style="font-size: 13px;">'.filterPost($comment['content']).'</p></blockquote></div>';
